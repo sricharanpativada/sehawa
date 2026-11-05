@@ -31,7 +31,14 @@ AgriBot operates as an expert agronomic diagnostic assistant and botanical visio
    - Cultural & Mechanical controls first $\longrightarrow$ Biological controls second $\longrightarrow$ Chemical interventions strictly as a calibrated last resort.
 4. **Chemical Safety & Compliance**: Mandates strict adherence to State Agricultural University (SAU) extension schedules and Central Insecticides Board (CIBRC) approved dosage rates and Pre-Harvest Intervals (PHI).
 5. **Missing Context Inquiry**: Before advising irreversible actions, prompts for missing variables: crop growth stage, soil pH, rootzone moisture, and recent weather events.
-6. **Everyday Natural Telugu Voice (సరళమైన వాడుక భాష)**: Web Speech synthesis (`te-IN`) specifically configured with conversational rural idioms, avoiding archaic or bookish terms.
+6. **Empathetic Everyday Telugu Operational Mandate (సరళమైన వాడుక భాష)**:
+   - Primary operational mandate: converses exclusively in warm, natural everyday conversational Telugu whenever the user speaks or inputs prompts in Telugu.
+   - Strictly avoids archaic, bookish, or formal *grandhikam* (గ్రాంథిక భాష).
+   - Explains technical agronomic concepts (chlorosis, drip irrigation, IPM, transpiration) using simple everyday farming analogies.
+   - Fluid Telugu vocal pacing calibrated at `0.92` (strictly in the ideal 0.90 to 0.95 range).
+   - **Zero English Output Rule**: Never outputs text or audio in English if the input prompt was in Telugu.
+7. **Single-Like Constraint on Community Listings**:
+   - Each user can give only one like per post listing in the village residency forum (`localStorage` tracking via `sehawa_liked_posts`), preventing duplicate upvotes.
 
 ---
 

@@ -2187,7 +2187,16 @@
         const filtered = (f === 'all') ? posts : posts.filter(p => p.category === f);
         document.getElementById('metricForumCount').innerText = `${posts.length} Active Listings`;
 
-        feed.innerHTML = filtered.map(post => `
+        let likedPosts = JSON.parse(localStorage.getItem('sehawa_liked_posts') || '[]');
+        if (!Array.isArray(likedPosts)) likedPosts = [];
+
+        feed.innerHTML = filtered.map(post => {
+          const isLiked = likedPosts.includes(post.id);
+          const likeBtnClass = isLiked 
+            ? "px-2.5 py-1 rounded-lg bg-emerald-950 text-emerald-400 border border-emerald-500/50 text-xs font-semibold flex items-center gap-1 cursor-default shadow-sm"
+            : "px-2.5 py-1 rounded-lg bg-charcoal-800 hover:bg-emerald-950 text-slate-300 hover:text-emerald-300 border border-white/5 text-xs transition-all flex items-center gap-1";
+
+          return `
           <div class="bg-charcoal-900/80 rounded-2xl p-4 border border-white/5 space-y-2">
             <div class="flex items-start justify-between">
               <div>
@@ -2196,8 +2205,13 @@
                 <div class="text-[11px] text-slate-400 font-mono">${post.location}</div>
               </div>
               <div class="flex items-center gap-1.5">
-                <button onclick="window.sehawaApp.upvotePost('${post.id}')" class="px-2 py-1 rounded-lg bg-charcoal-800 text-xs text-slate-300">👍 ${post.upvotes || 0}</button>
-                <button onclick="window.sehawaApp.deletePost('${post.id}')" class="p-1 rounded-lg bg-charcoal-800 text-slate-400 hover:text-signal-red"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                <button onclick="window.sehawaApp.upvotePost('${post.id}')" class="${likeBtnClass}" title="${isLiked ? 'Already liked (1 like limit)' : 'Like this listing'}">
+                  <span>${isLiked ? '❤️' : '👍'}</span>
+                  <span>${post.upvotes || 0}</span>
+                </button>
+                <button onclick="window.sehawaApp.deletePost('${post.id}')" class="p-1 rounded-lg bg-charcoal-800 text-slate-400 hover:text-signal-red" title="Delete listing">
+                  <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                </button>
               </div>
             </div>
             <p class="text-xs text-slate-300">${post.description}</p>
@@ -2206,7 +2220,8 @@
               <span class="text-slate-400">${post.contact}</span>
             </div>
           </div>
-        `).join('');
+        `;
+        }).join('');
         if (window.lucide) window.lucide.createIcons();
       }
 
@@ -2236,9 +2251,23 @@
       }
 
       upvotePost(id) {
+        let likedPosts = JSON.parse(localStorage.getItem('sehawa_liked_posts') || '[]');
+        if (!Array.isArray(likedPosts)) likedPosts = [];
+
         const posts = this.getForumPosts();
         const p = posts.find(x => x.id === id);
-        if (p) { p.upvotes = (p.upvotes || 0) + 1; this.saveForumPosts(posts); }
+        if (!p) return;
+
+        if (likedPosts.includes(id)) {
+          alert("మీరు ఈ పోస్ట్‌కు ఇప్పటికే లైక్ ఇచ్చారు! ఒక్క పోస్ట్‌కు ఒకే లైక్ అనుమతించబడుతుంది.\n(You can only give one like per listing.)");
+          return;
+        }
+
+        p.upvotes = (p.upvotes || 0) + 1;
+        likedPosts.push(id);
+        localStorage.setItem('sehawa_liked_posts', JSON.stringify(likedPosts));
+        this.saveForumPosts(posts);
+        this.renderForum();
       }
 
       deletePost(id) {
@@ -2479,13 +2508,13 @@
           document.getElementById('translatorMicLabel').innerText = "Tap to Speak English";
         } else {
           this.translatorRecognition = new SpeechRec();
-          this.translatorRecognition.lang = 'en-US';
+          this.translatorRecognition.lang = this.translatorLang || 'te-IN';
           this.translatorRecognition.interimResults = false;
 
           this.translatorRecognition.onstart = () => {
             this.isTranslatorListening = true;
-            document.getElementById('translatorMicLabel').innerText = "Listening to English...";
-            document.getElementById('translatorVoiceFeedback').innerText = "🔴 Listening... Speak clearly into your mic in English";
+            document.getElementById('translatorMicLabel').innerText = (this.translatorLang === 'en-IN') ? "Listening to English..." : "తెలుగులో మాట్లాడుతున్నారు...";
+            document.getElementById('translatorVoiceFeedback').innerText = "🔴 Listening... Speak clearly into your mic";
           };
 
           this.translatorRecognition.onresult = (e) => {
@@ -2496,13 +2525,13 @@
 
           this.translatorRecognition.onerror = () => {
             this.isTranslatorListening = false;
-            document.getElementById('translatorMicLabel').innerText = "Tap to Speak English";
+            document.getElementById('translatorMicLabel').innerText = "Tap to Speak";
             document.getElementById('translatorVoiceFeedback').innerText = "Mic stopped or permission needed.";
           };
 
           this.translatorRecognition.onend = () => {
             this.isTranslatorListening = false;
-            document.getElementById('translatorMicLabel').innerText = "Tap to Speak English";
+            document.getElementById('translatorMicLabel').innerText = "Tap to Speak";
           };
 
           try {
@@ -2522,6 +2551,7 @@
         const input = document.getElementById('translatorEnglishInput').value.trim();
         if (!input) return;
 
+        const isTelugu = /[\u0C00-\u0C7F]/.test(input);
         let teluguResult = "";
         let meaningResult = "";
 
@@ -2534,21 +2564,30 @@
           let prefix = "రైతు సోదరులారా, ";
           let action = "పంటను జాగ్రత్తగా గమనించి, తగిన నిర్ణయం తీసుకోండి.";
 
-          if (lower.includes("rain") || lower.includes("storm") || lower.includes("weather")) {
+          if (lower.includes("rain") || lower.includes("storm") || lower.includes("weather") || lower.includes("వర్షం")) {
             action = "వాతావరణం మారే అవకాశం ఉంది. పొలంలో నీటి నిల్వ లేకుండా చూసుకోండి మరియు మోటార్ ఆపండి.";
-          } else if (lower.includes("yellow") || lower.includes("spot") || lower.includes("leaf")) {
+          } else if (lower.includes("yellow") || lower.includes("spot") || lower.includes("leaf") || lower.includes("పసుపు") || lower.includes("ఆకు")) {
             action = "ఆకులపై మచ్చలు గమనిస్తే వెంటనే వేపనూనె లేదా తగిన మందు పిచికారీ చేయండి.";
-          } else if (lower.includes("water") || lower.includes("irrigate") || lower.includes("pump")) {
+          } else if (lower.includes("water") || lower.includes("irrigate") || lower.includes("pump") || lower.includes("నీరు") || lower.includes("కరెంట్")) {
             action = "పంటకు అవసరమైనంత మాత్రమే నీరు పెట్టండి. ఎక్కువైతే వేరు కుళ్లు తెగులు వస్తుంది.";
-          } else if (lower.includes("pest") || lower.includes("insect") || lower.includes("bug")) {
-            action = "పురుగులు ఆశించినట్లు కనిపిస్తే పురుగుల మందు కొట్టి పంటను కాపాడుకోండి.";
+          } else if (lower.includes("pest") || lower.includes("insect") || lower.includes("bug") || lower.includes("పురుగు")) {
+            action = "పురుగులు ఆశించినట్లు కనిపిస్తే సహజ వేప కషాయం కొట్టి మిత్ర పురుగులను కాపాడుకోండి.";
           }
           teluguResult = `${prefix}${action}`;
           meaningResult = `Direct conversational translation in natural everyday Telugu: "${action}"`;
         }
 
         document.getElementById('teluguTranslatedOutput').innerText = teluguResult;
-        document.getElementById('teluguMeaningExplanation').innerText = `Exact Meaning: ${meaningResult}`;
+        
+        // Strict operational mandate: Never output text in English if the input prompt was in Telugu
+        const meaningEl = document.getElementById('teluguMeaningExplanation');
+        if (isTelugu) {
+          meaningEl.innerText = "వాడుక భాషలో స్పష్టమైన సలహా • Clear advice in spoken everyday Telugu";
+          meaningEl.className = "text-xs text-emerald-400 mt-2 font-mono";
+        } else {
+          meaningEl.innerText = `Exact Meaning: ${meaningResult}`;
+          meaningEl.className = "text-xs text-slate-400 mt-2 font-mono";
+        }
 
         this.speakCurrentTeluguTranslation();
       }
@@ -2561,7 +2600,7 @@
           window.speechSynthesis.cancel();
           const utterance = new SpeechSynthesisUtterance(text);
           utterance.lang = 'te-IN';
-          utterance.rate = 0.92;
+          utterance.rate = 0.92; // Natural fluid pacing in 0.90 to 0.95 range
           utterance.pitch = 1.0;
           
           const wave = document.getElementById('audioWaveBars');
