@@ -1,7 +1,7 @@
-# Sehawa (सेहावा) 🌾
+# ｓｅｈａｗａ (సెహావా / सेहावा) 🌾
 
-> **Autonomous Offline-First Agricultural Platform for macOS & Android**  
-> Precision soil diagnostics, edge-AI phytopathology, dual-trigger grid predictions, and hyper-local community resilience.
+> **Autonomous Offline-First Agricultural Platform & AgriBot Botanical Vision Expert for macOS & Android**  
+> Terrace 3D growth simulation, hierarchical visual botanical triage, IPM protocols, and hyper-local community resilience.
 
 ![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Android-emerald?style=for-the-badge)
 ![Offline](https://img.shields.io/badge/100%25-Offline--First-10B981?style=for-the-badge)
@@ -11,55 +11,56 @@
 
 ## 🌟 Overview
 
-**Sehawa** is an autonomous agritech and crop-management companion web application designed for mobile viewports with full responsive desktop compatibility. It executes 100% client-side with zero dynamic API dependencies or external network requirements.
+**ｓｅｈａｗａ** is an autonomous agritech companion web application designed aggressively for mobile viewports with full responsive desktop compatibility. It executes 100% client-side with zero dynamic API dependencies or external cloud requirements.
+
+The landing page features a photorealistic terraced mountain crop field background overlaid with a real-time procedural 3D crop animation: as users scroll down, seeds germinate into saplings, vegetative canopies expand, and mature golden wheat and waving paddy panicles emerge from the soil. At the bottom of the scroll sequence, users reach the dedicated **Download & Offline Engine Station** to save the standalone package or launch the in-browser engine.
 
 ---
 
-## 🚜 Key Features
+## 🤖 AgriBot Multimodal Diagnostic Assistant
 
-### 1. Offline Agricultural Core Matrix
-- **5 Soil Profiles × 2 Water Tables** (10 total permutations): Alluvial, Black (Regur), Red, Sandy, and Loamy soils mapped against Low (<15m) and High (>35m) water table depths.
-- Links optimal crop varieties, expected yield per acre, market demand ratings, recommended 3-step regenerative crop rotations, and boundary re-afforestation agroforestry trees.
-- **Home & Rooftop Vegetable Unit**: Calibrated micro-cultivation parameters for Tomatoes, Spinach, Chilies, Coriander, and Bell Peppers with exact drip-emitter flow rates (L/hr) and potting mix ratios.
-- **Companion Planting Wisdom**: Field-tested biological synergies (e.g. Marigolds repelling nematodes in Brassicas, Mustard aphid trap lines in Wheat, Basil scent camouflage with Tomatoes).
+AgriBot operates as an expert agronomic diagnostic assistant and botanical vision expert adhering strictly to **Five Core Operational Principles**:
 
-### 2. Edge-AI Crop & Leaf Vision Learner & Leaf Doctor
-- **Interactive Vision Classifier & Continual Learner**: Classifies crop foliage across 8 core agricultural crops (Tomato, Paddy, Cotton, Corn, Wheat, Chili, Potato, Groundnut) with Top-3 probability breakdowns and health status indicators.
-- **On-Device Few-Shot Training**: Users can upload new crop leaf images, label or correct diagnoses, and train the agent in real time. Features are extracted and persisted to `localStorage` (`sehawa_learned_leaf_samples`), updating the nearest-centroid classification model completely offline.
-- **Camera-Based Viewfinder**: Live mobile camera feed utilizing `navigator.mediaDevices.getUserMedia` with fallback sample leaf presets and HTML5 `<canvas>` botanical analysis.
-- Instant diagnosis of **Healthy Vigorous Foliage**, **Chlorosis (N/Fe/Mg Deficiency)** with organic corrective drenches, or **Necrotic Leaf Spot / Blight** with commercial fungicide protocols.
+1. **Structured Visual Triage**: Hierarchical plant analysis:
+   - *Growth habit & phyllotaxy* (alternate distichous, opposite, whorled, basal rosette).
+   - *Leaf architecture* (monocot vs. eudicot, parallel vs. reticulate venation, margins).
+   - *Diagnostic anatomical markers* (auricles, ligules, pulvinus, tendrils, stipules, nectary glands).
+   - *Pathology & stress indicators* (interveinal chlorosis, target-board lesions, vascular wilting, necrotic blight).
+2. **Probabilistic & Differential Diagnosis**: Primary identification paired with calibrated confidence estimates, differential lookalikes, and field verification questions.
+3. **Integrated Pest Management (IPM)**: Strict sequential hierarchy:
+   - Cultural & Mechanical controls first $\longrightarrow$ Biological controls second $\longrightarrow$ Chemical interventions strictly as a calibrated last resort.
+4. **Chemical Safety & Compliance**: Mandates strict adherence to State Agricultural University (SAU) extension schedules and Central Insecticides Board (CIBRC) approved dosage rates and Pre-Harvest Intervals (PHI).
+5. **Missing Context Inquiry**: Before advising irreversible actions, prompts for missing variables: crop growth stage, soil pH, rootzone moisture, and recent weather events.
+6. **Everyday Natural Telugu Voice (సరళమైన వాడుక భాష)**: Web Speech synthesis (`te-IN`) specifically configured with conversational rural idioms, avoiding archaic or bookish terms.
 
-### 3. English ➔ Natural Everyday Telugu Voice Translator (సరళమైన వాడుక భాష)
-- **Hands-Free Bilingual Voice Engine**: Listens to spoken English queries via the Web Speech recognition API (`webkitSpeechRecognition`) and translates them into simple, natural, everyday conversational Telugu.
-- **No Archaic or Bookish Phrasing**: Designed specifically for rural usability, utilizing conversational Telugu idioms that farmers use daily (avoiding hyper-formal Sanskritized vocabulary).
-- **Native Spoken Feedback**: Speaks out translated advisories aloud using HTML5 Web Speech synthesis (`window.speechSynthesis` with `te-IN` locale) with synchronized audio waveform visualizer.
-- Includes quick-tap English farmer prompt chips for weather checks, yellow leaf remedies, irrigation planning, and market prices.
+---
 
-### 4. Verified Ingredient & Pesticide Guide
-- Comprehensive chemical and organic formulation profiles mapped to agricultural pests and diseases.
-- Real commercial trade names (*Tatamida*, *Coragen*, *Amistar Top*, *Blitox 50*, *Dithane M-45*, *Contaf Plus*) paired with active market purchase links, application dosages, and Pre-Harvest Intervals (PHI).
+## 🚜 Key Architectural Components
 
-### 5. Dual-Trigger Weather Shield & Predictive Grid Outage Planner
-- Weather event simulator (*Torrential Monsoon*, *Severe Heatwave*, *Sudden Frost*, *Cyclonic Squall*).
-- **Predictive Feeder Logic**: Adverse storm patterns automatically trigger emergency alerts warning farmers of impending rural substation tripping to run irrigation pumps immediately before power lines shut down.
-- **Manual Power Cut Scheduler**: Computes crop transpiration deficit and calculates the exact pre-irrigation pump run time in minutes and total water volume needed.
+### 1. Terrace Background & 3D Scroll-Driven Growth Physics
+- **Mountain Terrace Backdrop**: Integrated with photorealistic terraced paddy hills.
+- **Scroll Progression**:
+  $$\text{🌰 Soil Seed } (0\% \to 25\%) \longrightarrow \text{🌱 Emerging Sapling } (25\% \to 50\%) \longrightarrow \text{🌿 Vegetative Canopy } (50\% \to 75\%) \longrightarrow \text{🌾 Golden Harvest } (75\% \to 100\%)$$
+- **Mature Grain Physics**: Nodding rice panicles and wheat spikes with bristling golden awns and dynamic wind oscillation.
 
-### 6. Dynamic Irrigation Transpiration Timer & Market Rescue System
-- Real-time countdown timer that deducts recent rainfall millimeters from baseline crop evapotranspiration needs ($ET_c$) using Web Audio API acoustic feedback.
-- **Market Rescue System**: Rapid distress harvest routing directing growers to local cold storage hubs, FPO distress intake depots, and food dehydrator facilities.
+### 2. Dedicated Download & Offline Engine Station
+- **One-Click Download**: Saves `sehawa-offline-engine.html` locally for 100% offline usage on Android, macOS, Windows, and Linux.
+- **In-Browser Execution**: Launches the full standalone suite (`app.html`) inside an interactive glassmorphism modal with full window controls.
+- Clean landing page layout without companion suite clutter.
 
-### 7. Local Web Speech Regional Voice Engine
-- Native HTML5 `window.speechSynthesis` supporting **Hindi** (`hi-IN`), **Telugu** (`te-IN`), **Tamil** (`ta-IN`), and **English** (`en-IN`).
-- Integrated speech recognition assistant (`webkitSpeechRecognition`) for spoken agronomic inquiries.
+### 3. Offline Agricultural Core Matrix (in `app.html`)
+- 5 Soil Profiles $\times$ 2 Water Tables (10 permutations) mapping optimal crop varieties, yield per acre, 3-step crop rotations, and boundary re-afforestation agroforestry trees.
+- Home & Rooftop Vegetable Unit with calibrated drip-emitter flow rates (L/hr) and potting mix ratios.
+- Companion Planting biological synergies (Marigolds, Mustard trap crops, Basil camouflage).
 
-### 8. Local Storage Community Residency Forum
-- Fully functional client-side peer-to-peer bulletin board persisted in browser `localStorage`.
-- Seeded with listings for **Tractor Rentals**, **Collective Labor Squads**, **Tool Exchanges**, and **Organic Manure Swaps** with full CRUD support.
+### 4. Dual-Trigger Weather Shield & Predictive Grid Outage Planner
+- Weather event simulation (*Torrential Monsoon*, *Severe Heatwave*, *Sudden Frost*).
+- **Predictive Grid Warning**: Approaching storms trigger automatic warnings to run water irrigation pumps before rural electricity lines shut down.
+- **Evapotranspiration Irrigation Countdown**: Real-time acoustic countdown deducting rainfall from crop water demands ($ET_c$).
 
-### 9. Procedural Seed-to-Harvest Growth Simulation
-- First slide / hero canvas dynamically reacts to user scrolling: soil bed $\rightarrow$ emergence of delicate saplings $\rightarrow$ flourishing lush foliage $\rightarrow$ wind-blown waving mature crop field with grain heads and golden awns.
-- Features bilingual motto: *"Sehawa - విత్తనం నుండి సమృద్ధి పంట వరకు • From Soil & Sapling to Bountiful Harvest"*.
-- Encourages exploratory scroll down directly to action controls at the base of the hero.
+### 5. Verified Pesticide Guide & Community Resilience Forum
+- Chemical and organic formulation profiles paired with real commercial trade names (*Tatamida*, *Coragen*, *Amistar Top*, *Blitox 50*).
+- Local storage peer-to-peer bulletin board with full CRUD persistence for tractor rentals, tool sharing, and labor squads.
 
 ---
 

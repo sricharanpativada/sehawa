@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Sehawa — Companion App</title>
+  <title>ｓｅｈａｗａ — Autonomous Offline Agricultural Suite</title>
   <meta name="description" content="Autonomous offline-first agricultural intelligence companion application for macOS & Android.">
   <meta name="theme-color" content="#022C22">
 
@@ -125,15 +125,15 @@
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <h1 class="text-xl font-bold tracking-tight text-white">Sehawa Agritech Suite</h1>
+              <h1 class="text-xl font-black tracking-[0.22em] text-white font-mono">ｓｅｈａｗａ</h1>
               <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30">Local Node</span>
             </div>
-            <p class="text-xs text-slate-400">Native Browser Execution Engine • Zero Dynamic API Required</p>
+            <p class="text-xs text-slate-400">Autonomous Offline Companion Suite • Zero Dynamic API Required</p>
           </div>
         </div>
 
-        <!-- Telemetry & Language Controls -->
-        <div class="flex items-center gap-2 self-stretch sm:self-auto justify-between sm:justify-end">
+        <!-- Telemetry, Download & Language Controls -->
+        <div class="flex items-center gap-2 self-stretch sm:self-auto justify-between sm:justify-end flex-wrap">
           <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-charcoal-900 border border-charcoal-700/80 text-xs">
             <span class="relative flex h-2 w-2">
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -141,6 +141,12 @@
             </span>
             <span class="font-mono text-[11px] text-emerald-300">100% OFFLINE</span>
           </div>
+
+          <!-- Download Standalone Package Button -->
+          <a href="app.html" download="sehawa-offline-engine.html" title="Download Standalone Offline HTML File" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-charcoal-950 font-bold transition-all text-xs shadow-md">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>Save Offline App</span>
+          </a>
 
           <select id="globalLangSelector" onchange="window.sehawaApp.setLanguage(this.value)" class="text-xs bg-charcoal-800 text-slate-200 border border-charcoal-600 rounded-lg px-2 py-1.5 focus:outline-none focus:border-emerald-400 cursor-pointer">
             <option value="en-IN">🌐 English</option>
@@ -156,15 +162,15 @@
           </button>
 
           <!-- Vision AI Learner Trigger -->
-          <button onclick="window.sehawaApp.openVisionTrainerModal()" title="Train Vision Model (Leaf & Crop Learner)" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-950/70 hover:bg-emerald-900 text-emerald-300 border border-emerald-600/40 transition-all text-xs font-semibold cursor-pointer">
-            <i data-lucide="brain" class="w-4 h-4 text-emerald-400"></i>
-            <span>Vision Learner</span>
+          <button onclick="window.sehawaApp.openVisionTrainerModal()" title="AgriBot Botanical Vision Triage" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-950/70 hover:bg-emerald-900 text-emerald-300 border border-emerald-600/40 transition-all text-xs font-semibold cursor-pointer">
+            <i data-lucide="scan-line" class="w-4 h-4 text-emerald-400"></i>
+            <span>AgriBot Vision</span>
           </button>
 
           <!-- Natural Telugu Voice Translator Trigger -->
-          <button onclick="window.sehawaApp.openVoiceTranslatorModal()" title="English to Natural Telugu Voice Engine" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-950/70 hover:bg-amber-900 text-amber-300 border border-amber-600/40 transition-all text-xs font-semibold cursor-pointer">
+          <button onclick="window.sehawaApp.openVoiceTranslatorModal()" title="AgriBot Spoken Telugu Voice Assistant" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-950/70 hover:bg-amber-900 text-amber-300 border border-amber-600/40 transition-all text-xs font-semibold cursor-pointer">
             <i data-lucide="languages" class="w-4 h-4 text-amber-400"></i>
-            <span>EN ➔ తెలుగు</span>
+            <span>AgriBot తెలుగు</span>
           </button>
         </div>
       </div>
