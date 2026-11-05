@@ -1,44 +1,48 @@
-# ｓｅｈａｗａ (సెహావా / सेहावा) 🌾
+# Sehawa (సెహావా / सेहावा) 🌾
 
 > **Autonomous Offline-First Agricultural Platform & AgriBot Botanical Vision Expert for macOS & Android**  
-> Terrace 3D growth simulation, hierarchical visual botanical triage, IPM protocols, and hyper-local community resilience.
+> Multi-tier soil terrace 3D growth simulation, trilingual conversational agronomic voice AI (Telugu, Hindi, English), hierarchical botanical triage, IPM protocols, and community resilience.
 
 ![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Android-emerald?style=for-the-badge)
 ![Offline](https://img.shields.io/badge/100%25-Offline--First-10B981?style=for-the-badge)
+![Voice AI](https://img.shields.io/badge/Voice%20AI-Telugu%20%7C%20Hindi%20%7C%20English-amber?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)
 
 ---
 
 ## 🌟 Overview
 
-**ｓｅｈａｗａ** is an autonomous agritech companion web application designed aggressively for mobile viewports with full responsive desktop compatibility. It executes 100% client-side with zero dynamic API dependencies or external cloud requirements.
+**Sehawa** is an autonomous agritech companion web application designed aggressively for mobile viewports with full responsive desktop compatibility. It executes 100% client-side with zero dynamic API dependencies or external cloud requirements.
 
-The landing page features a photorealistic terraced mountain crop field background overlaid with a real-time procedural 3D crop animation: as users scroll down, seeds germinate into saplings, vegetative canopies expand, and mature golden wheat and waving paddy panicles emerge from the soil. At the bottom of the scroll sequence, users reach the dedicated **Download & Offline Engine Station** to save the standalone package or launch the in-browser engine.
+The landing page features a photorealistic terraced mountain crop field background layered with a real-time procedural 3D crop canvas:
+- **Rich Agricultural Soil & Dark-Green Base**: Multi-tiered terrace shelves with deep emerald turf borders and rich brown loam soil contours provide the living earthen bed from which all crops emerge.
+- **Individual Seedbeds & Root Mounds**: Each seed and crop stalk is visibly anchored into a fertile, moist soil mound with organic turf shoots.
+- **Scroll Progression**: As users scroll down, dormant seeds nestled in the soil germinate into emerald sapling shoots, expand into leafy vegetative canopies, and mature into heavy golden wheat spikes and nodding paddy panicles.
+- At the bottom of the scroll sequence, users reach the dedicated **Download & Offline Engine Station** to save the standalone package or launch the in-browser engine.
 
 ---
 
-## 🤖 AgriBot Multimodal Diagnostic Assistant
+## 🤖 Dual AI Engines: Voice Assistant & Botanical Vision Triage
 
-AgriBot operates as an expert agronomic diagnostic assistant and botanical vision expert adhering strictly to **Five Core Operational Principles**:
+### 1. Trilingual Agronomic Voice Assistant (Telugu • Hindi • English)
+The voice engine supports three operational modes with automatic script detection and calibrated natural speech synthesis:
+- **Telugu to Telugu (తెలుగు)**: Primary regional mandate speaking simple, natural everyday conversational Telugu (*సరళమైన వాడుక భాష*). Strictly avoids bookish or archaic *grandhikam* (గ్రాంథిక భాష). Uses native voice synthesis (`te-IN` / `Google తెలుగు` / `Lekha`) with pacing calibrated at `0.90` for warm, unhurried, human-like rural articulation.
+- **Hindi to Hindi (हिन्दी)**: Natural conversational Hindi (*सरल बोलचाल की भाषा*) addressing farmers warmly (*किसान भाइयों*) with native voice synthesis (`hi-IN` / `Google हिन्दी`) at rate `0.92`.
+- **English to English (🌐)**: Clear, practical agronomic English response paired with cross-language field translations for farmers and agronomists.
+- **19+ Trained Agricultural Domains**: Complete offline intelligence covering paddy blast & blight, cotton whiteflies & pink bollworms, tomato early blight, chili leaf curl virus, nitrogen/iron chlorosis, heavy storm & drainage warnings, electricity grid power & pump run hours, organic 200L Jeevamrutham recipe, drip irrigation fertigation, green manure & soil testing, tractor & equipment hiring, weed control & mulching, and legume crop rotation.
 
+### 2. AgriBot Botanical Vision Triage Expert
+Adheres strictly to **Five Core Operational Principles**:
 1. **Structured Visual Triage**: Hierarchical plant analysis:
    - *Growth habit & phyllotaxy* (alternate distichous, opposite, whorled, basal rosette).
    - *Leaf architecture* (monocot vs. eudicot, parallel vs. reticulate venation, margins).
    - *Diagnostic anatomical markers* (auricles, ligules, pulvinus, tendrils, stipules, nectary glands).
    - *Pathology & stress indicators* (interveinal chlorosis, target-board lesions, vascular wilting, necrotic blight).
 2. **Probabilistic & Differential Diagnosis**: Primary identification paired with calibrated confidence estimates, differential lookalikes, and field verification questions.
-3. **Integrated Pest Management (IPM)**: Strict sequential hierarchy:
-   - Cultural & Mechanical controls first $\longrightarrow$ Biological controls second $\longrightarrow$ Chemical interventions strictly as a calibrated last resort.
+3. **Integrated Pest Management (IPM)**: Cultural & Mechanical $\longrightarrow$ Biological controls $\longrightarrow$ Chemical interventions strictly as calibrated last resort.
 4. **Chemical Safety & Compliance**: Mandates strict adherence to State Agricultural University (SAU) extension schedules and Central Insecticides Board (CIBRC) approved dosage rates and Pre-Harvest Intervals (PHI).
 5. **Missing Context Inquiry**: Before advising irreversible actions, prompts for missing variables: crop growth stage, soil pH, rootzone moisture, and recent weather events.
-6. **Empathetic Everyday Telugu Operational Mandate (సరళమైన వాడుక భాష)**:
-   - Primary operational mandate: converses exclusively in warm, natural everyday conversational Telugu whenever the user speaks or inputs prompts in Telugu.
-   - Strictly avoids archaic, bookish, or formal *grandhikam* (గ్రాంథిక భాష).
-   - Explains technical agronomic concepts (chlorosis, drip irrigation, IPM, transpiration) using simple everyday farming analogies.
-   - Fluid Telugu vocal pacing calibrated at `0.92` (strictly in the ideal 0.90 to 0.95 range).
-   - **Zero English Output Rule**: Never outputs text or audio in English if the input prompt was in Telugu.
-7. **Single-Like Constraint on Community Listings**:
-   - Each user can give only one like per post listing in the village residency forum (`localStorage` tracking via `sehawa_liked_posts`), preventing duplicate upvotes.
+6. **Instant Regional Audio Advisory**: Provides one-click spoken audio playout in everyday Telugu and Hindi directly inside the diagnostic triage card.
 
 ---
 

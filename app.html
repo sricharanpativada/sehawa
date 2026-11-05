@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>ｓｅｈａｗａ — Autonomous Offline Agricultural Suite</title>
+  <title>Sehawa — Autonomous Offline Agricultural Suite</title>
   <meta name="description" content="Autonomous offline-first agricultural intelligence companion application for macOS & Android.">
   <meta name="theme-color" content="#022C22">
 
@@ -125,7 +125,7 @@
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <h1 class="text-xl font-black tracking-[0.22em] text-white font-mono">ｓｅｈａｗａ</h1>
+              <h1 class="text-xl font-extrabold tracking-tight text-white font-sans">Sehawa</h1>
               <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30">Local Node</span>
             </div>
             <p class="text-xs text-slate-400">Autonomous Offline Companion Suite • Zero Dynamic API Required</p>
@@ -774,10 +774,10 @@
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <h3 class="text-base font-bold text-white">English ➔ Everyday Telugu Voice Engine</h3>
-              <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-500/30">Natural Speech AI</span>
+              <h3 class="text-base font-bold text-white">Trilingual Agricultural Voice & Translation Engine</h3>
+              <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30">Offline Natural AI</span>
             </div>
-            <p class="text-xs text-slate-400">Listen in English • Exact Natural Telugu Translation • Warm Voice Synthesis.</p>
+            <p class="text-xs text-slate-400">Conversational Telugu • Hindi • English • Calibrated Voice Synthesis</p>
           </div>
         </div>
         <button onclick="window.sehawaApp.closeVoiceTranslatorModal()" class="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-charcoal-800 transition-all">
@@ -786,10 +786,36 @@
       </div>
 
       <div class="flex-1 overflow-y-auto p-5 sm:p-6 space-y-6">
-        <div class="p-3.5 rounded-2xl bg-charcoal-950 border border-amber-500/20 flex items-start gap-3">
-          <i data-lucide="sparkles" class="w-4 h-4 text-amber-400 shrink-0 mt-0.5"></i>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            <strong class="text-amber-300">Natural Agricultural Speech Synthesis:</strong> Speak in English or click any agricultural prompt below. The agent translates speech into simple, natural, everyday Telugu (సరళమైన వాడుక భాష), keeping the meaning exact without archaic or overly formal words, and speaks it clearly in a natural Telugu voice!
+        <!-- Language selector tabs -->
+        <div class="flex items-center justify-center gap-2 pb-1 flex-wrap">
+          <span class="text-xs font-mono text-slate-400">భాష / भाषा / Language:</span>
+          <button 
+            id="appVoiceLangTeBtn" 
+            onclick="window.sehawaApp.setAppVoiceLang('te-IN')" 
+            class="px-3.5 py-1 rounded-full text-xs font-bold bg-emerald-500 text-charcoal-950 transition-all shadow-md shadow-emerald-500/20"
+          >
+            🇮🇳 తెలుగు (te-IN)
+          </button>
+          <button 
+            id="appVoiceLangHiBtn" 
+            onclick="window.sehawaApp.setAppVoiceLang('hi-IN')" 
+            class="px-3.5 py-1 rounded-full text-xs font-semibold bg-charcoal-800 text-slate-300 hover:text-white transition-all"
+          >
+            🇮🇳 हिन्दी (hi-IN)
+          </button>
+          <button 
+            id="appVoiceLangEnBtn" 
+            onclick="window.sehawaApp.setAppVoiceLang('en-IN')" 
+            class="px-3.5 py-1 rounded-full text-xs font-semibold bg-charcoal-800 text-slate-300 hover:text-white transition-all"
+          >
+            🌐 English (en-IN)
+          </button>
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-charcoal-950 border border-emerald-500/20 flex items-start gap-3">
+          <i data-lucide="sparkles" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
+          <p id="appVoiceIntroText" class="text-xs text-slate-300 leading-relaxed">
+            <strong class="text-emerald-300">Natural Agricultural Speech Synthesis:</strong> మాట్లాడండి లేదా ప్రశ్నను టైప్ చేయండి. సెహావా సులభమైన వాడుక భాషలో (సరళమైన తెలుగు / सरल हिन्दी / English) సమాధానం అందిస్తుంది మరియు స్పష్టమైన స్వరంతో వినిపిస్తుంది.
           </p>
         </div>
 
@@ -797,64 +823,64 @@
           <div class="flex items-center justify-between">
             <label class="text-xs font-semibold text-slate-300 uppercase tracking-wider flex items-center gap-2">
               <i data-lucide="volume-2" class="w-4 h-4 text-emerald-400"></i>
-              <span>English Voice & Text Input</span>
+              <span id="appVoiceInputLabel">Voice & Text Input</span>
             </label>
             <button id="translatorMicBtn" onclick="window.sehawaApp.toggleTranslatorMic()" class="px-3.5 py-1.5 rounded-xl bg-charcoal-800 hover:bg-emerald-950 text-slate-200 hover:text-emerald-300 border border-charcoal-600 transition-all flex items-center gap-2 text-xs font-medium cursor-pointer">
               <i data-lucide="mic" id="translatorMicIcon" class="w-3.5 h-3.5 text-emerald-400"></i>
-              <span id="translatorMicLabel">Tap to Speak English</span>
+              <span id="translatorMicLabel">Tap to Speak</span>
             </button>
           </div>
 
-          <textarea id="translatorEnglishInput" rows="2" placeholder="e.g. Why are my tomato leaves turning yellow with brown spots?" class="w-full bg-charcoal-900 border border-charcoal-700 rounded-xl p-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400 resize-none font-sans"></textarea>
+          <textarea id="translatorEnglishInput" rows="2" placeholder="తెలుగు, हिन्दी లేదా English లో మీ ప్రశ్న రాయండి..." class="w-full bg-charcoal-900 border border-charcoal-700 rounded-xl p-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400 resize-none font-sans"></textarea>
 
           <div class="flex items-center justify-between">
             <span class="text-[11px] font-mono text-slate-500" id="translatorVoiceFeedback">Listening engine ready (Web Speech API)</span>
             <button onclick="window.sehawaApp.executeTranslation()" class="px-5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-charcoal-950 font-bold text-xs transition-all shadow-md">
-              Translate & Speak in Telugu
+              Ask & Speak
             </button>
           </div>
         </div>
 
         <div>
-          <div class="text-[11px] font-mono text-slate-400 uppercase mb-2">Or Tap a Quick Farmer Speech Prompt:</div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 text-xs">
-            <button onclick="window.sehawaApp.setAndTranslatePrompt('Why are my tomato leaves turning yellow with brown spots?')" class="p-2.5 rounded-xl bg-charcoal-950 hover:bg-emerald-950/60 text-slate-300 text-left">🍅 "Why are tomato leaves yellow with brown spots?"</button>
-            <button onclick="window.sehawaApp.setAndTranslatePrompt('Is it going to rain heavily today? Should I turn off the water pump?')" class="p-2.5 rounded-xl bg-charcoal-950 hover:bg-emerald-950/60 text-slate-300 text-left">🌧️ "Is heavy rain coming? Should I stop the pump?"</button>
-            <button onclick="window.sehawaApp.setAndTranslatePrompt('Approaching severe weather has placed local electricity grid at risk. Run water pumps now.')" class="p-2.5 rounded-xl bg-charcoal-950 hover:bg-emerald-950/60 text-slate-300 text-left">⚡️ "Power cut expected. Run water pumps now."</button>
-            <button onclick="window.sehawaApp.setAndTranslatePrompt('What is the best 3 step crop rotation for black soil with low water table?')" class="p-2.5 rounded-xl bg-charcoal-950 hover:bg-emerald-950/60 text-slate-300 text-left">🌱 "Best crop rotation for black soil?"</button>
-            <button onclick="window.sehawaApp.setAndTranslatePrompt('Paddy leaf blast detected. Spray tricyclazole fungicide.')" class="p-2.5 rounded-xl bg-charcoal-950 hover:bg-emerald-950/60 text-slate-300 text-left">🌾 "Paddy blast detected. Spray fungicide."</button>
-            <button onclick="window.sehawaApp.setAndTranslatePrompt('Check the soil moisture before planting seeds.')" class="p-2.5 rounded-xl bg-charcoal-950 hover:bg-emerald-950/60 text-slate-300 text-left">💧 "Check soil moisture before planting."</button>
+          <div class="text-[11px] font-mono text-slate-400 uppercase mb-2" id="appQuickPromptLabel">Quick Agricultural Prompts:</div>
+          <div id="appQuickPromptGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 text-xs">
+            <button onclick="window.sehawaApp.setAndTranslatePrompt('వరి ఆకులు చివరన ఎండిపోతున్నాయి, ఏం చేయాలి?')" class="p-2.5 rounded-xl bg-charcoal-950 hover:bg-emerald-950/60 text-slate-300 text-left">🌾 "వరి ఆకులు ఎండిపోతున్నాయి"</button>
+            <button onclick="window.sehawaApp.setAndTranslatePrompt('భారీ వర్షం వస్తే మోటార్ ఆపాలా? నీరు ఎలా తీయాలి?')" class="p-2.5 rounded-xl bg-charcoal-950 hover:bg-emerald-950/60 text-slate-300 text-left">🌧️ "భారీ వర్షం హెచ్చరిక"</button>
+            <button onclick="window.sehawaApp.setAndTranslatePrompt('పైరులో ఆకులు పసుపుగా మారితే ఏ ఎరువు వేయాలి?')" class="p-2.5 rounded-xl bg-charcoal-950 hover:bg-emerald-950/60 text-slate-300 text-left">🍂 "ఆకులు పసుపు రంగులోకి మారడం"</button>
+            <button onclick="window.sehawaApp.setAndTranslatePrompt('పత్తి ఆకులు ముడుచుకున్నాయి, తెల్లదోమ ఎలా పోతుంది?')" class="p-2.5 rounded-xl bg-charcoal-950 hover:bg-emerald-950/60 text-slate-300 text-left">🐛 "పత్తిలో పురుగులు & ముడుత"</button>
+            <button onclick="window.sehawaApp.setAndTranslatePrompt('కరెంట్ పోయే ముందు ఎంత సేపు నీరు పెట్టాలి?')" class="p-2.5 rounded-xl bg-charcoal-950 hover:bg-emerald-950/60 text-slate-300 text-left">⚡️ "కరెంట్ కోత & మోటార్ సమయం"</button>
+            <button onclick="window.sehawaApp.setAndTranslatePrompt('భూమి బలం పెరగడానికి జీవామృతం ఎలా చేయాలి?')" class="p-2.5 rounded-xl bg-charcoal-950 hover:bg-emerald-950/60 text-slate-300 text-left">🌱 "సేంద్రియ జీవామృతం తయారీ"</button>
           </div>
         </div>
 
         <div class="bg-charcoal-950 p-6 rounded-3xl border border-emerald-500/30 space-y-4 shadow-xl">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-mono font-bold text-emerald-400 flex items-center gap-1.5 uppercase">
+            <span id="appOutputLanguageBadge" class="text-xs font-mono font-bold text-emerald-400 flex items-center gap-1.5 uppercase">
               <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-              Natural Everyday Telugu Translation (సరళమైన వాడుక భాష)
+              <span>Natural Everyday Speech Response</span>
             </span>
-            <button onclick="window.sehawaApp.speakCurrentTeluguTranslation()" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-charcoal-950 font-bold text-xs flex items-center gap-2">
+            <button onclick="window.sehawaApp.speakCurrentTranslation()" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-charcoal-950 font-bold text-xs flex items-center gap-2">
               <i data-lucide="volume-2" class="w-4 h-4"></i>
-              <span>Speak in Telugu Voice</span>
+              <span id="appSpeakBtnText">Speak Output</span>
             </button>
           </div>
 
           <div class="p-4 rounded-2xl bg-charcoal-900 border border-white/5">
             <div id="teluguTranslatedOutput" class="text-xl sm:text-2xl font-bold text-white leading-relaxed font-sans">
-              మీ టమాట ఆకులపై పసుపు, గోధుమ రంగు మచ్చలు వచ్చాయి. వెంటనే వేప నూనె లేదా తగిన మందు పిచికారీ చేయండి.
+              నమస్కారం రైతు సోదరులారా! సెహావా వ్యవసాయ సహాయకి సిద్ధంగా ఉంది. మీ పంట సమస్య ఏమిటో చెప్పండి, మంచి సలహా ఇస్తాను.
             </div>
-            <div id="teluguMeaningExplanation" class="text-xs text-slate-400 mt-2 font-mono">
-              Exact Meaning: "Yellow and brown spots appeared on your tomato leaves. Spray neem oil or suitable medicine immediately."
+            <div id="teluguMeaningExplanation" class="text-xs text-emerald-400 mt-2 font-mono">
+              వాడుక భాషలో స్పష్టమైన సలహా • Clear advice in spoken everyday language
             </div>
           </div>
 
           <div class="flex items-center justify-between pt-2 border-t border-charcoal-800 text-xs text-slate-400 font-mono">
-            <div>Voice: <strong>te-IN Natural</strong> • Rate: 0.92</div>
+            <div id="appVoiceModelMeta">Engine: <strong>Trilingual Edge NLP</strong> • TTS Rate: <strong>0.90</strong></div>
             <div class="flex items-center gap-1 h-3" id="audioWaveBars">
               <span class="w-1 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
               <span class="w-1 h-3 bg-emerald-500 rounded-full animate-pulse" style="animation-delay: 0.1s"></span>
               <span class="w-1 h-1.5 bg-emerald-300 rounded-full animate-pulse" style="animation-delay: 0.2s"></span>
-              <span class="w-1 h-3 bg-mint-400 rounded-full animate-pulse" style="animation-delay: 0.3s"></span>
+              <span class="w-1 h-3 bg-teal-400 rounded-full animate-pulse" style="animation-delay: 0.3s"></span>
             </div>
           </div>
         </div>
@@ -1535,12 +1561,134 @@
       }
     ];
 
+    const AGRIBOT_TRILINGUAL_MAP = {
+      welcome: {
+        te: "నమస్కారం రైతు సోదరులారా! సెహావా వ్యవసాయ సహాయకి మీకు స్వాగతం పలుకుతోంది. మీ పంట సమస్య ఏమిటో చెప్పండి, సరళమైన దేశీ పద్ధతుల్లో మంచి సలహా ఇస్తాను.",
+        hi: "नमस्ते किसान भाइयों! सेहावा कृषि सहायक में आपका स्वागत है। अपनी फसल की समस्या बताइए, सरल और असरदार देसी तरीकों से सही सलाह दूंगा।",
+        en: "Greetings farmer friends! Welcome to Sehawa agricultural intelligence assistant. Tell me your crop problem, and I will provide clear, practical farming guidance.",
+        meaning: "Greetings farmer brothers! Sehawa agricultural assistant welcomes you. Tell me your crop problem, and I will give helpful advice in simple everyday methods."
+      },
+      greetings: {
+        te: "నమస్తే అన్నదాతా! మీరు మరియు మీ కుటుంబం, మీ పైరు క్షేమంగా ఉన్నారా? ఈరోజు మీ చేనులో ఏ సహాయం కావాలి?",
+        hi: "नमस्ते अन्नदाता! आप और आपका परिवार, आपकी फसल कैसी है? आज आपके खेत में किस तरह की सहायता चाहिए?",
+        en: "Greetings respected farmer! Are you, your family, and your crops doing well? What assistance do you need in your field today?",
+        meaning: "Greetings respected farmer! Are you and your crop doing well? What assistance do you need in your field today?"
+      },
+      paddy_blight: {
+        te: "రైతు సోదరులారా, వరి చేనులో ఆకులు ఎండటం లేదా అంచుల వెంబడి నీటి చారలు కనిపిస్తే అది ఆకు ఎండు తెగులు కావచ్చు. ముందుగా పొలంలో నిల్వ ఉన్న నీటిని తీసివేసి, నేల ఆరేలా చూడండి. లీటరు నీటికి 10 గ్రాముల సూడోమోనాస్ లేదా ట్రైకోడెర్మా కలిపి పిచికారీ చేయండి. తెగులు ఎక్కువగా ఉంటే వ్యవసాయ అధికారుల సలహాతో కాపర్ మందు కొట్టండి.",
+        hi: "किसान भाइयों, धान के खेत में पत्तियां सूखना या किनारों पर पानी जैसे धब्बे दिखना झुलसा रोग (बैक्टीरियल ब्लाइट) हो सकता है। सबसे पहले खेत का जमा पानी निकालकर मिट्टी को हवा लगने दें। प्रति लीटर पानी में 10 ग्राम स्यूडोमोनास या ट्राइकोडर्मा मिलाकर छिड़काव करें।",
+        en: "Farmer friends, if paddy leaf tips and margins are drying along edges with water-soaked lesions, it is bacterial leaf blight. First drain excess standing water to let soil aerate. Spray 10g Pseudomonas or Trichoderma per litre of water. Use copper fungicide only under university extension guidance if severe.",
+        meaning: "Farmer brothers, if paddy leaf tips are drying along margins, it is bacterial leaf blight. First drain excess standing water to let soil aerate. Spray 10g Pseudomonas or Trichoderma per litre of water."
+      },
+      paddy_blast: {
+        te: "వరిలో ఆకులపై కంటి ఆకారంలో మచ్చలు వస్తే అది అగ్గి తెగులు. పొలంలో యూరియా వేయడం వెంటనే ఆపండి. లీటరు నీటికి ఒక గ్రాము ట్రైసైక్లాజోల్ కలిపి మంచు తగ్గిన తర్వాత ఉదయం వేళల్లో పిచికారీ చేయండి.",
+        hi: "धान की पत्तियों पर आंख के आकार के धब्बे दिखें तो यह ब्लास्ट (अग्नि रोग) है। खेत में यूरिया डालना तुरंत बंद कर दें। प्रति लीटर पानी में 1 ग्राम ट्राइसाइक्लाजोल मिलाकर ओस सूखने के बाद सुबह के समय छिड़काव करें।",
+        en: "If eye-shaped spindle lesions appear on paddy leaves, it is rice blast. Stop applying urea fertilizer immediately. Spray 1g tricyclazole per litre of water in early morning after dew dries.",
+        meaning: "If eye-shaped spots appear on paddy leaves, it is blast. Stop applying urea fertilizer immediately. Spray 1g tricyclazole per litre of water in the morning."
+      },
+      cotton_pests: {
+        te: "పత్తి చేనులో ఆకులు ముడుచుకుపోయినా లేదా తెల్లదోమ ఆశించినా, మొదట ఎకరానికి 8 పసుపు రంగు జిగురు అట్టలు పెట్టండి. లీటరు నీటిలో 5 మిల్లీల వేపనూనె కలిపి పిచికారీ చేయండి. రసాయన మందులు వెంటనే కొట్టకుండా మిత్ర పురుగులను కాపాడుకోండి.",
+        hi: "कपास के खेत में पत्तियां मुड़ रही हों या सफेद मक्खी का प्रकोप हो, तो प्रति एकड़ 8 पीले चिपचिपे ट्रैप लगाएं। प्रति लीटर पानी में 5 मिली नीम का तेल मिलाकर छिड़कें। तुरंत कीटनाशक न डालकर मित्र कीटों को बचाएं।",
+        en: "If cotton leaves are curling with whiteflies or sucking pests, install 8 yellow sticky traps per acre immediately. Spray 5ml cold-pressed neem oil per litre of water. Protect beneficial predatory insects before considering chemicals.",
+        meaning: "If cotton leaves are curling with whitefly, first install 8 yellow sticky traps per acre. Spray 5ml neem oil per litre of water. Avoid immediate chemical sprays."
+      },
+      cotton_pink_bollworm: {
+        te: "పత్తిలో గులాబీ రంగు పురుగు నివారణకు ఎకరానికి 5 ఫెరమోన్ బుట్టలు అమర్చండి. పూత దశలో ట్రైకోగ్రామా గుడ్ల కార్డులను పొలంలో ఉంచితే పురుగు గుడ్లను సహజంగానే నాశనం చేస్తాయి.",
+        hi: "कपास में गुलाबी सुंडी (पिंक बॉलवर्म) की रोकथाम के लिए प्रति एकड़ 5 फेरोमोन ट्रैप लगाएं। फूल आने की अवस्था में ट्राइकोग्रामा अंडों के कार्ड खेत में लगाएं जो कीट के अंडों को प्राकृतिक रूप से नष्ट कर देंगे।",
+        en: "To control pink bollworm in cotton, install 5 pheromone traps per acre for pest surveillance. Fasten Trichogramma egg parasitoid cards during flowering to destroy pest eggs biologically.",
+        meaning: "To control pink bollworm in cotton, place 5 pheromone traps per acre. Hang Trichogramma cards during flowering stage."
+      },
+      tomato_blight: {
+        te: "టమాట ఆకులపై వలయాలు లాంటి నల్లటి లేదా గోధుమ మచ్చలు వస్తే ఆకు మాకుడు తెగులు. తెగులు సోకిన కింది ఆకులను తుంచి దూరంగా పారేయండి. లీటరు నీటికి 30 మిల్లీల పులిసిన మజ్జిగ కలిపి పిచికారీ చేస్తే తెగులు బాగా తగ్గుతుంది.",
+        hi: "टमाटर की पत्तियों पर छल्लेदार गोल भूरे-काले धब्बे दिखें तो यह अगेती झुलसा रोग है। प्रभावित निचली पत्तियों को तोड़कर खेत से दूर फेंक दें। प्रति लीटर पानी में 30 मिली खट्टी छाछ मिलाकर छिड़कने से रोग तेजी से थमता है।",
+        en: "Concentric circular brown spots on tomato leaves indicate early blight. Prune affected lower foliage to prevent soil splash. Spray 30ml fermented sour buttermilk or copper oxychloride per litre of water.",
+        meaning: "If concentric circular brown spots appear on tomato leaves, it is early blight. Prune lower affected foliage and spray 30ml fermented sour buttermilk per litre."
+      },
+      chili_curling: {
+        te: "మిరప తోటలో ఆకులు పైకి ముడుచుకుంటే తామర పురుగులు, కిందకి ముడుచుకుంటే నల్లి పురుగులు కారణం. ఎకరానికి 10 నీలి రంగు, 10 పసుపు రంగు జిగురు అట్టలు పెట్టండి. వేపనూనె లేదా పులిసిన ఇంగువ ద్రావణం పిచికారీ చేయండి.",
+        hi: "मिर्च में पत्तियां ऊपर की ओर मुड़ें तो थ्रिप्स और नीचे की ओर मुड़ें तो माइट्स (माहू) का प्रकोप है। प्रति एकड़ 10 नीले और 10 पीले चिपचिपे ट्रैप लगाएं। नीम तेल या हींग-छाछ के घोल का छिड़काव करें।",
+        en: "In chili, upward leaf curling indicates thrips, while downward curling indicates mites. Install 10 blue and 10 yellow sticky traps per acre, and spray neem oil or fermented asafoetida buttermilk solution.",
+        meaning: "In chili, upward leaf curling indicates thrips, downward indicates mites. Install 10 blue and 10 yellow sticky traps per acre, and spray neem oil."
+      },
+      yellow_leaves: {
+        te: "ఆకులు పసుపుగా మారడాన్ని క్లోరోసిస్ అంటారు. అంటే మొక్కకు సరైన ఆహారం అందకపోవడం. మొదట నేలలో తగినంత తేమ ఉందో లేదో చేత్తో చూడండి. ఆ తర్వాత ఎకరానికి ఘనజీవామృతం లేదా వర్మీకంపోస్ట్ వేయండి. ఇనుము లోపం ఉంటే సూక్ష్మ పోషకాల మిశ్రమం పిచికారీ చేయండి.",
+        hi: "पत्तियों का पीला पड़ना क्लोरोसिस कहलाता है, जिसका मतलब है पोषण की कमी। सबसे पहले हाथ से मिट्टी की नमी जांचें। इसके बाद प्रति एकड़ घनजीवामृत या केंचुआ खाद डालें। यदि नसों के बीच पीलापन है तो सूक्ष्म पोषक तत्व का छिड़काव करें।",
+        en: "Yellowing of leaves is called chlorosis, indicating nutrient deficiency or waterlogged roots. First check soil drainage and moisture. Apply solid jeevamrutham or vermicompost. If interveinal, foliar spray micronutrient chelate.",
+        meaning: "Yellowing of leaves is called chlorosis, meaning plant lacks nutrition. First check soil moisture. Then apply solid jeevamrutham or vermicompost."
+      },
+      rain_warning: {
+        te: "రైతు సోదరులారా, భారీ వర్షం లేదా తుఫాను వచ్చే అవకాశం ఉంది. పొలంలో నీటి నిల్వ లేకుండా కాలువలు తీసి నీటిని వెంటనే బయటకు పంపండి. మోటార్ పంపులు ఆపేయండి మరియు వర్షం తగ్గే వరకు ఎలాంటి ఎరువులు చల్లవద్దు.",
+        hi: "किसान भाइयों, भारी बारिश या आंधी की चेतावनी है। खेत में पानी जमा न होने दें और जल निकासी की नालियां तुरंत खोलें। मोटर पंप बंद कर दें और बारिश थमने तक कोई भी खाद या दवा न छिड़कें।",
+        en: "Farmer friends, heavy rain or severe storm warning is active. Clear drainage canals immediately to avert root submergence. Turn off irrigation motor pumps and postpone fertilizer applications until rain ceases.",
+        meaning: "Farmer brothers, heavy rain or storm is anticipated. Clear drainage channels to prevent water stagnation. Turn off irrigation motor pumps and do not broadcast fertilizers."
+      },
+      power_cut: {
+        te: "కరెంట్ కోత వచ్చే ప్రమాదం ఉంది. మోటార్ నడిచే సమయంలోనే పంటకు అవసరమైనంత తడి ఇవ్వండి. ఎక్కువ నీరు నిల్వ ఉంచితే వేరుకుళ్లు వచ్చే ప్రమాదం ఉంది కాబట్టి తగినంత మాత్రమే నీరు పెట్టండి.",
+        hi: "बिजली कटौती की संभावना है। 3-फेज बिजली रहने के दौरान ही फसल को आवश्यक सिंचाई दें। अधिक पानी भरने से जड़ गलन रोग हो सकता है, इसलिए केवल जरूरत भर पानी दें।",
+        en: "Power cut alert. Irrigate only the necessary volume while 3-phase grid power is active. Avoid waterlogging to prevent root rot disease.",
+        meaning: "Risk of electricity power outage. Irrigate the necessary volume while power is active. Avoid over-watering to prevent root rot."
+      },
+      fertilizer_jeevamrutham: {
+        te: "సేంద్రియ జీవామృతం తయారీకి: 200 లీటర్ల నీటిలో 10 కిలోల దేశీ ఆవు పేడ, 10 లీటర్ల ఆవు మూత్రం, 2 కిలోల బెల్లం, 2 కిలోల శనగపిండి, పిడికెడు పుట్టమన్ను కలిపి రెండు రోజులు నీడలో ఉంచి రోజుకు రెండుసార్లు తిప్పాలి. దీన్ని నీటితో పాటు పొలానికి అందిస్తే పంట బలంగా పెరుగుతుంది.",
+        hi: "प्राकृतिक जीवामृत बनाने की विधि: 200 लीटर पानी में 10 किलो देसी गाय का गोबर, 10 लीटर गोमूत्र, 2 किलो गुड़, 2 किलो बेसन और मुट्ठी भर उपजाऊ मिट्टी मिलाएं। 48 घंटे छाया में रखकर दिन में दो बार लकड़ी से हिलाएं। सिंचाई के पानी के साथ खेत में दें।",
+        en: "To prepare 200L organic Jeevamrutham: mix 10kg cow dung, 10L cow urine, 2kg jaggery, 2kg chickpea flour, and a handful of farm soil in 200L water. Ferment for 2 days in shade, stirring twice daily, and feed via irrigation.",
+        meaning: "For organic jeevamrutham: mix 10kg cow dung, 10L urine, 2kg jaggery, 2kg gram flour, handful of soil in 200L water. Ferment for 2 days and apply with irrigation."
+      },
+      drip_irrigation: {
+        te: "డ్రిప్ ఇరిగేషన్ అంటే బిందు సేద్యం. పైపుల ద్వారా మొక్క మొదట్లోనే చుక్కలు చుక్కలుగా నీరు అందుతుంది. దీనివల్ల 50 శాతం నీరు ఆదా అవుతుంది, కలుపు మొక్కలు పెరగవు మరియు ఎరువులను నేరుగా మొక్క వేర్లకే అందించవచ్చు.",
+        hi: "ड्रिप सिंचाई में पानी पौधों की जड़ों तक बूंद-बूंद करके पहुंचता है। इससे 50% पानी की बचत होती है, खरपतवार नहीं उगते और घुलनशील खाद सीधे जड़ों को मिलती है।",
+        en: "Drip irrigation delivers water drop-by-drop right at each plant base. It saves up to 50% water, prevents weed growth, and enables precise root-zone fertigation.",
+        meaning: "Drip irrigation delivers water drop-by-drop right at the plant base. It saves up to 50% water, prevents weeds, and delivers fertilizers straight to roots."
+      },
+      soil_health: {
+        te: "నేల సారం పెరగడానికి వర్షాకాలం ముందు జనుము లేదా పిల్లిపెసర వంటి పచ్చిరొట్ట పైర్లు వేసి, పూత దశలో ట్రాక్టర్ తో కలియదున్నండి. దీనివల్ల భూమిలో సేంద్రియ కర్బనం పెరిగి పంట దిగుబడి రెట్టింపు అవుతుంది.",
+        hi: "मिट्टी की उर्वरता बढ़ाने के लिए बारिश से पहले सनई या ढैंचा जैसी हरी खाद बोएं और फूल आने पर खेत में हल चलाकर मिला दें। इससे मिट्टी में जैविक कार्बन बढ़ता है और पैदावार दोगुनी होती है।",
+        en: "To enrich soil fertility, sow green manure crops like sunn hemp or dhaincha ahead of rains. Plow them back into soil during flowering stage to boost organic carbon and microflora.",
+        meaning: "To improve soil fertility, sow green manure crops like sunn hemp before monsoons, and plow back into the soil at flowering stage."
+      },
+      community_tractor: {
+        te: "మన సెహావా కమ్యూనిటీ ఫోరంలో మన గ్రామంలోని రైతుల ట్రాక్టర్ అద్దెలు, కూలీల బృందాలు మరియు వ్యవసాయ పరికరాల వివరాలు ఉన్నాయి. మీరు కూడా కింద ఉన్న 'పోస్ట్ లిస్టింగ్' ద్వారా మీ ట్రాక్టర్ లేదా పరికరాన్ని ఉచితంగా నమోదు చేసుకోవచ్చు.",
+        hi: "हमारे सेहावा कम्युनिटी फोरम में गांव के किसानों के ट्रैक्टर किराए, मजदूर समूह और कृषि यंत्रों की जानकारी उपलब्ध है। आप भी नीचे 'पोस्ट लिस्टिंग' पर क्लिक करके अपने उपकरण मुफ्त में दर्ज कर सकते हैं।",
+        en: "Our Sehawa village community hub connects local tractor rentals, custom hiring centers, and harvester crews. You can also post your implements for hire or request labor squads for free.",
+        meaning: "Our Sehawa community forum lists local village tractor rentals, labor sharing squads, and farm implements. You can also post your listing for free."
+      },
+      weed_control: {
+        te: "కలుపు మొక్కలను విత్తనాలు వచ్చే ముందే తొలగించండి. నేల ఆరిపోకుండా వరి పొట్టు లేదా ఎండుగడ్డితో మల్చింగ్ వేస్తే కలుపు మొలకెత్తదు మరియు నేలలో తేమ నిల్వ ఉంటుంది.",
+        hi: "खरपतवारों को बीज बनने से पहले ही निकाल दें। खेत में पुआल या सूखी घास से मल्चिंग करने से खरपतवार नहीं उगते और मिट्टी में नमी बनी रहती है।",
+        en: "Remove weeds before they flower and set seed. Apply organic paddy straw mulching (5-7 cm layer) to suppress weed emergence and conserve soil moisture.",
+        meaning: "Remove weeds before seeds mature. Mulch with straw to suppress weeds and retain soil moisture."
+      },
+      crop_rotation: {
+        te: "ప్రతిసారీ ఒకే పంట వేయకుండా, ధాన్యపు పంటల తర్వాత మినుము, పెసర వంటి పప్పు దినుసులు వేయండి. ఇవి గాలిలోని నత్రజనిని నేలలో స్థిరీకరించి తదుపరి పంటకు సహజ బలాన్నిస్తాయి.",
+        hi: "हर बार एक ही फसल न लगाएं। अनाज की फसल के बाद उड़द, मूंग या चना जैसी दलहनी फसलें लगाएं, जिससे मिट्टी में नाइट्रोजन की मात्रा बढ़ती है और अगली फसल अच्छी होती है।",
+        en: "Follow cereals with nitrogen-fixing pulse legumes like black gram or green gram in 3-tier rotation to break pest lifecycles and replenish soil nitrogen.",
+        meaning: "Rotate heavy cereals with legumes to fix atmospheric nitrogen and nourish subsequent crops."
+      },
+      thanks: {
+        te: "చాలా సంతోషం రైతు సోదరులారా! అన్నదాత సుఖీభవ. మీకు ఎలాంటి సందేహం వచ్చినా ఎప్పుడైనా సెహావాను అడగండి. మీ పంట సమృద్ధిగా పండాలని మనసారా కోరుకుంటున్నాం.",
+        hi: "बहुत खुशी हुई किसान भाइयों! जय जवान, जय किसान। कोई भी सवाल हो तो बेझिझक सेहावा से पूछें। आपकी फसल लहलहाए, यही हमारी कामना है।",
+        en: "You are most welcome, farmer friends! May your harvest be bountiful and prosperous. Feel free to consult Sehawa anytime you need agricultural guidance.",
+        meaning: "Happy to help respected farmers! Ask Sehawa anytime you have doubts. Wishing you a bountiful harvest."
+      }
+    };
+
     class SehawaApp {
       constructor() {
         this.selectedSoil = 'alluvial';
         this.selectedWater = 'high';
         this.selectedVeggie = 'tomato';
         this.currentLanguage = 'en-IN';
+        this.appVoiceLang = 'te-IN';
+        this.lastSpokenText = "";
+        this.lastSpokenLang = 'te-IN';
+        this.cachedVoices = [];
+
+        if (window.speechSynthesis) {
+          this.cachedVoices = window.speechSynthesis.getVoices();
+          window.speechSynthesis.onvoiceschanged = () => {
+            this.cachedVoices = window.speechSynthesis.getVoices();
+          };
+        }
         this.activeTab = 'home';
         this.cameraStream = null;
         this.timerSeconds = 24 * 60 + 48;
@@ -1563,6 +1711,7 @@
         this.renderForum();
         this.calculatePowerCutIrrigation();
         this.initSpeechEngines();
+        this.renderAppQuickPromptChips();
 
         // Check if hash points to a specific tab
         if (window.location.hash) {
@@ -2495,6 +2644,192 @@
         }
       }
 
+      setAppVoiceLang(lang) {
+        this.appVoiceLang = lang;
+        if (this.translatorRecognition) {
+          this.translatorRecognition.lang = lang;
+        }
+
+        const teBtn = document.getElementById('appVoiceLangTeBtn');
+        const hiBtn = document.getElementById('appVoiceLangHiBtn');
+        const enBtn = document.getElementById('appVoiceLangEnBtn');
+        const input = document.getElementById('translatorEnglishInput');
+        const intro = document.getElementById('appVoiceIntroText');
+        const label = document.getElementById('appVoiceInputLabel');
+        const promptLabel = document.getElementById('appQuickPromptLabel');
+        const badge = document.getElementById('appOutputLanguageBadge');
+        const speakBtn = document.getElementById('appSpeakBtnText');
+
+        const activeClass = "px-3.5 py-1 rounded-full text-xs font-bold bg-emerald-500 text-charcoal-950 transition-all shadow-md shadow-emerald-500/20";
+        const inactiveClass = "px-3.5 py-1 rounded-full text-xs font-semibold bg-charcoal-800 text-slate-300 hover:text-white transition-all";
+
+        if (teBtn) teBtn.className = (lang === 'te-IN') ? activeClass : inactiveClass;
+        if (hiBtn) hiBtn.className = (lang === 'hi-IN') ? activeClass : inactiveClass;
+        if (enBtn) enBtn.className = (lang === 'en-IN') ? activeClass : inactiveClass;
+
+        if (lang === 'te-IN') {
+          if (input) input.placeholder = "తెలుగులో మీ ప్రశ్న రాయండి (ఉదా: 'వరి ఆకులు ఎండిపోతున్నాయి', 'వర్షం వస్తే ఏం చేయాలి')...";
+          if (intro) intro.innerHTML = `<strong class="text-emerald-300">Natural Agricultural Speech Synthesis:</strong> మాట్లాడండి లేదా ప్రశ్నను టైప్ చేయండి. సెహావా సులభమైన వాడుక తెలుగులో (సరళమైన వాడుక భాష) సమాధానం అందిస్తుంది మరియు స్పష్టమైన స్వరంతో వినిపిస్తుంది.`;
+          if (label) label.innerText = "వాయిస్ & టెక్స్ట్ ప్రశ్న (Voice & Text Input)";
+          if (promptLabel) promptLabel.innerText = "రైతులు ఎక్కువగా అడిగే ప్రశ్నలు (Quick Prompts):";
+          if (badge) badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span><span>వాడుక తెలుగు సమాధానం (Everyday Spoken Telugu)</span>`;
+          if (speakBtn) speakBtn.innerText = "వినండి (Speak)";
+        } else if (lang === 'hi-IN') {
+          if (input) input.placeholder = "हिन्दी में अपना सवाल लिखें (जैसे: 'धान की पत्तियां सूख रही हैं', 'बारिश आने पर क्या करें')...";
+          if (intro) intro.innerHTML = `<strong class="text-teal-300">Natural Agricultural Speech Synthesis:</strong> बोलिए या प्रश्न लिखें। सेहावा सरल बोलचाल की हिन्दी में उत्तर देता है और स्पष्ट आवाज में सुनाता है।`;
+          if (label) label.innerText = "आवाज और टेक्स्ट इनपुट (Voice & Text Input)";
+          if (promptLabel) promptLabel.innerText = "किसान भाइयों के त्वरित प्रश्न (Quick Prompts):";
+          if (badge) badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-teal-400 animate-ping"></span><span>सरल हिन्दी उत्तर (Everyday Spoken Hindi)</span>`;
+          if (speakBtn) speakBtn.innerText = "सुनें (Speak)";
+        } else {
+          if (input) input.placeholder = "Type your farming query in English (e.g. 'paddy blight', 'heavy rain advice')...";
+          if (intro) intro.innerHTML = `<strong class="text-emerald-300">Natural Agricultural Speech Synthesis:</strong> Speak in English or type below. Sehawa provides calibrated agricultural advice and speaks out in natural voice.`;
+          if (label) label.innerText = "Voice & Text Input";
+          if (promptLabel) promptLabel.innerText = "Quick Agricultural Prompts:";
+          if (badge) badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span><span>English Agronomic Response</span>`;
+          if (speakBtn) speakBtn.innerText = "Listen (Speak)";
+        }
+
+        this.renderAppQuickPromptChips();
+      }
+
+      renderAppQuickPromptChips() {
+        const grid = document.getElementById('appQuickPromptGrid');
+        if (!grid) return;
+
+        const lang = this.appVoiceLang || 'te-IN';
+        const prompts = [
+          {
+            key: 'paddy_blight',
+            icon: '🌾',
+            teTitle: 'వరి ఆకులు ఎండిపోతున్నాయి',
+            teQuery: 'వరి ఆకులు చివరన ఎండిపోతున్నాయి, ఏం చేయాలి?',
+            hiTitle: 'धान का झुलसा रोग',
+            hiQuery: 'धान की पत्तियां सूख रही हैं, क्या उपाय करें?',
+            enTitle: 'Paddy Leaf Blight',
+            enQuery: 'Paddy leaf tips are drying, what should I do?'
+          },
+          {
+            key: 'rain_warning',
+            icon: '🌧️',
+            teTitle: 'భారీ వర్షం హెచ్చరిక',
+            teQuery: 'భారీ వర్షం వస్తే మోటార్ ఆపాలా? నీరు ఎలా తీయాలి?',
+            hiTitle: 'भारी बारिश व तूफान',
+            hiQuery: 'बारिश आने पर मोटर पंप कब बंद करें?',
+            enTitle: 'Heavy Rain Warning',
+            enQuery: 'Is heavy rain coming? Should I stop the pump?'
+          },
+          {
+            key: 'yellow_leaves',
+            icon: '🍂',
+            teTitle: 'ఆకులు పసుపు రంగులోకి మారడం',
+            teQuery: 'పైరులో ఆకులు పసుపుగా మారితే ఏ ఎరువు వేయాలి?',
+            hiTitle: 'पत्तियां पीली पड़ना',
+            hiQuery: 'फसल में पत्तियां पीली पड़ें तो कौन सी खाद डालें?',
+            enTitle: 'Yellowing Leaves',
+            enQuery: 'Why are my tomato leaves turning yellow with brown spots?'
+          },
+          {
+            key: 'cotton_pests',
+            icon: '🐛',
+            teTitle: 'పత్తిలో పురుగులు & ముడుత',
+            teQuery: 'పత్తి ఆకులు ముడుచుకున్నాయి, తెల్లదోమ ఎలా పోతుంది?',
+            hiTitle: 'कपास में सफेद मक्खी',
+            hiQuery: 'कपास में पत्तियां मुड़ने पर कौन सा उपाय करें?',
+            enTitle: 'Cotton Sucking Pests',
+            enQuery: 'Cotton leaves curling with whiteflies and thrips'
+          },
+          {
+            key: 'power_cut',
+            icon: '⚡️',
+            teTitle: 'కరెంట్ కోత & మోటార్ సమయం',
+            teQuery: 'కరెంట్ పోయే ముందు ఎంత సేపు నీరు పెట్టాలి?',
+            hiTitle: 'बिजली कटौती व पंप',
+            hiQuery: 'बिजली जाने से पहले कितना पानी देना चाहिए?',
+            enTitle: 'Grid Power & Pump Run',
+            enQuery: 'Power cut expected. Run water pumps now.'
+          },
+          {
+            key: 'fertilizer_jeevamrutham',
+            icon: '🌱',
+            teTitle: 'సేంద్రియ జీవామృతం తయారీ',
+            teQuery: 'భూమి బలం పెరగడానికి జీవామృతం ఎలా చేయాలి?',
+            hiTitle: 'प्राकृतिक जीवामृत विधि',
+            hiQuery: 'खेत की उपजाऊ शक्ति बढ़ाने जीवामृत कैसे बनाएं?',
+            enTitle: 'Organic Jeevamrutham',
+            enQuery: 'How to prepare 200L organic Jeevamrutham?'
+          }
+        ];
+
+        grid.innerHTML = prompts.map(p => {
+          let title = p.teTitle;
+          let query = p.teQuery;
+          if (lang === 'hi-IN') {
+            title = p.hiTitle;
+            query = p.hiQuery;
+          } else if (lang === 'en-IN') {
+            title = p.enTitle;
+            query = p.enQuery;
+          }
+          return `
+            <button onclick="window.sehawaApp.setAndTranslatePrompt('${query.replace(/'/g, "\\'")}')" class="p-2.5 rounded-xl bg-charcoal-950 hover:bg-emerald-950/60 text-slate-300 text-left transition-all">
+              ${p.icon} "${title}"
+            </button>
+          `;
+        }).join('');
+      }
+
+      getVoiceForLang(langCode) {
+        const voices = (this.cachedVoices && this.cachedVoices.length > 0) 
+          ? this.cachedVoices 
+          : (window.speechSynthesis ? window.speechSynthesis.getVoices() : []);
+        if (!voices || voices.length === 0) return null;
+
+        if (langCode.startsWith('te')) {
+          const te = voices.find(v => 
+            v.lang === 'te-IN' || 
+            v.lang === 'te_IN' || 
+            v.lang.startsWith('te') || 
+            (v.name && v.name.toLowerCase().includes('telugu')) ||
+            (v.name && v.name.includes('తెలుగు'))
+          );
+          if (te) return te;
+
+          const indic = voices.find(v => 
+            v.lang === 'hi-IN' || 
+            v.lang.startsWith('hi') || 
+            (v.name && v.name.toLowerCase().includes('hindi'))
+          );
+          if (indic) return indic;
+        }
+
+        if (langCode.startsWith('hi')) {
+          const hi = voices.find(v => 
+            v.lang === 'hi-IN' || 
+            v.lang === 'hi_IN' || 
+            v.lang.startsWith('hi') || 
+            (v.name && v.name.toLowerCase().includes('hindi')) ||
+            (v.name && v.name.includes('हिन्दी'))
+          );
+          if (hi) return hi;
+        }
+
+        if (langCode.startsWith('en')) {
+          const enIn = voices.find(v => v.lang === 'en-IN' || v.lang === 'en_IN');
+          if (enIn) return enIn;
+
+          const enNat = voices.find(v => 
+            v.lang.startsWith('en') && 
+            (v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('Samantha'))
+          );
+          if (enNat) return enNat;
+
+          return voices.find(v => v.lang.startsWith('en')) || null;
+        }
+
+        return null;
+      }
+
       toggleTranslatorMic() {
         const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (!SpeechRec) {
@@ -2505,33 +2840,46 @@
         if (this.isTranslatorListening) {
           if (this.translatorRecognition) this.translatorRecognition.stop();
           this.isTranslatorListening = false;
-          document.getElementById('translatorMicLabel').innerText = "Tap to Speak English";
+          const lbl = document.getElementById('translatorMicLabel');
+          if (lbl) lbl.innerText = "Tap to Speak";
         } else {
           this.translatorRecognition = new SpeechRec();
-          this.translatorRecognition.lang = this.translatorLang || 'te-IN';
+          this.translatorRecognition.lang = this.appVoiceLang || 'te-IN';
           this.translatorRecognition.interimResults = false;
 
           this.translatorRecognition.onstart = () => {
             this.isTranslatorListening = true;
-            document.getElementById('translatorMicLabel').innerText = (this.translatorLang === 'en-IN') ? "Listening to English..." : "తెలుగులో మాట్లాడుతున్నారు...";
-            document.getElementById('translatorVoiceFeedback').innerText = "🔴 Listening... Speak clearly into your mic";
+            const lbl = document.getElementById('translatorMicLabel');
+            if (lbl) {
+              lbl.innerText = (this.appVoiceLang === 'te-IN') 
+                ? "తెలుగులో మాట్లాడుతున్నారు..." 
+                : (this.appVoiceLang === 'hi-IN')
+                ? "हिन्दी में सुन रहे हैं..."
+                : "Listening to English...";
+            }
+            const fb = document.getElementById('translatorVoiceFeedback');
+            if (fb) fb.innerText = "🔴 Listening... Speak clearly into your mic";
           };
 
           this.translatorRecognition.onresult = (e) => {
             const transcript = e.results[0][0].transcript;
-            document.getElementById('translatorEnglishInput').value = transcript;
+            const inp = document.getElementById('translatorEnglishInput');
+            if (inp) inp.value = transcript;
             this.executeTranslation();
           };
 
           this.translatorRecognition.onerror = () => {
             this.isTranslatorListening = false;
-            document.getElementById('translatorMicLabel').innerText = "Tap to Speak";
-            document.getElementById('translatorVoiceFeedback').innerText = "Mic stopped or permission needed.";
+            const lbl = document.getElementById('translatorMicLabel');
+            if (lbl) lbl.innerText = "Tap to Speak";
+            const fb = document.getElementById('translatorVoiceFeedback');
+            if (fb) fb.innerText = "Mic stopped or permission needed.";
           };
 
           this.translatorRecognition.onend = () => {
             this.isTranslatorListening = false;
-            document.getElementById('translatorMicLabel').innerText = "Tap to Speak";
+            const lbl = document.getElementById('translatorMicLabel');
+            if (lbl) lbl.innerText = "Tap to Speak";
           };
 
           try {
@@ -2543,71 +2891,145 @@
       }
 
       setAndTranslatePrompt(text) {
-        document.getElementById('translatorEnglishInput').value = text;
+        const inp = document.getElementById('translatorEnglishInput');
+        if (inp) inp.value = text;
         this.executeTranslation();
       }
 
       executeTranslation() {
-        const input = document.getElementById('translatorEnglishInput').value.trim();
+        const inputEl = document.getElementById('translatorEnglishInput');
+        const input = inputEl ? inputEl.value.trim() : "";
         if (!input) return;
 
-        const isTelugu = /[\u0C00-\u0C7F]/.test(input);
-        let teluguResult = "";
-        let meaningResult = "";
+        const isTe = /[\u0C00-\u0C7F]/.test(input);
+        const isHi = /[\u0900-\u097F]/.test(input);
+        const lower = input.toLowerCase();
 
-        const matched = TELUGU_CONVERSATIONAL_MAP.find(m => m.match.test(input));
-        if (matched) {
-          teluguResult = matched.telugu;
-          meaningResult = matched.meaning;
-        } else {
-          let lower = input.toLowerCase();
-          let prefix = "రైతు సోదరులారా, ";
-          let action = "పంటను జాగ్రత్తగా గమనించి, తగిన నిర్ణయం తీసుకోండి.";
+        let targetLang = this.appVoiceLang || 'te-IN';
+        if (isTe) targetLang = 'te-IN';
+        else if (isHi) targetLang = 'hi-IN';
+        else if (this.appVoiceLang === 'en-IN' || (!isTe && !isHi && this.appVoiceLang !== 'te-IN' && this.appVoiceLang !== 'hi-IN')) {
+          targetLang = 'en-IN';
+        }
 
-          if (lower.includes("rain") || lower.includes("storm") || lower.includes("weather") || lower.includes("వర్షం")) {
-            action = "వాతావరణం మారే అవకాశం ఉంది. పొలంలో నీటి నిల్వ లేకుండా చూసుకోండి మరియు మోటార్ ఆపండి.";
-          } else if (lower.includes("yellow") || lower.includes("spot") || lower.includes("leaf") || lower.includes("పసుపు") || lower.includes("ఆకు")) {
-            action = "ఆకులపై మచ్చలు గమనిస్తే వెంటనే వేపనూనె లేదా తగిన మందు పిచికారీ చేయండి.";
-          } else if (lower.includes("water") || lower.includes("irrigate") || lower.includes("pump") || lower.includes("నీరు") || lower.includes("కరెంట్")) {
-            action = "పంటకు అవసరమైనంత మాత్రమే నీరు పెట్టండి. ఎక్కువైతే వేరు కుళ్లు తెగులు వస్తుంది.";
-          } else if (lower.includes("pest") || lower.includes("insect") || lower.includes("bug") || lower.includes("పురుగు")) {
-            action = "పురుగులు ఆశించినట్లు కనిపిస్తే సహజ వేప కషాయం కొట్టి మిత్ర పురుగులను కాపాడుకోండి.";
+        let matched = null;
+
+        // Trilingual lookup
+        if (lower.includes('వరి') || lower.includes('rice') || lower.includes('paddy') || lower.includes('ధాన్యం') || lower.includes('धान')) {
+          if (lower.includes('అగ్గి') || lower.includes('blast') || lower.includes('ब्लास्ट') || lower.includes('अग्नि')) {
+            matched = AGRIBOT_TRILINGUAL_MAP.paddy_blast;
+          } else {
+            matched = AGRIBOT_TRILINGUAL_MAP.paddy_blight;
           }
-          teluguResult = `${prefix}${action}`;
-          meaningResult = `Direct conversational translation in natural everyday Telugu: "${action}"`;
-        }
-
-        document.getElementById('teluguTranslatedOutput').innerText = teluguResult;
-        
-        // Strict operational mandate: Never output text in English if the input prompt was in Telugu
-        const meaningEl = document.getElementById('teluguMeaningExplanation');
-        if (isTelugu) {
-          meaningEl.innerText = "వాడుక భాషలో స్పష్టమైన సలహా • Clear advice in spoken everyday Telugu";
-          meaningEl.className = "text-xs text-emerald-400 mt-2 font-mono";
+        } else if (lower.includes('పత్తి') || lower.includes('cotton') || lower.includes('कपास')) {
+          if (lower.includes('గులాబీ') || lower.includes('bollworm') || lower.includes('सुंडी') || lower.includes('गुलाबी')) {
+            matched = AGRIBOT_TRILINGUAL_MAP.cotton_pink_bollworm;
+          } else {
+            matched = AGRIBOT_TRILINGUAL_MAP.cotton_pests;
+          }
+        } else if (lower.includes('టమాట') || lower.includes('tomato') || lower.includes('टमाटर')) {
+          matched = AGRIBOT_TRILINGUAL_MAP.tomato_blight;
+        } else if (lower.includes('మిరప') || lower.includes('chili') || lower.includes('chilli') || lower.includes('మిర్చి') || lower.includes('मिर्च')) {
+          matched = AGRIBOT_TRILINGUAL_MAP.chili_curling;
+        } else if (lower.includes('వర్షం') || lower.includes('తుఫాను') || lower.includes('rain') || lower.includes('storm') || lower.includes('weather') || lower.includes('monsoon') || lower.includes('बारिश') || lower.includes('तूफान') || lower.includes('मौसम')) {
+          matched = AGRIBOT_TRILINGUAL_MAP.rain_warning;
+        } else if (lower.includes('పసుపు') || lower.includes('yellow') || lower.includes('క్లోరోసిస్') || lower.includes('chlorosis') || lower.includes('pale') || lower.includes('पीली') || lower.includes('पीला')) {
+          matched = AGRIBOT_TRILINGUAL_MAP.yellow_leaves;
+        } else if (lower.includes('కరెంట్') || lower.includes('మోటార్') || lower.includes('విద్యుత్') || lower.includes('power') || lower.includes('pump') || lower.includes('grid') || lower.includes('बिजली') || lower.includes('मोटर') || lower.includes('पंप')) {
+          matched = AGRIBOT_TRILINGUAL_MAP.power_cut;
+        } else if (lower.includes('జీవామృతం') || lower.includes('ఎరువు') || lower.includes('manure') || lower.includes('fertilizer') || lower.includes('urea') || lower.includes('जीवामृत') || lower.includes('खाद') || lower.includes('गोबर')) {
+          matched = AGRIBOT_TRILINGUAL_MAP.fertilizer_jeevamrutham;
+        } else if (lower.includes('డ్రిప్') || lower.includes('బిందు') || lower.includes('drip') || lower.includes('water') || lower.includes('irrigation') || lower.includes('ड्रिप') || lower.includes('सिंचाई') || lower.includes('टपक')) {
+          matched = AGRIBOT_TRILINGUAL_MAP.drip_irrigation;
+        } else if (lower.includes('నేల') || lower.includes('భూమి') || lower.includes('soil') || lower.includes('సారం') || lower.includes('పచ్చిరొట్ట') || lower.includes('मिट्टी') || lower.includes('उर्वरता')) {
+          matched = AGRIBOT_TRILINGUAL_MAP.soil_health;
+        } else if (lower.includes('ట్రాక్టర్') || lower.includes('కూలీ') || lower.includes('పరికరాలు') || lower.includes('tractor') || lower.includes('community') || lower.includes('forum') || lower.includes('ट्रैक्टर') || lower.includes('किराया')) {
+          matched = AGRIBOT_TRILINGUAL_MAP.community_tractor;
+        } else if (lower.includes('కలుపు') || lower.includes('మల్చింగ్') || lower.includes('weed') || lower.includes('mulch') || lower.includes('खरपतवार')) {
+          matched = AGRIBOT_TRILINGUAL_MAP.weed_control;
+        } else if (lower.includes('పంట మార్పిడి') || lower.includes('rotation') || lower.includes('फसल चक्र')) {
+          matched = AGRIBOT_TRILINGUAL_MAP.crop_rotation;
+        } else if (lower.includes('నమస్కారం') || lower.includes('నమస్తే') || lower.includes('బాగున్నారా') || lower.includes('hello') || lower.includes('hi') || lower.includes('greetings') || lower.includes('नमस्ते') || lower.includes('प्रणाम')) {
+          matched = AGRIBOT_TRILINGUAL_MAP.greetings;
+        } else if (lower.includes('ధన్యవాదాలు') || lower.includes('సంతోషం') || lower.includes('thanks') || lower.includes('thank you') || lower.includes('धन्यवाद') || lower.includes('शुक्रिया')) {
+          matched = AGRIBOT_TRILINGUAL_MAP.thanks;
         } else {
-          meaningEl.innerText = `Exact Meaning: ${meaningResult}`;
-          meaningEl.className = "text-xs text-slate-400 mt-2 font-mono";
+          matched = {
+            te: "నమస్కారం రైతు సోదరులారా! మీరు అడిగిన ప్రశ్న నేను గమనించాను. మీ పంట పేరు, ఆకుల లక్షణాలు కాస్త వివరంగా చెబితే సరైన సహజ పరిష్కారం అందిస్తాను.",
+            hi: "नमस्ते किसान भाइयों! आपकी बात मैंने नोट कर ली है। कृपया फसल का नाम और पत्तियों के लक्षण बताएं ताकि सटीक देसी उपाय दे सकूं।",
+            en: "Greetings farmer friends! I have noted your inquiry. Please tell me your crop name and symptoms so I can provide calibrated agronomic advice."
+          };
         }
 
-        this.speakCurrentTeluguTranslation();
+        const outEl = document.getElementById('teluguTranslatedOutput');
+        const meanEl = document.getElementById('teluguMeaningExplanation');
+        const badge = document.getElementById('appOutputLanguageBadge');
+
+        let textToDisplay = matched.te;
+        let subText = "వాడుక భాషలో స్పష్టమైన సలహా • Clear advice in spoken everyday language";
+
+        if (targetLang === 'te-IN') {
+          textToDisplay = matched.te;
+          subText = "రైతు సోదరుల కోసం సరళమైన వాడుక భాషలో సలహా (Everyday Spoken Telugu)";
+          if (badge) badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span><span>వాడుక తెలుగు సమాధానం (Everyday Spoken Telugu)</span>`;
+        } else if (targetLang === 'hi-IN') {
+          textToDisplay = matched.hi;
+          subText = "किसान भाइयों के लिए सरल बोलचाल की भाषा में सलाह (Everyday Spoken Hindi)";
+          if (badge) badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-teal-400 animate-ping"></span><span>सरल हिन्दी उत्तर (Everyday Spoken Hindi)</span>`;
+        } else {
+          textToDisplay = matched.en;
+          subText = `Telugu Translation: "${matched.te}"`;
+          if (badge) badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span><span>English Agronomic Response</span>`;
+        }
+
+        if (outEl) outEl.innerText = textToDisplay;
+        if (meanEl) meanEl.innerText = subText;
+
+        this.lastSpokenText = textToDisplay;
+        this.lastSpokenLang = targetLang;
+
+        const meta = document.getElementById('appVoiceModelMeta');
+        if (meta) {
+          const rateVal = (targetLang === 'te-IN') ? '0.90' : (targetLang === 'hi-IN') ? '0.92' : '0.95';
+          meta.innerHTML = `Language: <strong>${targetLang}</strong> • TTS Rate: <strong>${rateVal}</strong>`;
+        }
+
+        this.speakCurrentTranslation();
       }
 
-      speakCurrentTeluguTranslation() {
-        const text = document.getElementById('teluguTranslatedOutput').innerText;
+      speakCurrentTranslation() {
+        const text = this.lastSpokenText || document.getElementById('teluguTranslatedOutput').innerText;
+        const lang = this.lastSpokenLang || this.appVoiceLang || 'te-IN';
         if (!text) return;
 
         if ('speechSynthesis' in window) {
           window.speechSynthesis.cancel();
           const utterance = new SpeechSynthesisUtterance(text);
-          utterance.lang = 'te-IN';
-          utterance.rate = 0.92; // Natural fluid pacing in 0.90 to 0.95 range
-          utterance.pitch = 1.0;
-          
+          utterance.lang = lang;
+
+          const voice = this.getVoiceForLang(lang);
+          if (voice) utterance.voice = voice;
+
+          if (lang.startsWith('te')) {
+            utterance.rate = 0.90; // Natural, deliberate, warm rural conversational pacing
+            utterance.pitch = 1.0;
+          } else if (lang.startsWith('hi')) {
+            utterance.rate = 0.92;
+            utterance.pitch = 1.0;
+          } else {
+            utterance.rate = 0.95;
+            utterance.pitch = 1.0;
+          }
+
           const wave = document.getElementById('audioWaveBars');
           if (wave) wave.classList.remove('opacity-30');
           utterance.onend = () => {
             if (wave) wave.classList.add('opacity-30');
           };
+          utterance.onerror = () => {
+            if (wave) wave.classList.add('opacity-30');
+          };
+
           window.speechSynthesis.speak(utterance);
         }
       }
