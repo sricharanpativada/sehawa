@@ -546,10 +546,69 @@
                 </div>
               </div>
 
+              <!-- AI Leaf Image Generator (New Plant Diseases Dataset - 38 Classes) -->
+              <div class="p-3.5 rounded-xl bg-charcoal-900 border border-emerald-500/30 space-y-2.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-mono font-bold text-emerald-300 flex items-center gap-1.5">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-400"></i>
+                    <span>AI Leaf Generator (Plant Diseases Dataset)</span>
+                  </span>
+                  <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-charcoal-950 text-emerald-400 border border-emerald-500/20">
+                    38 Classes
+                  </span>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <label class="text-[10px] font-mono text-slate-400 block mb-1">Crop Variety:</label>
+                    <select id="datasetCropSelect" onchange="window.sehawaApp.updateDatasetDiseaseOptions()" class="w-full bg-charcoal-950 border border-white/10 rounded-lg px-2 py-1.5 text-xs text-white focus:outline-none focus:border-emerald-500 font-sans">
+                      <option value="tomato">Tomato (Solanum lycopersicum)</option>
+                      <option value="potato">Potato (Solanum tuberosum)</option>
+                      <option value="pepper">Bell Pepper (Capsicum annuum)</option>
+                      <option value="corn">Corn / Maize (Zea mays)</option>
+                      <option value="apple">Apple (Malus domestica)</option>
+                      <option value="grape">Grape (Vitis vinifera)</option>
+                      <option value="peach">Peach (Prunus persica)</option>
+                      <option value="cherry">Cherry (Prunus avium)</option>
+                      <option value="strawberry">Strawberry (Fragaria ananassa)</option>
+                      <option value="citrus">Citrus / Orange (Citrus sinensis)</option>
+                      <option value="rice">Rice / Paddy (Oryza sativa)</option>
+                      <option value="cotton">Cotton (Gossypium hirsutum)</option>
+                      <option value="wheat">Wheat (Triticum aestivum)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="text-[10px] font-mono text-slate-400 block mb-1">Pathology / Health:</label>
+                    <select id="datasetDiseaseSelect" class="w-full bg-charcoal-950 border border-white/10 rounded-lg px-2 py-1.5 text-xs text-white focus:outline-none focus:border-emerald-500 font-sans">
+                      <option value="early_blight">Early Blight (Alternaria solani)</option>
+                      <option value="late_blight">Late Blight (Phytophthora)</option>
+                      <option value="bacterial_spot">Bacterial Spot (Xanthomonas)</option>
+                      <option value="leaf_mold">Leaf Mold (Passalora)</option>
+                      <option value="septoria">Septoria Leaf Spot</option>
+                      <option value="target_spot">Target Spot (Corynespora)</option>
+                      <option value="yellow_leaf_curl">Yellow Leaf Curl Virus</option>
+                      <option value="mosaic_virus">Mosaic Virus (ToMV)</option>
+                      <option value="healthy">Healthy Vigorous Foliage</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-2 pt-1">
+                  <button onclick="window.sehawaApp.generateSelectedDatasetLeaf()" class="flex-1 px-3 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-charcoal-950 font-bold text-xs transition-all flex items-center justify-center gap-1.5 shadow-md">
+                    <i data-lucide="wand-2" class="w-3.5 h-3.5"></i>
+                    <span>Generate & Analyze Leaf Image</span>
+                  </button>
+                  <button onclick="window.sehawaApp.toggleLesionHeatmap()" id="heatmapToggleBtn" class="px-3 py-2 rounded-xl bg-charcoal-800 hover:bg-charcoal-700 text-slate-300 hover:text-white border border-white/10 text-xs font-semibold transition-all flex items-center gap-1.5" title="Toggle Lesion Detection Heatmap">
+                    <i data-lucide="eye" class="w-3.5 h-3.5 text-amber-400"></i>
+                    <span>Heatmap</span>
+                  </button>
+                </div>
+              </div>
+
             </div>
 
-            <!-- Right: Hierarchical Diagnostic Triage Results -->
-            <div class="space-y-4 bg-charcoal-950/60 rounded-2xl p-4 border border-white/10 flex flex-col justify-between">
+            <!-- Right: Hierarchical Diagnostic Triage Results & Color Spectrum -->
+            <div class="space-y-3 bg-charcoal-950/60 rounded-2xl p-4 border border-white/10 flex flex-col justify-between">
               
               <div class="space-y-3">
                 <div class="flex items-center justify-between">
@@ -563,35 +622,61 @@
                 <div class="p-3 rounded-xl bg-charcoal-900 border border-emerald-500/20 space-y-1">
                   <span class="text-[10px] font-mono text-slate-400 uppercase block">Primary Identification</span>
                   <div id="agriBotPrimaryId" class="text-base font-bold text-white flex items-center gap-2">
-                    <span>Select or upload a specimen</span>
+                    <span>Select or generate a specimen</span>
                   </div>
                   <p id="agriBotBotanicalDetails" class="text-xs text-slate-300 leading-relaxed"></p>
                 </div>
 
+                <!-- Leaf Color & Pathology Spectrum Analysis -->
+                <div class="p-3 rounded-xl bg-charcoal-900 border border-white/5 space-y-2 text-xs">
+                  <div class="flex items-center justify-between">
+                    <span class="font-bold text-slate-200 flex items-center gap-1.5">
+                      <i data-lucide="palette" class="w-3.5 h-3.5 text-emerald-400"></i>
+                      <span>Leaf Color & Pathology Spectrum</span>
+                    </span>
+                    <span id="leafTypePill" class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/20">
+                      Odd-Pinnate Eudicot
+                    </span>
+                  </div>
+
+                  <!-- Color Bar Spectrum -->
+                  <div class="w-full h-2.5 rounded-full bg-charcoal-950 overflow-hidden flex shadow-inner">
+                    <div id="spectrumGreenBar" style="width: 70%" class="h-full bg-emerald-500 transition-all duration-300" title="Healthy Chlorophyll"></div>
+                    <div id="spectrumYellowBar" style="width: 18%" class="h-full bg-amber-400 transition-all duration-300" title="Chlorosis / Yellowing"></div>
+                    <div id="spectrumNecroticBar" style="width: 12%" class="h-full bg-rose-600 transition-all duration-300" title="Necrotic Lesion / Blight"></div>
+                  </div>
+
+                  <div class="flex items-center justify-between text-[10px] font-mono text-slate-400 pt-0.5">
+                    <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Green: <strong id="valGreenPct" class="text-white">70%</strong></span>
+                    <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400"></span> Yellow: <strong id="valYellowPct" class="text-amber-300">18%</strong></span>
+                    <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-rose-600"></span> Blight: <strong id="valNecroticPct" class="text-rose-400">12%</strong></span>
+                  </div>
+                </div>
+
                 <!-- Structured Visual Triage Hierarchy Breakdown -->
-                <div class="space-y-2 text-xs">
-                  <div class="p-2.5 rounded-lg bg-charcoal-900/80 border border-white/5 flex items-start gap-2">
-                    <span class="text-emerald-400 font-mono text-[11px] font-bold shrink-0">1. Habit & Phyllotaxy:</span>
-                    <span id="triagePhyllotaxy" class="text-slate-300">--</span>
+                <div class="space-y-1.5 text-xs">
+                  <div class="p-2 rounded-lg bg-charcoal-900/80 border border-white/5 flex items-start gap-2">
+                    <span class="text-emerald-400 font-mono text-[10px] font-bold shrink-0">1. Habit & Phyllotaxy:</span>
+                    <span id="triagePhyllotaxy" class="text-slate-300 text-[11px]">--</span>
                   </div>
-                  <div class="p-2.5 rounded-lg bg-charcoal-900/80 border border-white/5 flex items-start gap-2">
-                    <span class="text-emerald-400 font-mono text-[11px] font-bold shrink-0">2. Leaf Architecture:</span>
-                    <span id="triageArchitecture" class="text-slate-300">--</span>
+                  <div class="p-2 rounded-lg bg-charcoal-900/80 border border-white/5 flex items-start gap-2">
+                    <span class="text-emerald-400 font-mono text-[10px] font-bold shrink-0">2. Leaf Architecture:</span>
+                    <span id="triageArchitecture" class="text-slate-300 text-[11px]">--</span>
                   </div>
-                  <div class="p-2.5 rounded-lg bg-charcoal-900/80 border border-white/5 flex items-start gap-2">
-                    <span class="text-emerald-400 font-mono text-[11px] font-bold shrink-0">3. Diagnostic Markers:</span>
-                    <span id="triageMarkers" class="text-slate-300">--</span>
+                  <div class="p-2 rounded-lg bg-charcoal-900/80 border border-white/5 flex items-start gap-2">
+                    <span class="text-emerald-400 font-mono text-[10px] font-bold shrink-0">3. Diagnostic Markers:</span>
+                    <span id="triageMarkers" class="text-slate-300 text-[11px]">--</span>
                   </div>
-                  <div class="p-2.5 rounded-lg bg-charcoal-900/80 border border-white/5 flex items-start gap-2">
-                    <span class="text-rose-400 font-mono text-[11px] font-bold shrink-0">4. Pathology & Stress:</span>
-                    <span id="triagePathology" class="text-slate-300">--</span>
+                  <div class="p-2 rounded-lg bg-charcoal-900/80 border border-white/5 flex items-start gap-2">
+                    <span class="text-rose-400 font-mono text-[10px] font-bold shrink-0">4. Pathology & Stress:</span>
+                    <span id="triagePathology" class="text-slate-300 text-[11px]">--</span>
                   </div>
                 </div>
 
                 <!-- Differential Diagnosis & Lookalikes -->
-                <div class="p-3 rounded-xl bg-charcoal-900/70 border border-white/5 space-y-1.5 text-xs">
-                  <span class="text-[10px] font-mono text-amber-400 uppercase font-bold block">Differential Lookalikes (To Disambiguate):</span>
-                  <div id="agriBotDifferentials" class="text-slate-300 text-xs space-y-1">
+                <div class="p-2.5 rounded-xl bg-charcoal-900/70 border border-white/5 space-y-1 text-xs">
+                  <span class="text-[10px] font-mono text-amber-400 uppercase font-bold block">Differential Lookalikes:</span>
+                  <div id="agriBotDifferentials" class="text-slate-300 text-[11px] space-y-0.5">
                     <span class="text-slate-500">None evaluated yet.</span>
                   </div>
                 </div>
@@ -600,7 +685,7 @@
               <!-- Trigger Diagnosis Button -->
               <button 
                 onclick="window.sehawaApp.executeAgriBotTriage()" 
-                class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-charcoal-950 font-bold text-sm transition-all shadow-lg shadow-emerald-500/20"
+                class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-charcoal-950 font-bold text-xs transition-all shadow-lg shadow-emerald-500/20"
               >
                 <i data-lucide="scan" class="w-4 h-4"></i>
                 <span>Run Hierarchical Triage Engine</span>
@@ -608,6 +693,95 @@
 
             </div>
 
+          </div>
+
+          <!-- Interactive Visual Leaf Q&A Assistant ("Ask the Leaf AI") -->
+          <div class="p-5 rounded-2xl bg-charcoal-950/90 border border-emerald-500/30 space-y-4 shadow-xl">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-xl bg-emerald-950 text-emerald-400 border border-emerald-500/30 flex items-center justify-center">
+                  <i data-lucide="bot" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h4 class="text-sm font-bold text-white flex items-center gap-2">
+                    <span>Ask AgriBot About This Leaf</span>
+                    <span class="text-[9px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/20 uppercase">Visual Q&A AI</span>
+                  </h4>
+                  <p class="text-[11px] text-slate-400">Ask questions about leaf type, color, disease cause, contagiousness, or treatment.</p>
+                </div>
+              </div>
+
+              <span id="qaVoiceLangBadge" class="text-[10px] font-mono px-2.5 py-1 rounded-full bg-charcoal-900 text-emerald-400 border border-emerald-500/20 flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>Spoken Voice Active</span>
+              </span>
+            </div>
+
+            <!-- Quick Diagnostic Questions -->
+            <div class="space-y-1.5">
+              <span class="text-[10px] font-mono text-slate-400 uppercase">Tap a question:</span>
+              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-1.5 text-xs">
+                <button onclick="window.sehawaApp.askLeafQuestion('What is the leaf type and morphology?')" class="p-2.5 rounded-xl bg-charcoal-900 hover:bg-emerald-950 border border-white/5 text-slate-300 hover:text-white text-left transition-all">
+                  🍃 "What is the leaf type & shape?"
+                </button>
+                <button onclick="window.sehawaApp.askLeafQuestion('Analyze leaf color and stress signs')" class="p-2.5 rounded-xl bg-charcoal-900 hover:bg-emerald-950 border border-white/5 text-slate-300 hover:text-white text-left transition-all">
+                  🎨 "What do leaf colors indicate?"
+                </button>
+                <button onclick="window.sehawaApp.askLeafQuestion('What disease is diagnosed on this leaf?')" class="p-2.5 rounded-xl bg-charcoal-900 hover:bg-emerald-950 border border-white/5 text-slate-300 hover:text-white text-left transition-all">
+                  🔬 "What is the exact diagnosis?"
+                </button>
+                <button onclick="window.sehawaApp.askLeafQuestion('What organic or biological treatment to use?')" class="p-2.5 rounded-xl bg-charcoal-900 hover:bg-emerald-950 border border-white/5 text-slate-300 hover:text-white text-left transition-all">
+                  🌱 "What biological cure to apply?"
+                </button>
+                <button onclick="window.sehawaApp.askLeafQuestion('Is this disease contagious to other plants?')" class="p-2.5 rounded-xl bg-charcoal-900 hover:bg-emerald-950 border border-white/5 text-slate-300 hover:text-white text-left transition-all">
+                  ⚠️ "Is it contagious in field?"
+                </button>
+                <button onclick="window.sehawaApp.askLeafQuestion('How to prevent this in the next season?')" class="p-2.5 rounded-xl bg-charcoal-900 hover:bg-emerald-950 border border-white/5 text-slate-300 hover:text-white text-left transition-all">
+                  🔄 "Crop rotation & prevention"
+                </button>
+              </div>
+            </div>
+
+            <!-- Custom Question Input -->
+            <div class="flex items-center gap-2">
+              <input 
+                type="text" 
+                id="leafQaInput" 
+                placeholder="Ask any question about this leaf image (e.g. 'Why is it yellow?', 'How to cure?')..." 
+                onkeydown="if(event.key==='Enter') window.sehawaApp.submitLeafQuestion()"
+                class="flex-1 bg-charcoal-900 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500 placeholder-slate-500 font-sans"
+              />
+              <button 
+                onclick="window.sehawaApp.submitLeafQuestion()" 
+                class="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-charcoal-950 font-bold text-xs transition-all flex items-center gap-1.5 shadow-md"
+              >
+                <span>Ask AI</span>
+              </button>
+              <button 
+                id="leafQaMicBtn" 
+                onclick="window.sehawaApp.toggleLeafQaMic()" 
+                class="p-2.5 rounded-xl bg-charcoal-800 hover:bg-emerald-950 text-slate-300 hover:text-emerald-400 border border-white/10 transition-all"
+                title="Ask Question via Microphone"
+              >
+                <i data-lucide="mic" class="w-4 h-4"></i>
+              </button>
+            </div>
+
+            <!-- Q&A Answer Display -->
+            <div id="leafQaAnswerCard" class="p-4 rounded-xl bg-charcoal-900 border border-emerald-500/20 space-y-2">
+              <div class="flex items-center justify-between">
+                <span id="leafQaQuestionLabel" class="text-xs font-mono font-semibold text-emerald-400">
+                  Q: "What is this leaf and what disease does it have?"
+                </span>
+                <button onclick="window.sehawaApp.speakCurrentLeafQaAnswer()" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-950 hover:bg-emerald-900 text-emerald-300 border border-emerald-500/30 text-xs font-semibold transition-all">
+                  <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
+                  <span>Speak Answer</span>
+                </button>
+              </div>
+              <p id="leafQaAnswerText" class="text-sm text-slate-100 leading-relaxed font-sans">
+                Select or generate a leaf specimen. AgriBot evaluates leaf morphology, chlorophyll vs chlorosis ratios, and disease lesions in real time and speaks the answer in your chosen language.
+              </p>
+            </div>
           </div>
 
           <!-- IPM, Chemical Safety & Missing Context Panel (Operational Principles 3, 4, 5) -->
@@ -957,7 +1131,8 @@
                 biological: "Apply Azospirillum bio-fertilizer and maintain Azolla water fern carpet for natural nitrogen fixation.",
                 chemical: "None required. Maintain balanced N-P-K (120:60:40 kg/ha).",
                 differentials: ["Normal leaf senescence of oldest lower blade (not disease)", "Mild cold water yellowing"],
-                teluguAdvice: "రైతు సోదరులారా, మీ వరి పైరు చాలా ఆరోగ్యంగా, ఏపుగా ఎదుగుతోంది. పిలకలు బాగా వస్తున్నాయి. పొలంలో రెండు మూడు అంగుళాల మేర తేలికపాటి నీరు ఉండేలా చూసుకోండి. ఎక్కువ నీరు నిల్వ ఉంచకండి."
+                teluguAdvice: "రైతు సోదరులారా, మీ వరి పైరు చాలా ఆరోగ్యంగా, ఏపుగా ఎదుగుతోంది. పిలకలు బాగా వస్తున్నాయి. పొలంలో రెండు మూడు అంగుళాల మేర తేలికపాటి నీరు ఉండేలా చూసుకోండి. ఎక్కువ నీరు నిల్వ ఉంచకండి.",
+                hindiAdvice: "किसान भाइयों, आपकी धान की फसल पूरी तरह स्वस्थ है और कल्ले अच्छे फूट रहे हैं। खेत में 2-3 सेमी हल्का पानी बनाए रखें, अधिक पानी न भरने दें।"
               },
               necrosis: {
                 title: "Bacterial Leaf Blight (Xanthomonas oryzae)",
@@ -966,7 +1141,8 @@
                 biological: "Foliar spray of Pseudomonas fluorescens (0.2%) at 15-day intervals.",
                 chemical: "Copper Oxychloride 50% WP (2.5 g/L) + Streptocycline (0.1 g/L) strictly as last resort.",
                 differentials: ["Rice Blast (Magnaporthe oryzae) - diamond spindle lesions with grey centers", "Brown Spot (Bipolaris oryzae) - circular brown spots with yellow halos"],
-                teluguAdvice: "వరి చేనులో ఆకు ఎండు తెగులు లక్షణాలు కనిపిస్తున్నాయి. ఆకుల అంచుల వెంబడి నీటి చారలు వచ్చి ఎండుతున్నాయి. వెంటనే పొలంలో నిల్వ ఉన్న నీటిని తీసివేసి ఆరబెట్టండి. లీటరు నీటికి 10 గ్రాముల సూడోమోనాస్ లేదా ట్రైకోడెర్మా కలిపి పిచికారీ చేయండి."
+                teluguAdvice: "వరి చేనులో ఆకు ఎండు తెగులు లక్షణాలు కనిపిస్తున్నాయి. ఆకుల అంచుల వెంబడి నీటి చారలు వచ్చి ఎండుతున్నాయి. వెంటనే పొలంలో నిల్వ ఉన్న నీటిని తీసివేసి ఆరబెట్టండి. లీటరు నీటికి 10 గ్రాముల సూడోమోనాస్ లేదా ట్రైకోడెర్మా కలిపి పిచికారీ చేయండి.",
+                hindiAdvice: "धान में जीवाणु झुलसा (बैक्टीरियल ब्लाइट) के लक्षण हैं। पत्तियों के किनारे सूख रहे हैं। खेत का पानी निकाल दें और कॉपर ऑक्सीक्लोराइड 500 ग्राम प्रति एकड़ छिड़कें।"
               },
               chlorosis: {
                 title: "Nitrogen / Zinc Deficiency Chlorosis",
@@ -975,7 +1151,8 @@
                 biological: "Soil application of organic compost enriched with zinc solubilizing bacteria (ZSB).",
                 chemical: "Foliar spray of Zinc Sulphate (0.5% + 0.25% lime) 2-3 weeks after transplanting.",
                 differentials: ["Iron chlorosis on calcareous soils", "Sulphur deficiency on young leaves"],
-                teluguAdvice: "వరి ఆకులు పసుపు రంగులోకి మారుతున్నాయి. నత్రజని లేదా జింక్ లోపం వల్ల ఇది జరుగుతుంది. పొలంలో నీరు ఆరిన తర్వాత లీటరు నీటికి 5 గ్రాముల జింక్ సల్ఫేట్ మరియు సున్నం కలిపి పిచికారీ చేయండి."
+                teluguAdvice: "వరి ఆకులు పసుపు రంగులోకి మారుతున్నాయి. నత్రజని లేదా జింక్ లోపం వల్ల ఇది జరుగుతుంది. పొలంలో నీరు ఆరిన తర్వాత లీటరు నీటికి 5 గ్రాముల జింక్ సల్ఫేట్ మరియు సున్నం కలిపి పిచికారీ చేయండి.",
+                hindiAdvice: "धान की पत्तियां पीली पड़ रही हैं जो जिंक या नाइट्रोजन की कमी दर्शाती हैं। 1 किलो जिंक सल्फेट व चूने का घोल प्रति एकड़ छिड़कें।"
               }
             }
           },
@@ -994,7 +1171,8 @@
                 biological: "Seed treatment with Trichoderma viride (4 g/kg seed).",
                 chemical: "None required.",
                 differentials: ["Frost nip on leaf tips", "Herbicide drift yellowing"],
-                teluguAdvice: "గోధుమ పైరు ఏపుగా, ఆరోగ్యంగా ఉంది. ఆకులపై ఎలాంటి తుప్పు మచ్చలు లేవు. సమయానికి తేలికపాటి తడి అందిస్తూ ఉండండి."
+                teluguAdvice: "గోధుమ పైరు ఏపుగా, ఆరోగ్యంగా ఉంది. ఆకులపై ఎలాంటి తుప్పు మచ్చలు లేవు. సమయానికి తేలికపాటి తడి అందిస్తూ ఉండండి.",
+                hindiAdvice: "गेहूं की फसल पूरी तरह हरी-भरी और स्वस्थ है। कल्ले फूटते समय खेत में पर्याप्त नमी बनाए रखें।"
               },
               necrosis: {
                 title: "Stripe Rust / Yellow Rust (Puccinia striiformis)",
@@ -1003,7 +1181,8 @@
                 biological: "Spray neem seed kernel extract (NSKE 5%) at first symptom appearance.",
                 chemical: "Propiconazole 25% EC (1 ml/L) strictly complying with university extension guidelines.",
                 differentials: ["Leaf Rust (Puccinia triticina) - scattered round brown pustules", "Septoria nodorum blotch"],
-                teluguAdvice: "గోధుమ ఆకులపై పసుపు రంగు చారల తుప్పు తెగులు కనిపిస్తోంది. మొదట వేప గింజల కషాయం కొట్టండి. తెగులు తగ్గకపోతే వ్యవసాయ అధికారుల సలహాతో ప్రొపికొనజోల్ మందు పిచికారీ చేయండి."
+                teluguAdvice: "గోధుమ ఆకులపై పసుపు రంగు చారల తుప్పు తెగులు కనిపిస్తోంది. మొదట వేప గింజల కషాయం కొట్టండి. తెగులు తగ్గకపోతే వ్యవసాయ అధికారుల సలహాతో ప్రొపికొనజోల్ మందు పిచికారీ చేయండి.",
+                hindiAdvice: "गेहूं की पत्तियों पर पीले रतुआ (स्ट्राइप रस्ट) के लक्षण हैं। तुरंत प्रोपिकोनाज़ोल 1 मिली प्रति लीटर पानी में मिलाकर छिड़काव करें।"
               },
               chlorosis: {
                 title: "Sulphur / Nitrogen Chlorosis",
@@ -1012,7 +1191,8 @@
                 biological: "Farmyard manure (FYM) incorporation.",
                 chemical: "Foliar application of ammonium sulphate or urea (2% solution).",
                 differentials: ["Iron deficiency on high lime soils", "Waterlogging root asphyxiation"],
-                teluguAdvice: "గోధుమ ఆకుల్లో పచ్చదనం తగ్గి లేత ఆకులు పసుపుగా మారుతున్నాయి. సల్ఫర్ లేదా నత్రజని లోపం ఉంది. తగినంత జిప్సం లేదా యూరియా ద్రావణం పిచికారీ చేయండి."
+                teluguAdvice: "గోధుమ ఆకుల్లో పచ్చదనం తగ్గి లేత ఆకులు పసుపుగా మారుతున్నాయి. సల్ఫర్ లేదా నత్రజని లోపం ఉంది. తగినంత జిప్సం లేదా యూరియా ద్రావణం పిచికారీ చేయండి.",
+                hindiAdvice: "गेहूं की नई पत्तियां पीली पड़ रही हैं जो सल्फर की कमी है। 2% यूरिया या जिप्सम का प्रयोग करें।"
               }
             }
           },
@@ -1031,7 +1211,8 @@
                 biological: "Release Chrysoperla carnea predators for aphid and whitefly control.",
                 chemical: "None required.",
                 differentials: ["Light sun bleaching on upper canopy", "Mechanical wind scarring"],
-                teluguAdvice: "పత్తి చేను చాలా బాగుంది. ఆకులు వెడల్పుగా, పచ్చగా ఉన్నాయి. కలుపు లేకుండా చూసుకుంటూ బిందు సేద్యం ద్వారా నీరందించండి."
+                teluguAdvice: "పత్తి చేను చాలా బాగుంది. ఆకులు వెడల్పుగా, పచ్చగా ఉన్నాయి. కలుపు లేకుండా చూసుకుంటూ బిందు సేద్యం ద్వారా నీరందించండి.",
+                hindiAdvice: "कपास की पत्तियां चौड़ी, हरी और स्वस्थ हैं। ड्रिप सिंचाई से संतुलित पानी दें।"
               },
               chlorosis: {
                 title: "Magnesium / Nitrogen Interveinal Chlorosis",
@@ -1040,7 +1221,8 @@
                 biological: "Soil application of mycorrhizal fungi to enhance nutrient uptake.",
                 chemical: "Foliar spray of Magnesium Sulphate (MgSO4 1%) twice at 15-day intervals.",
                 differentials: ["Cotton Leaf Curl Virus (CLCuV) - upward cupping & vein enation", "Potassium deficiency marginal scorch"],
-                teluguAdvice: "పత్తి ఆకుల ఈనెల మధ్య పసుపు మరియు ఎరుపు రంగులోకి మారుతోంది. ఇది మెగ్నీషియం లోపం వల్ల వస్తుంది. లీటరు నీటికి 10 గ్రాముల మెగ్నీషియం సల్ఫేట్ కలిపి 15 రోజుల వ్యవధిలో రెండుసార్లు పిచికారీ చేయండి."
+                teluguAdvice: "పత్తి ఆకుల ఈనెల మధ్య పసుపు మరియు ఎరుపు రంగులోకి మారుతోంది. ఇది మెగ్నీషియం లోపం వల్ల వస్తుంది. లీటరు నీటికి 10 గ్రాముల మెగ్నీషియం సల్ఫేట్ కలిపి 15 రోజుల వ్యవధిలో రెండుసార్లు పిచికారీ చేయండి.",
+                hindiAdvice: "कपास में पत्तियों की नसों के बीच पीलापन व लालिमा मैग्नीशियम की कमी है। 1% मैग्नीशियम सल्फेट का छिड़काव करें।"
               },
               necrosis: {
                 title: "Bacterial Blight / Angular Leaf Spot (Xanthomonas citri pv. malvacearum)",
@@ -1049,7 +1231,8 @@
                 biological: "Pseudomonas fluorescens seed treatment.",
                 chemical: "Copper Oxychloride (2.5 g/L) + Streptocycline (100 ppm) as last resort.",
                 differentials: ["Alternaria leaf spot - concentric circular brown rings", "Cercospora leaf spot"],
-                teluguAdvice: "పత్తి ఆకులపై కోణాల ఆకారంలో నల్లటి మచ్చలు కనిపిస్తున్నాయి. దీన్ని బాక్టీరియల్ ఆకుమచ్చ తెగులు అంటారు. కాపర్ ఆక్సిక్లోరైడ్ మరియు స్ట్రెప్టోసైక్లిన్ కలిపి తగిన మోతాదులో పిచికారీ చేయండి."
+                teluguAdvice: "పత్తి ఆకులపై కోణాల ఆకారంలో నల్లటి మచ్చలు కనిపిస్తున్నాయి. దీన్ని బాక్టీరియల్ ఆకుమచ్చ తెగులు అంటారు. కాపర్ ఆక్సిక్లోరైడ్ మరియు స్ట్రెప్టోసైక్లిన్ కలిపి తగిన మోతాదులో పిచికారీ చేయండి.",
+                hindiAdvice: "कपास में कोणीय काले धब्बे (बैक्टीरियल ब्लाइट) हैं। कॉपर ऑक्सीक्लोराइड व स्ट्रेप्टोसाइक्लिन का छिड़काव करें।"
               }
             }
           },
@@ -1068,7 +1251,8 @@
                 biological: "Mulch soil with organic straw to prevent soil-splash pathogens.",
                 chemical: "None required.",
                 differentials: ["Temporary heat wilt during peak afternoon", "Leaf purpling from cold phosphorus block"],
-                teluguAdvice: "టమాట మొక్కలు ఏపుగా, ఆరోగ్యకరమైన పచ్చదనంతో ఉన్నాయి. కింద ఆకులు నేలకు తగలకుండా కట్టెలు కట్టి పైకి నిలబెట్టండి."
+                teluguAdvice: "టమాట మొక్కలు ఏపుగా, ఆరోగ్యకరమైన పచ్చదనంతో ఉన్నాయి. కింద ఆకులు నేలకు తగలకుండా కట్టెలు కట్టి పైకి నిలబెట్టండి.",
+                hindiAdvice: "टमाटर के पौधे स्वस्थ और गहरे हरे हैं। पौधों को सहारा दें ताकि निचली पत्तियां जमीन से न छुएं।"
               },
               necrosis: {
                 title: "Early Blight (Alternaria solani)",
@@ -1077,7 +1261,8 @@
                 biological: "Spray Trichoderma harzianum or Bacillus subtilis biological suspension.",
                 chemical: "Mancozeb 75% WP (2 g/L) or Azoxystrobin 23% SC (1 ml/L) following label restrictions.",
                 differentials: ["Septoria Leaf Spot - small circular grey spots with black specks", "Late Blight (Phytophthora) - greasy dark lesions with white mold underneath"],
-                teluguAdvice: "టమాట ఆకులపై గుండ్రటి వలయాలతో కూడిన నల్లటి మచ్చలు వచ్చాయి. దీన్ని ఆకు మాకుడు తెగులు అంటారు. తెగులు సోకిన కింద ఆకులను తుంచి దూరంగా పారేయండి. లీటరు నీటికి 30 మిల్లీల పులిసిన మజ్జిగ కలిపి పిచికారీ చేయండి."
+                teluguAdvice: "టమాట ఆకులపై గుండ్రటి వలయాలతో కూడిన నల్లటి మచ్చలు వచ్చాయి. దీన్ని ఆకు మాకుడు తెగులు అంటారు. తెగులు సోకిన కింద ఆకులను తుంచి దూరంగా పారేయండి. లీటరు నీటికి 30 మిల్లీల పులిసిన మజ్జిగ కలిపి పిచికారీ చేయండి.",
+                hindiAdvice: "टमाटर की पत्तियों पर छल्लेदार काले-भूरे धब्बे हैं जो अगेती झुलसा का लक्षण हैं। 2 ग्राम मैंकोजेब प्रति लीटर पानी में मिलाकर छिड़कें।"
               },
               chlorosis: {
                 title: "Interveinal Magnesium / Iron Chlorosis",
@@ -1088,6 +1273,406 @@
                 differentials: ["Tomato Yellow Leaf Curl Virus (TYLCV) - stunted upward curled leaves", "Root knot nematode induced yellowing"],
                 teluguAdvice: "టమాట ఆకుల ఈనెలు పచ్చగా ఉండి మధ్య భాగం పసుపుగా మారుతోంది. నేలలో తేమ సరిచూసుకుని, లీటరు నీటికి ఒక గ్రాము చిలేటెడ్ ఐరన్ కలిపి పిచికారీ చేయండి.",
                 hindiAdvice: "टमाटर की पत्तियों की नसें हरी हैं और बीच का भाग पीला हो रहा है। 1 ग्राम चेलेटेड आयरन प्रति लीटर पानी में मिलाकर छिड़काव करें।"
+              },
+              late_blight: {
+                title: "Late Blight (Phytophthora infestans)",
+                description: "Irregular water-soaked greasy olive-brown lesions with pale chlorotic borders and white fungal sporulation.",
+                cultural: "Destroy infected plants immediately; ensure wide spacing for air circulation.",
+                biological: "Foliar spray of Bacillus subtilis or fermented compost tea.",
+                chemical: "Cymoxanil + Mancozeb (2 g/L) or Metalaxyl-M (2.5 g/L).",
+                differentials: ["Early blight concentric rings", "Bacterial canker wilting"],
+                teluguAdvice: "టమాటలో లేట్ బ్లైట్ తెగులు వచ్చింది. ఆకులపై నల్లటి తడి మచ్చలు ఉన్నాయి. వెంటనే తడి ఆకులను తీసివేసి కాపర్ లేదా మెటలాక్సిల్ మందు పిచికారీ చేయండి.",
+                hindiAdvice: "टमाटर में पछेती झुलसा (लेट ब्लाइट) है। पानी जैसे काले धब्बे दिख रहे हैं। तुरंत फफूंदनाशक का छिड़काव करें।"
+              },
+              bacterial_spot: {
+                title: "Bacterial Spot (Xanthomonas perforans)",
+                description: "Small angular dark brown scab-like spots (1-3mm) with greasy margins and yellow haloes.",
+                cultural: "Avoid overhead sprinkler irrigation; use certified disease-free seeds.",
+                biological: "Pseudomonas fluorescens seed and foliar treatment.",
+                chemical: "Copper Hydroxide (2 g/L) + Streptocycline (100 ppm).",
+                differentials: ["Septoria leaf spot with black pycnidia", "Early blight zonate spots"],
+                teluguAdvice: "టమాట ఆకులపై చిన్న చిన్న నల్లటి బాక్టీరియల్ మచ్చలు ఉన్నాయి. కాపర్ హైడ్రాక్సైడ్ మరియు స్ట్రెప్టోసైక్లిన్ కలిపి పిచికారీ చేయండి.",
+                hindiAdvice: "टमाटर पर बैक्टीरियल स्पॉट के छोटे काले धब्बे हैं। कॉपर और स्ट्रेप्टोसाइक्लिन का घोल छिड़कें।"
+              },
+              leaf_mold: {
+                title: "Leaf Mold (Passalora fulva)",
+                description: "Diffuse pale yellow-green patches on upper surface, matching olive-brown velvety mold underneath.",
+                cultural: "Lower relative humidity below 85% by increasing ventilation in polyhouses.",
+                biological: "Trichoderma harzianum bio-spray.",
+                chemical: "Difenoconazole (0.5 ml/L) or Chlorothalonil (2 g/L).",
+                differentials: ["Powdery mildew white patches", "Spider mite stippling"],
+                teluguAdvice: "టమాట ఆకుల కింద బూజు లాంటి మచ్చలు ఏర్పడ్డాయి. గాలి బాగా ఆడేలా చూడండి మరియు ట్రైకోడెర్మా పిచికారీ చేయండి.",
+                hindiAdvice: "टमाटर की पत्तियों के नीचे फफूंद है। खेत में हवा का संचार बढ़ाएं और ट्राइकोडर्मा छिड़कें।"
+              },
+              septoria: {
+                title: "Septoria Leaf Spot (Septoria lycopersici)",
+                description: "Numerous small circular grey lesions with prominent dark brown margins and microscopic black pycnidia.",
+                cultural: "Prune lower infected leaves; apply 5cm organic straw mulch.",
+                biological: "Neem oil 5ml/L + Bacillus amyloliquefaciens.",
+                chemical: "Mancozeb (2 g/L) or Azoxystrobin (1 ml/L).",
+                differentials: ["Bacterial spot without pycnidia", "Early blight concentric rings"],
+                teluguAdvice: "టమాట ఆకులపై చిన్న బూడిద రంగు గుండ్రటి మచ్చలు వచ్చాయి. కింద ఆకులను కత్తిరించి వేపనూనె కొట్టండి.",
+                hindiAdvice: "टमाटर पर सेप्टोरिया के छोटे गोल धब्बे हैं। निचली पत्तियां तोड़ें और नीम का तेल छिड़कें।"
+              },
+              target_spot: {
+                title: "Target Spot (Corynespora cassiicola)",
+                description: "Pinpoint brown specks expanding into zonate target-ring lesions with prominent yellow haloes.",
+                cultural: "Avoid continuous tomato cropping; remove wild solanaceous weeds.",
+                biological: "Foliar bio-fungicide containing Trichoderma viride.",
+                chemical: "Pyraclostrobin or Fluxapyroxad strictly complying with label.",
+                differentials: ["Early blight concentric rings", "Alternaria stem canker"],
+                teluguAdvice: "టమాట ఆకులపై వలయాల లక్ష్య మచ్చలు కనిపిస్తున్నాయి. ట్రైకోడెర్మా ద్రావణం పిచికారీ చేయండి.",
+                hindiAdvice: "टमाटर पर टारगेट स्पॉट के छल्लेदार धब्बे हैं। उचित जैव-फफूंदनाशक छिड़कें।"
+              },
+              yellow_leaf_curl: {
+                title: "Tomato Yellow Leaf Curl Virus (TYLCV)",
+                description: "Severe upward curling, cupping, chlorotic pale margins, and marked plant stunting transmitted by whiteflies.",
+                cultural: "Install 15 yellow sticky traps per acre; eliminate alternate weed hosts.",
+                biological: "Release predatory mirid bugs (Nesidiocoris tenuis); foliar neem oil spray.",
+                chemical: "Manage vector with Diafenthiuron or Acetamiprid under extension supervision.",
+                differentials: ["Herbicide hormone damage", "Physiological leaf roll"],
+                teluguAdvice: "టమాటలో తెల్లదోమ వల్ల ఆకు ముడుత వైరస్ వచ్చింది. ఎకరానికి 15 పసుపు జిగురు అట్టలు పెట్టి వేపనూనె కొట్టండి.",
+                hindiAdvice: "टमाटर में सफेद मक्खी के कारण मरोड़िया (कर्ल) वायरस है। पीले चिपचिपे ट्रैप लगाएं और नीम तेल छिड़कें।"
+              },
+              mosaic_virus: {
+                title: "Tomato Mosaic Virus (ToMV)",
+                description: "Mottled mosaic patterns of alternating light and dark green, distorted blistered leaf lamina.",
+                cultural: "Strict worker hand sanitation with skim milk/soap; rogue out infected plants.",
+                biological: "Milk spray (10% solution) to neutralize virions during handling.",
+                chemical: "No chemical cures viral particles; control physical transmission vectors.",
+                differentials: ["Cucumber mosaic virus shoestring", "Nutrient deficiency mottling"],
+                teluguAdvice: "టమాట ఆకులపై ఆకుపచ్చ మరియు పసుపు రంగుల మొజాయిక్ చారలు వచ్చాయి. తెగులు సోకిన మొక్కలను పీకి నాశనం చేయండి.",
+                hindiAdvice: "टमाटर में मोज़ेक वायरस है। संक्रमित पौधों को उखाड़कर नष्ट करें और हाथ साफ रखें।"
+              }
+            }
+          },
+          potato: {
+            name: "Potato",
+            binomial: "Solanum tuberosum",
+            family: "Solanaceae (Eudicot)",
+            phyllotaxy: "Alternate, odd-pinnately compound",
+            architecture: "Eudicot, large ovate-elliptic terminal and lateral leaflets with smaller intercalary lobes",
+            markers: "Winged stems, subterranean tubers, stolons, pentamerous white/violet flowers",
+            pathologyLookups: {
+              healthy: {
+                title: "Healthy Vigorous Potato Canopy",
+                description: "Deep green robust compound foliage, strong stolon development, zero foliar blights.",
+                cultural: "Proper hilling/earthing-up to prevent tuber greening; drip or furrow irrigation.",
+                biological: "Trichoderma harzianum tuber treatment.",
+                chemical: "None required.",
+                differentials: ["Early senescence at tuber maturity", "Frost injury"],
+                teluguAdvice: "బంగాళాదుంప పైరు ఏపుగా, పచ్చగా ఉంది. పిలకలకు మట్టిని ఎగదోసి సమయానికి నీరు అందించండి.",
+                hindiAdvice: "आलू की फसल पूरी तरह हरी और स्वस्थ है। समय पर मिट्टी चढ़ाएं और हल्की सिंचाई दें।"
+              },
+              early_blight: {
+                title: "Potato Early Blight (Alternaria solani)",
+                description: "Concentric target-board brown to black circular spots beginning on oldest lower leaflets.",
+                cultural: "Maintain high plant vigor through balanced NPK; avoid overhead sprinkling.",
+                biological: "Bio-priming seed tubers with Bacillus subtilis.",
+                chemical: "Mancozeb 75% WP (2 g/L) or Propineb 70% WP (2 g/L).",
+                differentials: ["Late blight greasy blotches", "Magnesium deficiency interveinal scorch"],
+                teluguAdvice: "బంగాళాదుంప ఆకులపై గుండ్రటి వలయాల మచ్చలు వచ్చాయి. మాంకోజెబ్ మందును లీటరు నీటికి 2 గ్రాములు కలిపి పిచికారీ చేయండి.",
+                hindiAdvice: "आलू पर अगेती झुलसा के गोल छल्लेदार धब्बे हैं। मैंकोजेब 2 ग्राम प्रति लीटर पानी में मिलाकर छिड़कें।"
+              },
+              late_blight: {
+                title: "Potato Late Blight (Phytophthora infestans)",
+                description: "Rapidly spreading water-soaked dark purplish-brown lesions with white downy mildew on undersides.",
+                cultural: "Strictly use certified disease-free seed tubers; destroy cull piles.",
+                biological: "Copper-based preventive bio-formulations.",
+                chemical: "Dimethomorph (1 g/L) or Cymoxanil + Mancozeb (2 g/L) at first symptom.",
+                differentials: ["Early blight without white mildew", "Frost damage"],
+                teluguAdvice: "బంగాళాదుంపలో లేట్ బ్లైట్ తెగులు వ్యాపించింది. వెంటనే తడి ఆరిన తర్వాత డైమెథోమార్ఫ్ లేదా కాపర్ మందు కొట్టండి.",
+                hindiAdvice: "आलू में पछेती झुलसा का भारी प्रकोप है। डाइमेथोमॉर्फ या कॉपर फफूंदनाशक तुरंत छिड़कें।"
+              }
+            }
+          },
+          pepper: {
+            name: "Bell Pepper / Chilli",
+            binomial: "Capsicum annuum",
+            family: "Solanaceae (Eudicot)",
+            phyllotaxy: "Alternate, simple",
+            architecture: "Eudicot, simple ovate-elliptic leaves with entire smooth margins and acuminate tips",
+            markers: "Solitary white rotate flowers at stem dichotomies; pendant pungent berries",
+            pathologyLookups: {
+              healthy: {
+                title: "Healthy Glossy Bell Pepper Foliage",
+                description: "Vibrant emerald green leaves, smooth intact lamina, active flower bud set.",
+                cultural: "Provide support stakes; maintain well-aerated fertile loamy soil.",
+                biological: "Soil mycorrhizal inoculation.",
+                chemical: "None required.",
+                differentials: ["Sunscald on exposed upper fruit", "Temporary noon heat droop"],
+                teluguAdvice: "మిరప మొక్కలు ఆరోగ్యంగా, పచ్చగా ఉన్నాయి. సరైన సమయంలో తడి అందిస్తూ కలుపు లేకుండా చూసుకోండి.",
+                hindiAdvice: "शिमला मिर्च के पौधे स्वस्थ और हरे-भरे हैं। उचित नमी बनाए रखें।"
+              },
+              bacterial_spot: {
+                title: "Bacterial Leaf Spot (Xanthomonas campestris)",
+                description: "Small angular circular water-soaked dark brown spots with raised pustular centers on lower surfaces.",
+                cultural: "Avoid working in wet fields; rotate out of Solanaceae crops for 2 years.",
+                biological: "Seed soaking in hot water (50°C for 25 min) + Pseudomonas foliar spray.",
+                chemical: "Copper Oxychloride (2.5 g/L) + Streptocycline (100 ppm).",
+                differentials: ["Cercospora frog-eye spot", "Anthracnose lesions"],
+                teluguAdvice: "మిరప ఆకులపై బాక్టీరియల్ మచ్చలు వచ్చాయి. కాపర్ ఆక్సిక్లోరైడ్ మరియు స్ట్రెప్టోసైక్లిన్ పిచికారీ చేయండి.",
+                hindiAdvice: "मिर्च पर बैक्टीरियल लीफ स्पॉट है। कॉपर ऑक्सीक्लोराइड और स्ट्रेप्टोसाइक्लिन का छिड़काव करें।"
+              }
+            }
+          },
+          corn: {
+            name: "Corn / Maize",
+            binomial: "Zea mays",
+            family: "Poaceae (Monocot Cereal)",
+            phyllotaxy: "Alternate, distichous 2-ranked",
+            architecture: "Monocot, tall linear ribbon-like arching leaves with prominent pale midrib and parallel venation",
+            markers: "Monoecious (tassel male inflorescence, ear female inflorescence), prop roots at lower nodes",
+            pathologyLookups: {
+              healthy: {
+                title: "Healthy Vigorous Maize Foliage",
+                description: "Sturdy upright dark emerald leaves with intact parallel veins, zero rust pustules.",
+                cultural: "Maintain recommended plant density (60x20 cm); weed control during early 30 days.",
+                biological: "Seed treatment with Azotobacter and PSB bio-fertilizers.",
+                chemical: "None required.",
+                differentials: ["Lower leaf firing due to nitrogen translocation", "Wind leaf shredding"],
+                teluguAdvice: "మొక్కజొన్న పైరు ఏపుగా, బలంగా ఎదుగుతోంది. కలుపు లేకుండా చూసుకుంటూ పూత దశలో నీటి కొరత రాకుండా చూడండి.",
+                hindiAdvice: "मक्का की फसल बहुत मजबूत और हरी है। कतारों में खरपतवार निकालें और उचित समय पर पानी दें।"
+              },
+              common_rust: {
+                title: "Common Rust (Puccinia sorghi)",
+                description: "Prominent elongated golden-brown to reddish-cinnamon pustules bursting on both leaf surfaces.",
+                cultural: "Plant resistant maize hybrids; avoid late delayed plantings.",
+                biological: "Neem seed kernel extract (NSKE 5%) foliar spray.",
+                chemical: "Mancozeb 75% WP (2.5 g/L) or Azoxystrobin (1 ml/L).",
+                differentials: ["Southern rust smaller orange pustules", "Physoderma brown spot"],
+                teluguAdvice: "మొక్కజొన్న ఆకులపై ఎర్రటి తుప్పు రంగు పుట్టలు వచ్చాయి. లీటరు నీటికి 2.5 గ్రాముల మాంకోజెబ్ కలిపి పిచికారీ చేయండి.",
+                hindiAdvice: "मक्का पर लाल-भूरे रंग के रतुआ (कॉमन रस्ट) के फफोले हैं। मैंकोजेब 2.5 ग्राम प्रति लीटर छिड़कें।"
+              },
+              northern_leaf_blight: {
+                title: "Northern Corn Leaf Blight (Exserohilum turcicum)",
+                description: "Large elongated cigar-shaped grayish-green to tan necrotic lesions (2.5 to 15 cm long).",
+                cultural: "Deep summer plowing to bury crop residues; 2-year non-host crop rotation.",
+                biological: "Trichoderma viride seed and soil treatment.",
+                chemical: "Propiconazole 25% EC (1 ml/L) at first sign of lesions.",
+                differentials: ["Gray leaf spot rectangular lesions", "Stewart's wilt vascular stripes"],
+                teluguAdvice: "మొక్కజొన్నలో చుట్ట ఆకారంలో పొడవాటి బూడిద రంగు మచ్చలు వచ్చాయి. ప్రొపికొనజోల్ మందు పిచికారీ చేయండి.",
+                hindiAdvice: "मक्का में सिगार के आकार के लंबे झुलसा धब्बे हैं। प्रोपिकोनाजोल 1 मिली प्रति लीटर छिड़कें।"
+              },
+              gray_leaf_spot: {
+                title: "Gray Leaf Spot (Cercospora zeae-maydis)",
+                description: "Distinctly rectangular tan to gray lesions strictly bounded by parallel leaf veins.",
+                cultural: "Incorporate crop residues; use balanced potassium fertilization.",
+                biological: "Pseudomonas fluorescens foliar spray.",
+                chemical: "Pyraclostrobin or Azoxystrobin.",
+                differentials: ["Northern leaf blight cigar lesions", "Diplodia leaf streak"],
+                teluguAdvice: "ఆకుల ఈనెల మధ్య దీర్ఘచతురస్రాకార బూడిద మచ్చలు ఉన్నాయి. అజాక్సిస్ట్రోబిన్ మందు పిచికారీ చేయండి.",
+                hindiAdvice: "मक्का की नसों के बीच आयताकार धब्बे हैं। फफूंदनाशक का सही समय पर छिड़काव करें।"
+              }
+            }
+          },
+          apple: {
+            name: "Apple",
+            binomial: "Malus domestica",
+            family: "Rosaceae (Eudicot Tree)",
+            phyllotaxy: "Alternate, simple",
+            architecture: "Eudicot, simple ovate-elliptic leaves with finely serrated margins, pinnate arcuate veins",
+            markers: "Woody spurs, deciduous habit, 5-petaled pink/white blossoms, pome fruit",
+            pathologyLookups: {
+              healthy: {
+                title: "Healthy Glossy Apple Foliage",
+                description: "Vibrant dark green serrated leaves, active spur vegetative growth, zero scab lesions.",
+                cultural: "Proper canopy pruning for sunlight penetration; balanced boron and calcium nutrition.",
+                biological: "Compost mulching and beneficial predatory mite conservation.",
+                chemical: "None required.",
+                differentials: ["Frost injury on early leaves", "Insect leafhopper stippling"],
+                teluguAdvice: "ఆపిల్ తోటలో ఆకులు ఆరోగ్యకరంగా ఉన్నాయి. చెట్ల కొమ్మలను సరిగ్గా కత్తిరించి ఎండ తగిలేలా చూడండి.",
+                hindiAdvice: "सेब के पेड़ स्वस्थ और हरे हैं। कटाई-छंटाई सही रखें ताकि धूप पत्तों तक पहुंचे।"
+              },
+              apple_scab: {
+                title: "Apple Scab (Venturia inaequalis)",
+                description: "Olive-green to velvety dark brown circular spots becoming corky and distorted.",
+                cultural: "Rake and shred fallen autumn leaves to eliminate overwintering ascospores.",
+                biological: "Spray potassium bicarbonate or wettable sulphur during early bud break.",
+                chemical: "Captan 50% WP (2 g/L) or Difenoconazole 25% EC (0.5 ml/L).",
+                differentials: ["Cedar apple rust orange spots", "Sooty blotch smudges"],
+                teluguAdvice: "ఆపిల్ ఆకులపై నల్లటి గజ్జి తెగులు మచ్చలు వచ్చాయి. రాలిన ఆకులను తీసేసి కాప్టాన్ మందు పిచికారీ చేయండి.",
+                hindiAdvice: "सेब की पत्तियों पर पपड़ीदार काले धब्बे (स्कैब) हैं। कैप्टन या डाइफेनोकोनाजोल छिड़कें।"
+              },
+              black_rot: {
+                title: "Black Rot / Frog-Eye Leaf Spot (Botryosphaeria obtusa)",
+                description: "Small purple specks expanding into circular spots with light tan centers and prominent dark margins ('frog-eye').",
+                cultural: "Prune out dead wood, mummified fruits, and fire blight cankers.",
+                biological: "Bio-fungicide spray of Bacillus subtilis.",
+                chemical: "Thiophanate-methyl or Mancozeb.",
+                differentials: ["Apple scab velvety spots", "Cedar rust bright yellow spots"],
+                teluguAdvice: "ఆపిల్ ఆకులపై కప్ప కన్ను ఆకారంలో నల్లటి మచ్చలు ఉన్నాయి. ఎండిన కొమ్మలను తీసేసి మాంకోజెబ్ పిచికారీ చేయండి.",
+                hindiAdvice: "सेब पर फ्रॉग-आई (मेंढक की आंख) जैसे गोल धब्बे हैं। सूखी टहनियां हटाएं और मैंकोजेब छिड़कें।"
+              },
+              cedar_rust: {
+                title: "Cedar Apple Rust (Gymnosporangium juniperi-virginianae)",
+                description: "Bright yellow-orange circular lesions on upper leaf with small black pycnial dots in center.",
+                cultural: "Remove alternate host red cedar/juniper trees within 1 km radius.",
+                biological: "Sulphur-based preventive bio-spray.",
+                chemical: "Myclobutanil or Trifloxystrobin.",
+                differentials: ["Apple scab dark lesions", "Necrotic leaf blotch"],
+                teluguAdvice: "ఆపిల్ ఆకులపై ప్రకాశవంతమైన నారింజ రంగు తుప్పు మచ్చలు ఉన్నాయి. మైక్లోబుటానిల్ మందు కొట్టండి.",
+                hindiAdvice: "सेब पर चमकीले नारंगी रंग के रस्ट के धब्बे हैं। माइक्लोबुटानिल का छिड़काव करें।"
+              }
+            }
+          },
+          grape: {
+            name: "Grape",
+            binomial: "Vitis vinifera",
+            family: "Vitaceae (Woody Liana)",
+            phyllotaxy: "Alternate, distichous",
+            architecture: "Eudicot, palmately 3-5 lobed cordate leaves with coarsely serrated margins and branched tendrils",
+            markers: "Opposite leaf-opposed tendrils/clusters, woody cane peeling bark, berry bunches",
+            pathologyLookups: {
+              healthy: {
+                title: "Healthy Palmate Grape Canopy",
+                description: "Deep green broad palmately lobed leaves with intact margins and vigorous tendrils.",
+                cultural: "Trellising for canopy ventilation; cluster thinning for quality berry development.",
+                biological: "Trichoderma soil drench.",
+                chemical: "None required.",
+                differentials: ["Mild sun bleaching", "Mechanical wire chafing"],
+                teluguAdvice: "ద్రాక్ష తోటలో ఆకులు చాలా ఏపుగా ఉన్నాయి. పందిరి పైకి గాలి, వెలుతురు సరిగ్గా సోకేలా చూడండి.",
+                hindiAdvice: "अंगूर की बेलें बहुत अच्छी और हरी हैं। हवा और धूप का ध्यान रखें।"
+              },
+              black_rot: {
+                title: "Grape Black Rot (Guignardia bidwellii)",
+                description: "Small reddish-brown circular spots with dark borders and concentric rings of tiny black pycnidia.",
+                cultural: "Prune out mummified berries and infected canes during dormant pruning.",
+                biological: "Copper hydroxide bio-spray before bloom.",
+                chemical: "Mancozeb (2 g/L) or Tebuconazole (1 ml/L).",
+                differentials: ["Downy mildew oil spots", "Anthracnose bird's eye spots"],
+                teluguAdvice: "ద్రాక్ష ఆకులపై నల్లటి కుళ్లు మచ్చలు ఉన్నాయి. టెబుకొనజోల్ మందును పిచికారీ చేయండి.",
+                hindiAdvice: "अंगूर पर ब्लैक रॉट के भूरे-काले धब्बे हैं। टेबुकोनाजोल 1 मिली प्रति लीटर छिड़कें।"
+              },
+              esca: {
+                title: "Grape Esca / Black Measles (Fomitiporia / Phaeomoniella)",
+                description: "Striking interveinal chlorosis and necrosis creating vivid 'tiger-stripe' leaf patterns.",
+                cultural: "Avoid heavy pruning wounds in wet weather; paint large cuts with wound sealant.",
+                biological: "Trichoderma atroviride pruning wound protection.",
+                chemical: "No curative fungicide for deep trunk vascular rot; manage cane sanitation.",
+                differentials: ["Pierce's disease marginal scorch", "Potassium deficiency"],
+                teluguAdvice: "ద్రాక్ష ఆకులపై పులి చారల లాంటి ఎరుపు, పసుపు మచ్చలు వచ్చాయి. గాయాలు తగలకుండా చూసుకోండి.",
+                hindiAdvice: "अंगूर के पत्तों पर बाघ की धारियों जैसे धब्बे (एस्का) हैं। छंटाई के घावों पर लेप लगाएं।"
+              }
+            }
+          },
+          peach: {
+            name: "Peach",
+            binomial: "Prunus persica",
+            family: "Rosaceae (Stone Fruit)",
+            phyllotaxy: "Alternate, simple",
+            architecture: "Eudicot, slender lanceolate leaves with finely serrated margins, acute apex, petiole glands",
+            markers: "Glandular nectaries on petiole, solitary pink spring blossoms, velvety drupe fruit",
+            pathologyLookups: {
+              healthy: {
+                title: "Healthy Lanceolate Peach Foliage",
+                description: "Glossy medium green slender lanceolate leaves with active terminal extension shoots.",
+                cultural: "Open center canopy pruning; thin fruits to 15 cm spacing along shoots.",
+                biological: "Beneficial insect conservation for aphid control.",
+                chemical: "None required.",
+                differentials: ["Heat-induced slight leaf roll", "Hail dimples"],
+                teluguAdvice: "పీచ్ ఆకులు సన్నగా, ఆకుపచ్చగా ఆరోగ్యంగా ఉన్నాయి. సరైన సమయంలో కొమ్మలు కత్తిరించండి.",
+                hindiAdvice: "आड़ू के पत्ते स्वस्थ और हरे हैं। समय पर छंटाई करें।"
+              },
+              bacterial_spot: {
+                title: "Peach Bacterial Spot (Xanthomonas arboricola pv. pruni)",
+                description: "Angular purplish-brown lesions that dry, crack, and drop out, creating distinct 'shot-hole' perforations.",
+                cultural: "Plant windbreaks to prevent blowing sand damage; avoid excessive nitrogen.",
+                biological: "Preventive copper sprays during dormant bud swell.",
+                chemical: "Oxytetracycline (0.5 g/L) or Copper Hydroxide low rate.",
+                differentials: ["Coryneum blight shot-hole", "Nitrogen scorch"],
+                teluguAdvice: "పీచ్ ఆకులపై రంధ్రాలు పడి తూటా గుళ్ల లాంటి మచ్చలు వచ్చాయి. కాపర్ మందు పిచికారీ చేయండి.",
+                hindiAdvice: "आड़ू के पत्तों पर गोल छेद (शॉट-होल) हो रहे हैं। कॉपर फफूंदनाशक का छिड़काव करें।"
+              }
+            }
+          },
+          cherry: {
+            name: "Cherry",
+            binomial: "Prunus avium",
+            family: "Rosaceae (Stone Fruit)",
+            phyllotaxy: "Alternate, simple",
+            architecture: "Eudicot, obovate to elliptical leaves with coarsely double-serrated margins and two reddish petiole glands",
+            markers: "Two distinct red nectariferous glands at petiole junction, white umbel clusters, smooth banded bark",
+            pathologyLookups: {
+              healthy: {
+                title: "Healthy Double-Serrated Cherry Canopy",
+                description: "Vibrant dark green obovate leaves with intact margins and prominent red petiole glands.",
+                cultural: "Prune trees in dry summer weather to avoid bacterial canker infection.",
+                biological: "Ladybird beetle conservation for cherry black aphid control.",
+                chemical: "None required.",
+                differentials: ["Wind rub browning", "Summer heat scorch"],
+                teluguAdvice: "చెర్రీ ఆకులు ఆరోగ్యంగా ఉన్నాయి. ఎండాకాలంలో ఎండ తగిలేలా కొమ్మలు సర్దండి.",
+                hindiAdvice: "चेरी के पेड़ स्वस्थ हैं। गर्मी में सूखी टहनियां साफ करें।"
+              },
+              powdery_mildew: {
+                title: "Cherry Powdery Mildew (Podosphaera clandestina)",
+                description: "White talcum-like powdery fungal mycelial patches on lower and upper leaf surfaces, curling margins.",
+                cultural: "Prune dense canopies to lower humidity and enhance interior sunlight penetration.",
+                biological: "Spray potassium bicarbonate (3 g/L) or neem oil emulsion.",
+                chemical: "Myclobutanil or Quinoxyfen complying with pre-harvest intervals.",
+                differentials: ["Pesticide spray residue", "Dust accumulation"],
+                teluguAdvice: "చెర్రీ ఆకులపై తెల్లటి బూడిద తెగులు వ్యాపించింది. వేపనూనె లేదా గంధకం మందు పిచికారీ చేయండి.",
+                hindiAdvice: "चेरी के पत्तों पर सफेद पाउडर (पाउडरी मिल्ड्यू) जमा है। नीम तेल या घुलनशील गंधक छिड़कें।"
+              }
+            }
+          },
+          strawberry: {
+            name: "Strawberry",
+            binomial: "Fragaria ananassa",
+            family: "Rosaceae (Herbaceous Stoloniferous)",
+            phyllotaxy: "Basal rosette, trifoliate",
+            architecture: "Eudicot, compound trifoliate leaves with coarsely obovate serrated leaflets and silky pubescent petioles",
+            markers: "Runners (stolons) rooting at nodes, white 5-petaled flowers, pseudocarp fruit with external achenes",
+            pathologyLookups: {
+              healthy: {
+                title: "Healthy Trifoliate Strawberry Canopy",
+                description: "Glossy deep green trifoliate leaflets, erect petioles, active runner formation.",
+                cultural: "Black plastic or clean straw mulching to keep leaves and fruit elevated off wet soil.",
+                biological: "Neoseiulus californicus predatory mites for spider mite biological control.",
+                chemical: "None required.",
+                differentials: ["Cold red purpling on oldest leaves", "Drip emitter localized dry patch"],
+                teluguAdvice: "స్ట్రాబెర్రీ మొక్కలు చాలా బాగున్నాయి. పండ్లు, ఆకులు నేలకు తగలకుండా ఎండుగడ్డి పరచండి.",
+                hindiAdvice: "स्ट्रॉबेरी के पौधे स्वस्थ हैं। फल और पत्तों को मिट्टी से बचाने के लिए मल्चिंग करें।"
+              },
+              leaf_scorch: {
+                title: "Strawberry Leaf Scorch (Diplocarpon earlianum)",
+                description: "Numerous small irregular purplish-red blotches without light centers, giving scorched scorched look.",
+                cultural: "Rake and destroy infected leaves after harvest; avoid overhead sprinkler watering.",
+                biological: "Foliar bio-fungicide containing Bacillus amyloliquefaciens.",
+                chemical: "Captan (2 g/L) or Dodine (1.5 g/L).",
+                differentials: ["Common leaf spot with white center", "Leaf blight V-shaped lesions"],
+                teluguAdvice: "స్ట్రాబెర్రీ ఆకులు ఎర్రగా మాడిపోయినట్లు కనిపిస్తున్నాయి. కాప్టాన్ మందు పిచికారీ చేయండి.",
+                hindiAdvice: "स्ट्रॉबेरी के पत्ते झुलसे हुए लाल-बैंगनी दिख रहे हैं। कैप्टन फफूंदनाशक छिड़कें।"
+              }
+            }
+          },
+          citrus: {
+            name: "Citrus / Orange",
+            binomial: "Citrus sinensis",
+            family: "Rutaceae (Eudicot Tree)",
+            phyllotaxy: "Alternate, simple unifoliolate",
+            architecture: "Eudicot, leathery dark green ovate leaves with distinctly winged petioles and pellucid oil glands",
+            markers: "Winged petiole articulation, translucent aromatic essential oil glands, thorny twigs, hesperidium fruit",
+            pathologyLookups: {
+              healthy: {
+                title: "Healthy Leathery Citrus Foliage",
+                description: "Dark glossy green leathery leaves emitting aromatic citrus scent, intact winged petioles.",
+                cultural: "Maintain micronutrient fertility (Zinc, Iron, Manganese); proper rootzone drainage.",
+                biological: "Tamarixia radiata parasitoid wasp release for psyllid control.",
+                chemical: "None required.",
+                differentials: ["Leaf miner silvery winding trails", "Iron deficiency interveinal bleaching"],
+                teluguAdvice: "నిమ్మ / నారింజ ఆకులు సువాసనతో, పచ్చగా ఉన్నాయి. జింక్ మరియు ఇనుము లోపం రాకుండా చూసుకోండి.",
+                hindiAdvice: "नींबू / संतरे के पत्ते चमकदार और स्वस्थ हैं। सूक्ष्म पोषक तत्वों का ध्यान रखें।"
+              },
+              citrus_greening: {
+                title: "Citrus Greening / Huanglongbing (Candidatus Liberibacter)",
+                description: "Asymmetric blotchy mottled yellowing crossing leaf veins, upright hardened leaves, lopsided bitter fruit.",
+                cultural: "Remove and destroy HLB-infected trees immediately to protect orchard; plant certified clean stock.",
+                biological: "Vector control of Asian citrus psyllid (Diaphorina citri) with Tamarixia radiata.",
+                chemical: "Systemic vector suppression with Imidacloprid or Thiamethoxam under extension mandate.",
+                differentials: ["Zinc deficiency symmetrical yellowing", "Iron chlorosis on young flush"],
+                teluguAdvice: "నిమ్మలో ఆసియా సిట్రస్ పిసిల్లా వల్ల గ్రీనింగ్ తెగులు వచ్చింది. తెగులు సోకిన కొమ్మలను తీసేసి పురుగు మందు కొట్టండి.",
+                hindiAdvice: "संतरे/नींबू में सिट्रस ग्रीनिंग का प्रकोप है। संक्रमित शाखाएं हटाएं और कीटनाशक का छिड़काव करें।"
               }
             }
           }
@@ -1220,6 +1805,7 @@
         this.initProceduralCanvas();
         this.initScrollEngine();
         this.initSpeechEngines();
+        this.initAgriBotDatasetEngine();
         this.updateLearnedBadge();
         if (window.lucide) window.lucide.createIcons();
       }
@@ -1659,205 +2245,717 @@
       }
 
       loadSpecimenPreset(presetKey) {
+        if (presetKey === 'rice_blight') {
+          this.currentCropTaxon = 'rice';
+          this.currentDiseaseKey = 'necrosis';
+        } else if (presetKey === 'tomato_blight') {
+          this.currentCropTaxon = 'tomato';
+          this.currentDiseaseKey = 'early_blight';
+        } else if (presetKey === 'cotton_chlorosis') {
+          this.currentCropTaxon = 'cotton';
+          this.currentDiseaseKey = 'chlorosis';
+        } else if (presetKey === 'wheat_rust') {
+          this.currentCropTaxon = 'wheat';
+          this.currentDiseaseKey = 'necrosis';
+        } else {
+          this.currentCropTaxon = 'tomato';
+          this.currentDiseaseKey = 'early_blight';
+        }
+
+        const selCrop = document.getElementById('datasetCropSelect');
+        if (selCrop) selCrop.value = this.currentCropTaxon;
+        this.updateDatasetDiseaseOptions();
+        const selDis = document.getElementById('datasetDiseaseSelect');
+        if (selDis) selDis.value = this.currentDiseaseKey;
+
+        this.drawProceduralLeaf(this.currentCropTaxon, this.currentDiseaseKey);
+        this.executeAgriBotTriage();
+      }
+
+      /* ========================================================== */
+      /* KAGGLE PLANT DISEASES (38 CLASSES) & PROCEDURAL ENGINE    */
+      /* ========================================================== */
+      initAgriBotDatasetEngine() {
+        this.isHeatmapActive = false;
+        this.currentLeafMetrics = { pctGreen: 70, pctYellow: 18, pctNecrotic: 12 };
+        this.currentCropTaxon = 'tomato';
+        this.currentDiseaseKey = 'early_blight';
+
+        // Ensure key aliases exist across taxa
+        if (this.BOTANICAL_TAXA.tomato && !this.BOTANICAL_TAXA.tomato.pathologyLookups.early_blight) {
+          this.BOTANICAL_TAXA.tomato.pathologyLookups.early_blight = this.BOTANICAL_TAXA.tomato.pathologyLookups.necrosis;
+        }
+        if (this.BOTANICAL_TAXA.rice) {
+          if (!this.BOTANICAL_TAXA.rice.pathologyLookups.bacterial_blight) {
+            this.BOTANICAL_TAXA.rice.pathologyLookups.bacterial_blight = this.BOTANICAL_TAXA.rice.pathologyLookups.necrosis;
+          }
+          if (!this.BOTANICAL_TAXA.rice.pathologyLookups.blast) {
+            this.BOTANICAL_TAXA.rice.pathologyLookups.blast = {
+              title: "Rice Blast (Magnaporthe oryzae)",
+              description: "Elliptical spindle-shaped lesions with grayish-white centers and reddish-brown borders.",
+              cultural: "Avoid excessive nitrogen application; maintain balanced water management.",
+              biological: "Seed treatment with Pseudomonas fluorescens @ 10g/kg.",
+              chemical: "Tricyclazole 75% WP @ 0.6 g/L or Isoprothiolane 40% EC @ 1.5 ml/L.",
+              differentials: ["Brown spot (Bipolaris oryzae) - circular dark brown spots", "Narrow brown leaf spot"],
+              teluguAdvice: "వరి ఆకులపై కదురు ఆకారంలో అగ్గి తెగులు మచ్చలు వచ్చాయి. నత్రజని ఎరువులు తగ్గించి, లీటరు నీటికి ట్రైసైక్లాజోల్ 0.6 గ్రాములు కలిపి పిచికారీ చేయండి.",
+              hindiAdvice: "धान में ब्लास्ट रोग के धुरी जैसे धब्बे हैं। यूरिया कम करें और ट्राईसाइक्लाजोल 0.6 ग्राम प्रति लीटर पानी में छिड़कें।"
+            };
+          }
+        }
+        if (this.BOTANICAL_TAXA.wheat && !this.BOTANICAL_TAXA.wheat.pathologyLookups.stripe_rust) {
+          this.BOTANICAL_TAXA.wheat.pathologyLookups.stripe_rust = this.BOTANICAL_TAXA.wheat.pathologyLookups.necrosis;
+        }
+        if (this.BOTANICAL_TAXA.cotton) {
+          if (!this.BOTANICAL_TAXA.cotton.pathologyLookups.bacterial_blight) {
+            this.BOTANICAL_TAXA.cotton.pathologyLookups.bacterial_blight = this.BOTANICAL_TAXA.cotton.pathologyLookups.necrosis;
+          }
+          if (!this.BOTANICAL_TAXA.cotton.pathologyLookups.leaf_curl) {
+            this.BOTANICAL_TAXA.cotton.pathologyLookups.leaf_curl = this.BOTANICAL_TAXA.cotton.pathologyLookups.chlorosis;
+          }
+        }
+
+        this.updateDatasetDiseaseOptions();
+        this.generateSelectedDatasetLeaf(false);
+      }
+
+      updateDatasetDiseaseOptions() {
+        const cropSelect = document.getElementById('datasetCropSelect');
+        const diseaseSelect = document.getElementById('datasetDiseaseSelect');
+        if (!cropSelect || !diseaseSelect) return;
+
+        const crop = cropSelect.value;
+        const taxon = this.BOTANICAL_TAXA[crop];
+        if (!taxon || !taxon.pathologyLookups) return;
+
+        const entries = Object.keys(taxon.pathologyLookups);
+        diseaseSelect.innerHTML = entries.map(key => {
+          const item = taxon.pathologyLookups[key];
+          return `<option value="${key}">${item.title}</option>`;
+        }).join('');
+      }
+
+      generateSelectedDatasetLeaf(autoSpeak = false) {
+        const cropSelect = document.getElementById('datasetCropSelect');
+        const diseaseSelect = document.getElementById('datasetDiseaseSelect');
+        const crop = cropSelect ? cropSelect.value : 'tomato';
+        const disease = diseaseSelect ? diseaseSelect.value : 'early_blight';
+
+        this.currentCropTaxon = crop;
+        this.currentDiseaseKey = disease;
+        this.currentStatus = (disease === 'healthy') ? 'healthy' : (disease.includes('chloros') || disease.includes('curl') || disease.includes('yellow')) ? 'chlorosis' : 'necrosis';
+
+        this.drawProceduralLeaf(crop, disease);
+        this.executeAgriBotTriage();
+
+        const taxon = this.BOTANICAL_TAXA[crop] || this.BOTANICAL_TAXA.tomato;
+        const pathology = taxon.pathologyLookups[disease] || taxon.pathologyLookups.healthy || Object.values(taxon.pathologyLookups)[0];
+        const lang = this.voiceInputLang || 'te-IN';
+        const metrics = this.currentLeafMetrics || { pctGreen: 70, pctYellow: 18, pctNecrotic: 12 };
+
+        let initialOverview = "";
+        if (lang === 'te-IN') {
+          initialOverview = `రైతు సోదరులారా! ${taxon.name} ఆకు నమూనా సిద్ధమైంది. ఆకు రకం: "${taxon.architecture.split(',')[0]}". రంగు విశ్లేషణ: పచ్చని క్లోరోఫిల్ ${metrics.pctGreen}%, పసుపు క్లోరోసిస్ ${metrics.pctYellow}%, మచ్చల కణజాలం ${metrics.pctNecrotic}%. నిర్ధారణ: ${pathology.title}.`;
+        } else if (lang === 'hi-IN') {
+          initialOverview = `किसान भाइयों! ${taxon.name} की पत्ती तैयार है। पत्ती प्रकार: "${taxon.architecture.split(',')[0]}"। रंग विश्लेषण: क्लोरोफिल ${metrics.pctGreen}%, पीलापन ${metrics.pctYellow}%, झुलसा ${metrics.pctNecrotic}%। रोग: ${pathology.title}।`;
+        } else {
+          initialOverview = `Generated ${taxon.name} leaf (${taxon.binomial}). Leaf Type: ${taxon.architecture.split(',')[0]}. Color Analysis: ${metrics.pctGreen}% chlorophyll green, ${metrics.pctYellow}% chlorosis yellow, ${metrics.pctNecrotic}% necrotic blight. Diagnosis: ${pathology.title}.`;
+        }
+
+        const qLabel = document.getElementById('leafQaQuestionLabel');
+        const aText = document.getElementById('leafQaAnswerText');
+        if (qLabel) qLabel.innerText = `Specimen: ${taxon.name} - ${pathology.title}`;
+        if (aText) aText.innerText = initialOverview;
+        this.currentLeafQaAnswer = initialOverview;
+
+        if (autoSpeak) {
+          this.speakText(initialOverview, lang);
+        }
+      }
+
+      drawProceduralLeaf(cropKey = 'tomato', diseaseKey = 'early_blight') {
         const canvas = document.getElementById('agriBotCanvas');
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
-        canvas.width = 400;
-        canvas.height = 260;
+        const w = 400;
+        const h = 260;
+        canvas.width = w;
+        canvas.height = h;
 
         const placeholder = document.getElementById('agriBotUploadPlaceholder');
         if (placeholder) placeholder.classList.add('hidden');
 
-        // Draw synthetic botanical leaf specimen on canvas
-        ctx.fillStyle = '#0a0e13';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        // Dark agronomic studio background
+        const bgGrad = ctx.createRadialGradient(w / 2, h / 2, 40, w / 2, h / 2, 220);
+        bgGrad.addColorStop(0, '#101720');
+        bgGrad.addColorStop(1, '#070b10');
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, w, h);
 
         ctx.save();
-        ctx.translate(canvas.width / 2, canvas.height / 2);
+        ctx.translate(w / 2, h / 2);
 
-        if (presetKey === 'rice_blight') {
-          this.currentCropTaxon = 'rice';
-          this.currentStatus = 'necrosis';
-          // Draw linear monocot paddy blade with water-soaked yellow-grey necrotic margin
-          ctx.beginPath();
-          ctx.moveTo(-160, 0);
-          ctx.quadraticCurveTo(0, -35, 160, 0);
-          ctx.quadraticCurveTo(0, 35, -160, 0);
-          ctx.fillStyle = '#1e683a';
+        // Determine base color gradient according to health / pathology
+        let baseGrad = ctx.createLinearGradient(-60, -90, 60, 90);
+        if (diseaseKey === 'healthy') {
+          baseGrad.addColorStop(0, '#15803d');
+          baseGrad.addColorStop(0.5, '#16a34a');
+          baseGrad.addColorStop(1, '#22c55e');
+        } else if (diseaseKey.includes('chloros') || diseaseKey.includes('curl') || diseaseKey.includes('yellow')) {
+          baseGrad.addColorStop(0, '#84cc16');
+          baseGrad.addColorStop(0.5, '#eab308');
+          baseGrad.addColorStop(1, '#fde047');
+        } else if (diseaseKey === 'mosaic_virus') {
+          baseGrad.addColorStop(0, '#14532d');
+          baseGrad.addColorStop(0.3, '#84cc16');
+          baseGrad.addColorStop(0.6, '#15803d');
+          baseGrad.addColorStop(1, '#eab308');
+        } else if (diseaseKey.includes('blight') || diseaseKey.includes('scorch') || diseaseKey.includes('necros')) {
+          baseGrad.addColorStop(0, '#143820');
+          baseGrad.addColorStop(0.5, '#1b4d2c');
+          baseGrad.addColorStop(1, '#2d5a37');
+        } else {
+          baseGrad.addColorStop(0, '#166534');
+          baseGrad.addColorStop(0.5, '#15803d');
+          baseGrad.addColorStop(1, '#22c55e');
+        }
+
+        // Draw Stem / Petiole base
+        ctx.strokeStyle = '#1b4332';
+        ctx.lineWidth = 4;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(0, 75);
+        ctx.lineTo(0, 115);
+        ctx.stroke();
+
+        // 1. Draw Leaf Geometry according to crop morphology
+        ctx.fillStyle = baseGrad;
+        ctx.beginPath();
+
+        if (cropKey === 'tomato') {
+          // Terminal leaflet + 2 lateral leaflets (Odd-pinnate eudicot)
+          ctx.moveTo(0, -95);
+          ctx.bezierCurveTo(35, -75, 45, -30, 30, 5);
+          ctx.bezierCurveTo(20, 25, 10, 45, 0, 50);
+          ctx.bezierCurveTo(-10, 45, -20, 25, -30, 5);
+          ctx.bezierCurveTo(-45, -30, -35, -75, 0, -95);
           ctx.fill();
-          // Parallel veins
-          ctx.strokeStyle = '#28894d';
+
+          // Left lateral leaflet
+          ctx.save();
+          ctx.translate(-42, 35);
+          ctx.rotate(-0.55);
+          ctx.beginPath();
+          ctx.ellipse(0, 0, 18, 38, 0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+
+          // Right lateral leaflet
+          ctx.save();
+          ctx.translate(42, 35);
+          ctx.rotate(0.55);
+          ctx.beginPath();
+          ctx.ellipse(0, 0, 18, 38, 0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+
+          // Reticulate veins
+          ctx.strokeStyle = '#4ade8055';
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.moveTo(0, 50); ctx.lineTo(0, -85);
+          for (let y = -65; y < 35; y += 18) {
+            ctx.moveTo(0, y); ctx.lineTo(24, y - 12);
+            ctx.moveTo(0, y); ctx.lineTo(-24, y - 12);
+          }
+          ctx.stroke();
+
+        } else if (cropKey === 'potato') {
+          // Broadly ovate compound leaflet with undulating wavy margin
+          ctx.moveTo(0, -90);
+          ctx.bezierCurveTo(48, -60, 55, 0, 35, 45);
+          ctx.bezierCurveTo(20, 65, 0, 70, 0, 70);
+          ctx.bezierCurveTo(0, 70, -20, 65, -35, 45);
+          ctx.bezierCurveTo(-55, 0, -48, -60, 0, -90);
+          ctx.fill();
+
+          ctx.save();
+          ctx.translate(-48, 48);
+          ctx.rotate(-0.4);
+          ctx.beginPath(); ctx.ellipse(0, 0, 16, 26, 0, 0, Math.PI * 2); ctx.fill();
+          ctx.restore();
+
+          ctx.save();
+          ctx.translate(48, 48);
+          ctx.rotate(0.4);
+          ctx.beginPath(); ctx.ellipse(0, 0, 16, 26, 0, 0, Math.PI * 2); ctx.fill();
+          ctx.restore();
+
+          ctx.strokeStyle = '#4ade8055';
+          ctx.lineWidth = 1.8;
+          ctx.beginPath();
+          ctx.moveTo(0, 70); ctx.lineTo(0, -80);
+          for (let y = -60; y < 45; y += 22) {
+            ctx.moveTo(0, y); ctx.lineTo(35, y - 10);
+            ctx.moveTo(0, y); ctx.lineTo(-35, y - 10);
+          }
+          ctx.stroke();
+
+        } else if (cropKey === 'pepper') {
+          // Smooth entire ovate-lanceolate blade with acuminate tip
+          ctx.moveTo(0, -100);
+          ctx.bezierCurveTo(46, -50, 48, 20, 15, 65);
+          ctx.lineTo(0, 75);
+          ctx.lineTo(-15, 65);
+          ctx.bezierCurveTo(-48, 20, -46, -50, 0, -100);
+          ctx.fill();
+
+          ctx.strokeStyle = '#86efac44';
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.moveTo(0, 75); ctx.lineTo(0, -90);
+          for (let y = -70; y < 45; y += 20) {
+            ctx.moveTo(0, y); ctx.quadraticCurveTo(22, y - 8, 32, y - 18);
+            ctx.moveTo(0, y); ctx.quadraticCurveTo(-22, y - 8, -32, y - 18);
+          }
+          ctx.stroke();
+
+        } else if (cropKey === 'corn') {
+          // Elongate arching monocot ribbon with prominent midrib
+          ctx.moveTo(-165, 30);
+          ctx.quadraticCurveTo(-60, -45, 0, -20);
+          ctx.quadraticCurveTo(70, 0, 165, -35);
+          ctx.quadraticCurveTo(80, 45, 0, 30);
+          ctx.quadraticCurveTo(-70, 20, -165, 30);
+          ctx.fill();
+
+          ctx.strokeStyle = '#a7f3d0';
+          ctx.lineWidth = 4;
+          ctx.beginPath();
+          ctx.moveTo(-160, 30);
+          ctx.quadraticCurveTo(-60, -40, 0, -15);
+          ctx.quadraticCurveTo(70, 5, 160, -32);
+          ctx.stroke();
+
+          ctx.strokeStyle = '#34d39944';
           ctx.lineWidth = 1;
-          for (let v = -20; v <= 20; v += 6) {
+          for (let offset = -18; offset <= 18; offset += 5) {
+            if (offset === 0) continue;
+            ctx.beginPath();
+            ctx.moveTo(-150, 30 + offset);
+            ctx.quadraticCurveTo(0, -15 + offset, 150, -32 + offset);
+            ctx.stroke();
+          }
+
+        } else if (cropKey === 'apple') {
+          // Broad ovate leaf with finely serrate edge
+          ctx.moveTo(0, -95);
+          ctx.bezierCurveTo(55, -60, 58, 25, 20, 68);
+          ctx.lineTo(0, 75);
+          ctx.lineTo(-20, 68);
+          ctx.bezierCurveTo(-58, 25, -55, -60, 0, -95);
+          ctx.fill();
+
+          ctx.strokeStyle = '#4ade8055';
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.moveTo(0, 75); ctx.lineTo(0, -85);
+          for (let y = -65; y < 50; y += 18) {
+            ctx.moveTo(0, y); ctx.lineTo(38, y - 18);
+            ctx.moveTo(0, y); ctx.lineTo(-38, y - 18);
+          }
+          ctx.stroke();
+
+        } else if (cropKey === 'grape') {
+          // Palmately 5-lobed leaf with deep basal cordate sinus
+          ctx.moveTo(0, -100);
+          ctx.lineTo(28, -60);
+          ctx.lineTo(65, -70);
+          ctx.lineTo(48, -25);
+          ctx.lineTo(75, 10);
+          ctx.lineTo(35, 30);
+          ctx.bezierCurveTo(20, 55, 10, 68, 0, 45);
+          ctx.bezierCurveTo(-10, 68, -20, 55, -35, 30);
+          ctx.lineTo(-75, 10);
+          ctx.lineTo(-48, -25);
+          ctx.lineTo(-65, -70);
+          ctx.lineTo(-28, -60);
+          ctx.closePath();
+          ctx.fill();
+
+          ctx.strokeStyle = '#4ade8066';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(0, 45); ctx.lineTo(0, -95);
+          ctx.moveTo(0, 45); ctx.lineTo(62, -65);
+          ctx.moveTo(0, 45); ctx.lineTo(-62, -65);
+          ctx.moveTo(0, 45); ctx.lineTo(70, 8);
+          ctx.moveTo(0, 45); ctx.lineTo(-70, 8);
+          ctx.stroke();
+
+        } else if (cropKey === 'peach') {
+          // Slender elongated lanceolate leaf
+          ctx.moveTo(0, -105);
+          ctx.bezierCurveTo(26, -50, 26, 30, 8, 70);
+          ctx.lineTo(0, 80);
+          ctx.lineTo(-8, 70);
+          ctx.bezierCurveTo(-26, 30, -26, -50, 0, -105);
+          ctx.fill();
+
+          ctx.strokeStyle = '#4ade8055';
+          ctx.lineWidth = 1.3;
+          ctx.beginPath();
+          ctx.moveTo(0, 80); ctx.lineTo(0, -98);
+          for (let y = -80; y < 55; y += 15) {
+            ctx.moveTo(0, y); ctx.lineTo(16, y - 10);
+            ctx.moveTo(0, y); ctx.lineTo(-16, y - 10);
+          }
+          ctx.stroke();
+
+        } else if (cropKey === 'cherry') {
+          // Obovate-elliptic leaf with double-serrate edge
+          ctx.moveTo(0, -95);
+          ctx.bezierCurveTo(45, -60, 50, 15, 18, 65);
+          ctx.lineTo(0, 75);
+          ctx.lineTo(-18, 65);
+          ctx.bezierCurveTo(-50, 15, -45, -60, 0, -95);
+          ctx.fill();
+
+          ctx.fillStyle = '#ef4444';
+          ctx.beginPath();
+          ctx.arc(-5, 78, 3, 0, Math.PI * 2);
+          ctx.arc(5, 78, 3, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.strokeStyle = '#4ade8055';
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.moveTo(0, 75); ctx.lineTo(0, -85);
+          for (let y = -65; y < 50; y += 18) {
+            ctx.moveTo(0, y); ctx.lineTo(34, y - 15);
+            ctx.moveTo(0, y); ctx.lineTo(-34, y - 15);
+          }
+          ctx.stroke();
+
+        } else if (cropKey === 'strawberry') {
+          // Compound trifoliate leaf
+          ctx.save();
+          ctx.translate(0, -35);
+          ctx.beginPath(); ctx.ellipse(0, 0, 32, 45, 0, 0, Math.PI * 2); ctx.fill();
+          ctx.restore();
+
+          ctx.save();
+          ctx.translate(-42, 10);
+          ctx.rotate(-0.55);
+          ctx.beginPath(); ctx.ellipse(0, 0, 26, 38, 0, 0, Math.PI * 2); ctx.fill();
+          ctx.restore();
+
+          ctx.save();
+          ctx.translate(42, 10);
+          ctx.rotate(0.55);
+          ctx.beginPath(); ctx.ellipse(0, 0, 26, 38, 0, 0, Math.PI * 2); ctx.fill();
+          ctx.restore();
+
+          ctx.strokeStyle = '#4ade8055';
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.moveTo(0, 25); ctx.lineTo(0, -75);
+          ctx.moveTo(0, 25); ctx.lineTo(-58, 0);
+          ctx.moveTo(0, 25); ctx.lineTo(58, 0);
+          ctx.stroke();
+
+        } else if (cropKey === 'citrus') {
+          // Glossy leathery oval blade with winged petiole
+          ctx.moveTo(0, -95);
+          ctx.bezierCurveTo(45, -55, 48, 15, 15, 55);
+          ctx.lineTo(0, 60);
+          ctx.lineTo(-15, 55);
+          ctx.bezierCurveTo(-48, 15, -45, -55, 0, -95);
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.ellipse(0, 72, 8, 12, 0, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.strokeStyle = '#86efac55';
+          ctx.lineWidth = 1.6;
+          ctx.beginPath();
+          ctx.moveTo(0, 84); ctx.lineTo(0, -85);
+          for (let y = -65; y < 45; y += 18) {
+            ctx.moveTo(0, y); ctx.lineTo(30, y - 12);
+            ctx.moveTo(0, y); ctx.lineTo(-30, y - 12);
+          }
+          ctx.stroke();
+
+        } else if (cropKey === 'rice') {
+          // Slender erect linear blade with parallel veins
+          ctx.moveTo(-160, 0);
+          ctx.quadraticCurveTo(0, -28, 160, 0);
+          ctx.quadraticCurveTo(0, 28, -160, 0);
+          ctx.fill();
+
+          ctx.strokeStyle = '#34d39955';
+          ctx.lineWidth = 1;
+          for (let v = -20; v <= 20; v += 5) {
             ctx.beginPath();
             ctx.moveTo(-150, v);
             ctx.lineTo(150, v);
             ctx.stroke();
           }
-          // Bacterial blight wavy necrotic margins
-          ctx.beginPath();
-          ctx.ellipse(40, -18, 60, 10, 0.1, 0, Math.PI * 2);
-          ctx.fillStyle = '#bfa15f';
-          ctx.fill();
-          ctx.beginPath();
-          ctx.ellipse(60, -18, 30, 6, 0.1, 0, Math.PI * 2);
-          ctx.fillStyle = '#42331f';
-          ctx.fill();
-        } else if (presetKey === 'tomato_blight') {
-          this.currentCropTaxon = 'tomato';
-          this.currentStatus = 'necrosis';
-          // Odd-pinnate tomato leaflet
-          ctx.beginPath();
-          ctx.moveTo(-80, 0);
-          ctx.bezierCurveTo(-40, -60, 40, -60, 90, 0);
-          ctx.bezierCurveTo(40, 60, -40, 60, -80, 0);
-          ctx.fillStyle = '#1c5e36';
-          ctx.fill();
-          // Concentric early blight target spot
-          ctx.beginPath();
-          ctx.arc(10, -5, 28, 0, Math.PI * 2);
-          ctx.fillStyle = '#d4a017';
-          ctx.fill();
-          ctx.beginPath();
-          ctx.arc(10, -5, 20, 0, Math.PI * 2);
-          ctx.fillStyle = '#4a3319';
-          ctx.fill();
-          ctx.beginPath();
-          ctx.arc(10, -5, 10, 0, Math.PI * 2);
-          ctx.fillStyle = '#1f160b';
-          ctx.fill();
-        } else if (presetKey === 'cotton_chlorosis') {
-          this.currentCropTaxon = 'cotton';
-          this.currentStatus = 'chlorosis';
-          // Palmately 3-lobed leaf
-          ctx.beginPath();
-          ctx.moveTo(0, 70);
-          ctx.lineTo(-70, 0);
-          ctx.lineTo(-50, -60);
-          ctx.lineTo(0, -80);
-          ctx.lineTo(50, -60);
-          ctx.lineTo(70, 0);
+
+        } else if (cropKey === 'cotton') {
+          // Palmately 3-to-5 lobed cordate leaf
+          ctx.moveTo(0, -95);
+          ctx.lineTo(30, -45);
+          ctx.lineTo(75, -20);
+          ctx.lineTo(40, 25);
+          ctx.bezierCurveTo(20, 50, 10, 65, 0, 45);
+          ctx.bezierCurveTo(-10, 65, -20, 50, -40, 25);
+          ctx.lineTo(-75, -20);
+          ctx.lineTo(-30, -45);
           ctx.closePath();
-          ctx.fillStyle = '#e5c158'; // Chlorotic yellowing
           ctx.fill();
-          // Green veins (Interveinal chlorosis)
-          ctx.strokeStyle = '#1b5e20';
-          ctx.lineWidth = 3;
+
+          ctx.strokeStyle = '#4ade8066';
+          ctx.lineWidth = 2;
           ctx.beginPath();
-          ctx.moveTo(0, 70); ctx.lineTo(0, -80);
-          ctx.moveTo(0, 70); ctx.lineTo(-60, -30);
-          ctx.moveTo(0, 70); ctx.lineTo(60, -30);
+          ctx.moveTo(0, 45); ctx.lineTo(0, -90);
+          ctx.moveTo(0, 45); ctx.lineTo(70, -18);
+          ctx.moveTo(0, 45); ctx.lineTo(-70, -18);
           ctx.stroke();
-        } else if (presetKey === 'wheat_rust') {
-          this.currentCropTaxon = 'wheat';
-          this.currentStatus = 'necrosis';
-          // Linear blade with linear stripe rust pustules
-          ctx.beginPath();
-          ctx.rect(-170, -20, 340, 40);
-          ctx.fillStyle = '#2d6a4f';
+
+        } else if (cropKey === 'wheat') {
+          // Narrow linear blade with parallel veins
+          ctx.moveTo(-165, -12);
+          ctx.lineTo(165, -12);
+          ctx.lineTo(165, 12);
+          ctx.lineTo(-165, 12);
+          ctx.closePath();
           ctx.fill();
-          // Rust pustule stripes
-          ctx.fillStyle = '#f59e0b';
-          for (let rx = -120; rx < 120; rx += 14) {
-            ctx.fillRect(rx, -10, 8, 3);
-            ctx.fillRect(rx + 4, 2, 9, 3);
+
+          ctx.strokeStyle = '#34d39955';
+          ctx.lineWidth = 1;
+          for (let vy = -8; vy <= 8; vy += 4) {
+            ctx.beginPath();
+            ctx.moveTo(-160, vy);
+            ctx.lineTo(160, vy);
+            ctx.stroke();
           }
         }
+
+        // 2. Render Pathology Lesions based on diseaseKey
+        if (diseaseKey === 'early_blight' || diseaseKey === 'target_spot') {
+          const drawTarget = (x, y, r) => {
+            ctx.beginPath(); ctx.arc(x, y, r * 1.5, 0, Math.PI * 2);
+            ctx.fillStyle = '#facc15cc'; ctx.fill();
+            ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2);
+            ctx.fillStyle = '#451a03'; ctx.fill();
+            ctx.beginPath(); ctx.arc(x, y, r * 0.65, 0, Math.PI * 2);
+            ctx.fillStyle = '#78350f'; ctx.fill();
+            ctx.beginPath(); ctx.arc(x, y, r * 0.35, 0, Math.PI * 2);
+            ctx.fillStyle = '#1c1917'; ctx.fill();
+          };
+          drawTarget(15, -20, 24);
+          drawTarget(-25, 15, 18);
+          drawTarget(22, 35, 14);
+
+        } else if (diseaseKey === 'late_blight') {
+          const drawLateBlightPatch = (x, y, rx, ry, rot) => {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(rot);
+            ctx.beginPath(); ctx.ellipse(0, 0, rx + 6, ry + 6, 0, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(241, 245, 249, 0.45)'; ctx.fill();
+            ctx.beginPath(); ctx.ellipse(0, 0, rx + 2, ry + 2, 0, 0, Math.PI * 2);
+            ctx.fillStyle = '#78716c'; ctx.fill();
+            ctx.beginPath(); ctx.ellipse(0, 0, rx - 3, ry - 3, 0, 0, Math.PI * 2);
+            ctx.fillStyle = '#1c1917'; ctx.fill();
+            ctx.restore();
+          };
+          drawLateBlightPatch(20, -25, 32, 20, 0.3);
+          drawLateBlightPatch(-25, 20, 26, 16, -0.4);
+
+        } else if (diseaseKey === 'bacterial_spot') {
+          const spots = [
+            [-12, -45], [10, -50], [-25, -25], [18, -20], [-10, -5],
+            [25, 5], [-20, 20], [8, 25], [-5, 40], [20, 42],
+            [-32, 5], [30, -35], [-18, -60], [12, -70], [0, 15]
+          ];
+          spots.forEach(([sx, sy]) => {
+            ctx.beginPath(); ctx.arc(sx, sy, 5.5, 0, Math.PI * 2);
+            ctx.fillStyle = '#f59e0b88'; ctx.fill();
+            ctx.beginPath(); ctx.arc(sx, sy, 3, 0, Math.PI * 2);
+            ctx.fillStyle = '#292524'; ctx.fill();
+            if (Math.abs(sx + sy) % 3 === 0) {
+              ctx.beginPath(); ctx.arc(sx, sy, 1.5, 0, Math.PI * 2);
+              ctx.fillStyle = '#070b10'; ctx.fill();
+            }
+          });
+
+        } else if (diseaseKey === 'septoria') {
+          const septoriaSpots = [
+            [-15, -40], [12, -35], [-22, -15], [15, -5],
+            [-10, 10], [22, 15], [-18, 30], [10, 35]
+          ];
+          septoriaSpots.forEach(([sx, sy]) => {
+            ctx.beginPath(); ctx.arc(sx, sy, 8, 0, Math.PI * 2);
+            ctx.fillStyle = '#facc15aa'; ctx.fill();
+            ctx.beginPath(); ctx.arc(sx, sy, 5.5, 0, Math.PI * 2);
+            ctx.fillStyle = '#cbd5e1'; ctx.fill();
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(sx - 1.5, sy - 1.5, 1.5, 1.5);
+            ctx.fillRect(sx + 1.5, sy + 0.5, 1.5, 1.5);
+          });
+
+        } else if (diseaseKey === 'leaf_mold') {
+          ctx.beginPath(); ctx.ellipse(15, -25, 28, 18, 0.2, 0, Math.PI * 2);
+          ctx.fillStyle = '#422006cc'; ctx.fill();
+          ctx.beginPath(); ctx.ellipse(-20, 20, 22, 15, -0.3, 0, Math.PI * 2);
+          ctx.fillStyle = '#422006cc'; ctx.fill();
+
+        } else if (diseaseKey === 'common_rust' || diseaseKey === 'cedar_rust' || diseaseKey === 'stripe_rust' || diseaseKey.includes('rust')) {
+          ctx.fillStyle = '#ea580c';
+          for (let rx = -50; rx <= 50; rx += 14) {
+            for (let ry = -60; ry <= 40; ry += 16) {
+              const jx = rx + (Math.sin(ry) * 6);
+              const jy = ry + (Math.cos(rx) * 6);
+              ctx.beginPath(); ctx.arc(jx, jy, 4.5, 0, Math.PI * 2);
+              ctx.fillStyle = '#fb923c88'; ctx.fill();
+              ctx.beginPath(); ctx.arc(jx, jy, 2.5, 0, Math.PI * 2);
+              ctx.fillStyle = '#ea580c'; ctx.fill();
+            }
+          }
+
+        } else if (diseaseKey === 'powdery_mildew') {
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+          const drawMildewPatch = (mx, my, rad) => {
+            ctx.beginPath(); ctx.arc(mx, my, rad, 0, Math.PI * 2); ctx.fill();
+            ctx.beginPath(); ctx.arc(mx + rad * 0.4, my - rad * 0.3, rad * 0.7, 0, Math.PI * 2); ctx.fill();
+          };
+          drawMildewPatch(15, -30, 20);
+          drawMildewPatch(-20, 10, 18);
+          drawMildewPatch(25, 25, 15);
+
+        } else if (diseaseKey === 'esca') {
+          ctx.strokeStyle = '#eab308cc';
+          ctx.lineWidth = 8;
+          ctx.beginPath();
+          ctx.moveTo(-50, -40); ctx.lineTo(-10, -20);
+          ctx.moveTo(50, -40); ctx.lineTo(10, -20);
+          ctx.moveTo(-55, 0); ctx.lineTo(-10, 5);
+          ctx.moveTo(55, 0); ctx.lineTo(10, 5);
+          ctx.stroke();
+
+          ctx.strokeStyle = '#451a03ee';
+          ctx.lineWidth = 5;
+          ctx.beginPath();
+          ctx.moveTo(-45, -40); ctx.lineTo(-10, -20);
+          ctx.moveTo(45, -40); ctx.lineTo(10, -20);
+          ctx.moveTo(-50, 0); ctx.lineTo(-10, 5);
+          ctx.moveTo(50, 0); ctx.lineTo(10, 5);
+          ctx.stroke();
+
+        } else if (diseaseKey === 'apple_scab' || diseaseKey === 'black_rot') {
+          ctx.fillStyle = '#1c1917ee';
+          ctx.beginPath(); ctx.ellipse(18, -25, 22, 14, 0.4, 0, Math.PI * 2); ctx.fill();
+          ctx.beginPath(); ctx.ellipse(-20, 15, 18, 12, -0.3, 0, Math.PI * 2); ctx.fill();
+
+        } else if (diseaseKey === 'blast' || diseaseKey === 'northern_leaf_blight') {
+          const drawSpindle = (sx, sy, sw, sh) => {
+            ctx.save();
+            ctx.translate(sx, sy);
+            ctx.beginPath();
+            ctx.moveTo(0, -sh);
+            ctx.lineTo(sw, 0);
+            ctx.lineTo(0, sh);
+            ctx.lineTo(-sw, 0);
+            ctx.closePath();
+            ctx.fillStyle = '#78350f'; ctx.fill();
+            ctx.beginPath();
+            ctx.moveTo(0, -sh * 0.6);
+            ctx.lineTo(sw * 0.5, 0);
+            ctx.lineTo(0, sh * 0.6);
+            ctx.lineTo(-sw * 0.5, 0);
+            ctx.closePath();
+            ctx.fillStyle = '#cbd5e1'; ctx.fill();
+            ctx.restore();
+          };
+          drawSpindle(20, -10, 14, 30);
+          drawSpindle(-30, 15, 12, 24);
+
+        } else if (diseaseKey === 'leaf_scorch' || diseaseKey === 'necrosis') {
+          ctx.strokeStyle = '#451a03ee';
+          ctx.lineWidth = 6;
+          ctx.beginPath();
+          ctx.arc(0, 0, 55, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+
         ctx.restore();
 
-        // Run hierarchical triage
-        this.executeAgriBotTriage();
+        // 3. Render Heatmap if toggled active
+        if (this.isHeatmapActive) {
+          this.drawHeatmapOverlay(ctx, cropKey, diseaseKey);
+        }
+
+        // 4. Calculate exact pixel color spectrum & morphology
+        this.analyzeUploadedCanvasPixels(ctx, w, h);
       }
 
-      handleAgriBotImageUpload(e) {
-        const file = e.target.files[0];
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          const img = new Image();
-          img.onload = () => {
-            const canvas = document.getElementById('agriBotCanvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = 400;
-            canvas.height = 260;
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            
-            const placeholder = document.getElementById('agriBotUploadPlaceholder');
-            if (placeholder) placeholder.classList.add('hidden');
-
-            this.analyzeUploadedCanvasPixels(ctx, canvas.width, canvas.height);
-          };
-          img.src = event.target.result;
-        };
-        reader.readAsDataURL(file);
-      }
-
-      runAgriBotCamera() {
-        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-          alert("Native camera not supported or blocked in this environment. Using preset specimen.");
-          this.loadSpecimenPreset('rice_blight');
+      drawHeatmapOverlay(ctx, cropKey, diseaseKey) {
+        if (diseaseKey === 'healthy') {
+          ctx.save();
+          ctx.strokeStyle = '#10b981';
+          ctx.lineWidth = 2;
+          ctx.setLineDash([4, 4]);
+          ctx.strokeRect(120, 40, 160, 180);
+          ctx.fillStyle = '#064e3bcc';
+          ctx.fillRect(120, 20, 140, 20);
+          ctx.fillStyle = '#6ee7b7';
+          ctx.font = '10px monospace';
+          ctx.fillText('[Healthy Foliage: 98.2%]', 125, 34);
+          ctx.restore();
           return;
         }
 
-        navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
-          .then(stream => {
-            const video = document.createElement('video');
-            video.srcObject = stream;
-            video.play();
-            setTimeout(() => {
-              const canvas = document.getElementById('agriBotCanvas');
-              const ctx = canvas.getContext('2d');
-              canvas.width = 400;
-              canvas.height = 260;
-              ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-              stream.getTracks().forEach(t => t.stop());
-              
-              const placeholder = document.getElementById('agriBotUploadPlaceholder');
-              if (placeholder) placeholder.classList.add('hidden');
+        ctx.save();
+        ctx.strokeStyle = '#f43f5e';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([4, 2]);
 
-              this.analyzeUploadedCanvasPixels(ctx, canvas.width, canvas.height);
-            }, 1200);
-          })
-          .catch(() => {
-            this.loadSpecimenPreset('tomato_blight');
-          });
+        ctx.strokeRect(175, 75, 80, 75);
+        ctx.fillStyle = '#881337ee';
+        ctx.fillRect(175, 55, 120, 20);
+        ctx.fillStyle = '#fecdd3';
+        ctx.font = 'bold 9px monospace';
+        ctx.fillText(`[Lesion 1: ${diseaseKey.toUpperCase()} 96%]`, 178, 68);
+
+        ctx.strokeRect(140, 130, 65, 55);
+        ctx.fillStyle = '#881337ee';
+        ctx.fillRect(140, 112, 105, 18);
+        ctx.fillStyle = '#fecdd3';
+        ctx.font = 'bold 9px monospace';
+        ctx.fillText('[Lesion 2: Necrosis 91%]', 143, 124);
+
+        ctx.restore();
       }
 
-      analyzeUploadedCanvasPixels(ctx, width, height) {
-        const imgData = ctx.getImageData(0, 0, width, height).data;
-        let greenCount = 0;
-        let yellowCount = 0;
-        let darkNecroticCount = 0;
-        const total = imgData.length / 4;
-
-        for (let i = 0; i < imgData.length; i += 4) {
-          const r = imgData[i];
-          const g = imgData[i + 1];
-          const b = imgData[i + 2];
-
-          if (g > r * 1.15 && g > b * 1.15) greenCount++;
-          else if (r > 130 && g > 130 && b < 100) yellowCount++;
-          else if (r < 75 && g < 75 && b < 75) darkNecroticCount++;
+      toggleLesionHeatmap() {
+        this.isHeatmapActive = !this.isHeatmapActive;
+        const btn = document.getElementById('heatmapToggleBtn');
+        if (btn) {
+          if (this.isHeatmapActive) {
+            btn.className = "px-3 py-2 rounded-xl bg-amber-500 text-charcoal-950 font-bold border border-amber-400 text-xs transition-all flex items-center gap-1.5 shadow-lg shadow-amber-500/20";
+          } else {
+            btn.className = "px-3 py-2 rounded-xl bg-charcoal-800 hover:bg-charcoal-700 text-slate-300 hover:text-white border border-white/10 text-xs font-semibold transition-all flex items-center gap-1.5";
+          }
         }
-
-        const greenRatio = greenCount / total;
-        const yellowRatio = yellowCount / total;
-        const darkRatio = darkNecroticCount / total;
-
-        // Determine probable condition
-        if (darkRatio > 0.08) {
-          this.currentStatus = 'necrosis';
-        } else if (yellowRatio > 0.12) {
-          this.currentStatus = 'chlorosis';
-        } else {
-          this.currentStatus = 'healthy';
-        }
-
-        // Default or nearest taxon match
-        this.currentCropTaxon = this.currentCropTaxon || 'rice';
-        this.executeAgriBotTriage();
+        const crop = this.currentCropTaxon || 'tomato';
+        const disease = this.currentDiseaseKey || 'early_blight';
+        this.drawProceduralLeaf(crop, disease);
       }
+
+      
 
       executeAgriBotTriage() {
         const taxonKey = this.currentCropTaxon || 'rice';
@@ -2312,6 +3410,88 @@
         }
 
         let matchedData = null;
+
+        // 1. Spoken AI Leaf Generator & Visual Q&A Commands
+        if (lower.includes('generate leaf') || lower.includes('create leaf') || lower.includes('draw leaf') || 
+            lower.includes('ఆకు తయారు') || lower.includes('ఆకు చూపించు') || 
+            lower.includes('पत्ता बनाओ') || lower.includes('पत्ता दिखाओ') || lower.includes('पत्ती दिखाओ')) {
+          let crop = 'tomato';
+          if (lower.includes('potato') || lower.includes('బంగాళాదుంప') || lower.includes('ఆలూ') || lower.includes('आलू')) crop = 'potato';
+          else if (lower.includes('pepper') || lower.includes('chili') || lower.includes('మిరప') || lower.includes('మిర్చి') || lower.includes('शिमला') || lower.includes('मिर्च')) crop = 'pepper';
+          else if (lower.includes('corn') || lower.includes('maize') || lower.includes('మొక్కజొన్న') || lower.includes('मक्का')) crop = 'corn';
+          else if (lower.includes('apple') || lower.includes('ఆపిల్') || lower.includes('సేబ్') || lower.includes('सेब')) crop = 'apple';
+          else if (lower.includes('grape') || lower.includes('ద్రాక్ష') || lower.includes('అంగూర్') || lower.includes('अंगूर')) crop = 'grape';
+          else if (lower.includes('peach') || lower.includes('పీచ్') || lower.includes('ఆడూ') || lower.includes('आडू')) crop = 'peach';
+          else if (lower.includes('cherry') || lower.includes('చెర్రీ') || lower.includes('చేరీ') || lower.includes('चेरी')) crop = 'cherry';
+          else if (lower.includes('strawberry') || lower.includes('స్ట్రాబెర్రీ') || lower.includes('स्ट्रॉबेरी')) crop = 'strawberry';
+          else if (lower.includes('citrus') || lower.includes('orange') || lower.includes('నిమ్మ') || lower.includes('బత్తాయి') || lower.includes('संतरा') || lower.includes('नींबू')) crop = 'citrus';
+          else if (lower.includes('rice') || lower.includes('paddy') || lower.includes('వరి') || lower.includes('వరిచేను') || lower.includes('धान')) crop = 'rice';
+          else if (lower.includes('cotton') || lower.includes('పత్తి') || lower.includes('చేను') || lower.includes('कपास')) crop = 'cotton';
+          else if (lower.includes('wheat') || lower.includes('గోధుమ') || lower.includes('గేహూం') || lower.includes('गेहूं')) crop = 'wheat';
+
+          let disease = 'early_blight';
+          if (lower.includes('healthy') || lower.includes('ఆరోగ్య') || lower.includes('బాగుంది') || lower.includes('स्वस्थ')) disease = 'healthy';
+          else if (lower.includes('late blight') || lower.includes('లేట్ బ్లైట్') || lower.includes('పచేతీ') || lower.includes('पछेती')) disease = 'late_blight';
+          else if (lower.includes('bacterial') || lower.includes('బాక్టీరియల్') || lower.includes('జీవాణు') || lower.includes('जीवाणु')) disease = 'bacterial_spot';
+          else if (lower.includes('rust') || lower.includes('తుప్పు') || lower.includes('రతువా') || lower.includes('रतुआ')) disease = (crop === 'corn') ? 'common_rust' : (crop === 'apple') ? 'cedar_rust' : 'stripe_rust';
+          else if (lower.includes('mildew') || lower.includes('బూడిద') || lower.includes('फफूंद') || lower.includes('पाउडरी')) disease = 'powdery_mildew';
+          else if (lower.includes('mold') || lower.includes('బూజు') || lower.includes('मोल्ड')) disease = 'leaf_mold';
+          else if (lower.includes('scab') || lower.includes('స్కాబ్') || lower.includes('स्कैब')) disease = 'apple_scab';
+          else if (lower.includes('rot') || lower.includes('కుళ్ళు') || lower.includes('सड़न')) disease = 'black_rot';
+
+          const cropSelect = document.getElementById('datasetCropSelect');
+          if (cropSelect) cropSelect.value = crop;
+          this.updateDatasetDiseaseOptions();
+          const diseaseSelect = document.getElementById('datasetDiseaseSelect');
+          if (diseaseSelect) {
+            const hasOption = Array.from(diseaseSelect.options).some(o => o.value === disease);
+            if (hasOption) diseaseSelect.value = disease;
+          }
+          this.generateSelectedDatasetLeaf(true);
+          return;
+        }
+
+        if (lower.includes('leaf type') || lower.includes('leaf shape') || lower.includes('morphology') || 
+            lower.includes('ఆకు రకం') || lower.includes('ఆకు ఆకారం') || 
+            lower.includes('पत्ती का प्रकार') || lower.includes('पत्ते की बनावट')) {
+          this.askLeafQuestion('What is the leaf type and morphology?');
+          return;
+        }
+
+        if (lower.includes('leaf color') || lower.includes('color spectrum') || lower.includes('what color') || 
+            lower.includes('ఆకు రంగు') || lower.includes('రంగు ఎలా ఉంది') || 
+            lower.includes('पत्ती का रंग') || lower.includes('पत्ते का रंग')) {
+          this.askLeafQuestion('Analyze leaf color and stress signs');
+          return;
+        }
+
+        if (lower.includes('diagnose leaf') || lower.includes('what disease') || lower.includes('what is the disease') || 
+            lower.includes('ఆకుకి ఏ రోగం') || lower.includes('ఈ తెగులు ఏమిటి') || 
+            lower.includes('पत्ती में कौन सा रोग') || lower.includes('क्या बीमारी है')) {
+          this.askLeafQuestion('What disease is diagnosed on this leaf?');
+          return;
+        }
+
+        if (lower.includes('what treatment') || lower.includes('how to cure') || lower.includes('recommend treatment') || 
+            lower.includes('మందు ఏం కొట్టాలి') || lower.includes('నివారణ ఏమిటి') || 
+            lower.includes('क्या इलाज करें') || lower.includes('कौन सी दवा डालें')) {
+          this.askLeafQuestion('What organic or biological treatment to use?');
+          return;
+        }
+
+        if (lower.includes('contagious') || lower.includes('will it spread') || 
+            lower.includes('సోకుతుందా') || lower.includes('పక్క చేలకి') || 
+            lower.includes('क्या यह फैलेगा') || lower.includes('संक्रामक')) {
+          this.askLeafQuestion('Is this disease contagious to other plants?');
+          return;
+        }
+
+        if (lower.includes('prevent') || lower.includes('next season') || lower.includes('crop rotation') || 
+            lower.includes('పంట మార్పిడి') || lower.includes('వచ్చే సీజన్') || 
+            lower.includes('फसल चक्र') || lower.includes('अगली फसल')) {
+          this.askLeafQuestion('How to prevent this in the next season?');
+          return;
+        }
 
         // Trilingual NLP Matching Engine across all 19 agronomic intents
         if (lower.includes('వరి') || lower.includes('rice') || lower.includes('paddy') || lower.includes('ధాన్యం') || lower.includes('धान')) {

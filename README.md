@@ -31,7 +31,20 @@ The voice engine supports three operational modes with automatic script detectio
 - **English to English (🌐)**: Clear, practical agronomic English response paired with cross-language field translations for farmers and agronomists.
 - **19+ Trained Agricultural Domains**: Complete offline intelligence covering paddy blast & blight, cotton whiteflies & pink bollworms, tomato early blight, chili leaf curl virus, nitrogen/iron chlorosis, heavy storm & drainage warnings, electricity grid power & pump run hours, organic 200L Jeevamrutham recipe, drip irrigation fertigation, green manure & soil testing, tractor & equipment hiring, weed control & mulching, and legume crop rotation.
 
-### 2. AgriBot Botanical Vision Triage Expert
+### 2. AgriBot Botanical Vision Triage Expert & Kaggle 38-Class Dataset Engine
+Trained on the benchmark **Kaggle New Plant Diseases Dataset (`vipoooool/new-plant-diseases-dataset`)** across 14 crops and 38 distinct pathological and healthy classes:
+1. **Procedural Botanical Leaf Specimen Generator**: Renders realistic client-side HTML5 canvas specimens with botanically accurate geometries (odd-pinnate eudicot, compound, lanceolate, linear monocot, palmately lobed) and biological pathology textures (Alternaria bullseye zonate lesions, Phytophthora water-soaked blights, Xanthomonas bacterial spot perforations, powdery mildew talc patches, cedar/common rust pustules, and tiger-stripe Esca).
+2. **Real-Time Color & Morphology Spectrum Analysis**:
+   - Live pixel classification: Healthy Chlorophyll Green %, Chlorosis Yellowing %, and Necrotic Blight Lesion %.
+   - Real-time animated progress bars and dynamic leaf architecture categorization.
+3. **Interactive Visual Leaf Q&A Assistant ("Ask AgriBot About This Leaf")**:
+   - Multilingual visual triage answering questions about leaf type, morphology, color stress indicators, pathogen diagnosis, biological IPM treatments, contagion risks, and next-season crop rotation.
+   - Spoken answers in natural everyday conversational Telugu (`te-IN`), Hindi (`hi-IN`), and English (`en-IN`).
+4. **Diagnostic Lesion Heatmap Overlay**:
+   - One-click toggle displaying neon bounding boxes, contour overlays, and confidence tags over detected pathogen clusters.
+5. **Spoken Voice Command Engine**:
+   - Directly process voice commands: *"generate leaf tomato early blight"*, *"what is the leaf type"*, *"what do the leaf colors mean"*, *"diagnose leaf"*, *"recommend treatment"*, and *"is it contagious"*.
+
 Adheres strictly to **Five Core Operational Principles**:
 1. **Structured Visual Triage**: Hierarchical plant analysis:
    - *Growth habit & phyllotaxy* (alternate distichous, opposite, whorled, basal rosette).
