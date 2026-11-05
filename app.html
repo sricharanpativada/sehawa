@@ -1,0 +1,1884 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Sehawa — Companion App</title>
+  <meta name="description" content="Autonomous offline-first agricultural intelligence companion application for macOS & Android.">
+  <meta name="theme-color" content="#022C22">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            emerald: {
+              950: '#022C22',
+              900: '#064E3B',
+              850: '#04382B',
+              800: '#065F46',
+              700: '#047857',
+              600: '#059669',
+              500: '#10B981',
+              400: '#34D399',
+              300: '#6EE7B7',
+              200: '#A7F3D0',
+              100: '#D1FAE5',
+              50: '#ECFDF5'
+            },
+            mint: {
+              500: '#10B981',
+              400: '#34D399',
+              300: '#6EE7B7',
+              200: '#A7F3D0',
+              100: '#D1FAE5'
+            },
+            charcoal: {
+              950: '#05080A',
+              900: '#0B0F12',
+              850: '#0F1418',
+              800: '#141B21',
+              750: '#1A232B',
+              700: '#222D37',
+              600: '#32404D',
+              500: '#475666'
+            },
+            amber: {
+              400: '#FBBF24',
+              500: '#F59E0B',
+              600: '#D97706',
+              700: '#B45309',
+              900: '#78350F'
+            },
+            signal: {
+              red: '#EF4444',
+              darkred: '#991B1B'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            mono: ['"Space Grotesk"', 'ui-monospace', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0B0F12;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #064E3B;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #10B981;
+    }
+    .glass-card {
+      background: rgba(11, 15, 18, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-card-red {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.18) 0%, rgba(11, 15, 18, 0.95) 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+    }
+    .glass-card-amber {
+      background: linear-gradient(135deg, rgba(217, 119, 6, 0.18) 0%, rgba(11, 15, 18, 0.95) 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+  </style>
+</head>
+
+<body class="bg-charcoal-950 text-slate-100 font-sans antialiased selection:bg-emerald-500 selection:text-white min-h-screen relative p-3 sm:p-6 pb-28">
+
+  <!-- COMPANION APP MAIN CONTAINER -->
+  <main class="max-w-5xl mx-auto space-y-6">
+
+    <!-- Header Telemetry Strip -->
+    <div class="glass-card rounded-3xl p-4 sm:p-6 shadow-2xl relative overflow-hidden">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-charcoal-700/60">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-900 flex items-center justify-center shadow-lg shadow-emerald-950">
+            <i data-lucide="leaf" class="w-5 h-5 text-white"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-xl font-bold tracking-tight text-white">Sehawa Agritech Suite</h1>
+              <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30">Local Node</span>
+            </div>
+            <p class="text-xs text-slate-400">Native Browser Execution Engine • Zero Dynamic API Required</p>
+          </div>
+        </div>
+
+        <!-- Telemetry & Language Controls -->
+        <div class="flex items-center gap-2 self-stretch sm:self-auto justify-between sm:justify-end">
+          <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-charcoal-900 border border-charcoal-700/80 text-xs">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <span class="font-mono text-[11px] text-emerald-300">100% OFFLINE</span>
+          </div>
+
+          <select id="globalLangSelector" onchange="window.sehawaApp.setLanguage(this.value)" class="text-xs bg-charcoal-800 text-slate-200 border border-charcoal-600 rounded-lg px-2 py-1.5 focus:outline-none focus:border-emerald-400 cursor-pointer">
+            <option value="en-IN">🌐 English</option>
+            <option value="hi-IN">🇮🇳 हिन्दी</option>
+            <option value="te-IN">🇮🇳 తెలుగు</option>
+            <option value="ta-IN">🇮🇳 தமிழ்</option>
+          </select>
+
+          <!-- Voice Mic Trigger -->
+          <button id="voiceListenBtn" onclick="window.sehawaApp.toggleVoiceRecognition()" title="Voice Assistant (Web Speech)" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-charcoal-800 hover:bg-emerald-950 text-slate-200 hover:text-emerald-300 border border-charcoal-600 transition-all">
+            <i data-lucide="mic" id="voiceMicIcon" class="w-4 h-4 text-emerald-400"></i>
+            <span class="text-xs font-medium" id="voiceBtnText">Voice AI</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Voice Assistant Status Bar -->
+      <div id="voiceAssistantBanner" class="hidden mt-3 p-2.5 rounded-xl bg-charcoal-900/90 border border-emerald-500/30 flex items-center justify-between gap-3 text-xs">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-signal-red animate-pulse"></span>
+          <span class="text-slate-400 font-mono">VOICE ENGINE:</span>
+          <span id="voiceTranscriptText" class="text-emerald-300 font-medium">Listening for speech... (Try saying "soil", "tomato", "rain", or "leaf")</span>
+        </div>
+        <button onclick="window.sehawaApp.closeVoiceBanner()" class="text-slate-400 hover:text-white">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Quick Metrics Strip -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4">
+        <div class="bg-charcoal-900/70 p-3 rounded-2xl border border-white/5">
+          <div class="text-[10px] text-slate-400 uppercase font-mono tracking-wider">Field Transpiration</div>
+          <div class="text-lg font-bold text-emerald-400 mt-0.5">4.2 mm/day</div>
+          <div class="text-[11px] text-slate-500">Baseline ET₀: 4.8mm</div>
+        </div>
+        <div class="bg-charcoal-900/70 p-3 rounded-2xl border border-white/5">
+          <div class="text-[10px] text-slate-400 uppercase font-mono tracking-wider">Grid Feeder Status</div>
+          <div class="text-lg font-bold text-emerald-400 mt-0.5 flex items-center gap-1.5">
+            <i data-lucide="zap" class="w-4 h-4 text-amber-400"></i>
+            <span>3-Phase Active</span>
+          </div>
+          <div class="text-[11px] text-slate-500">238V • 49.98 Hz</div>
+        </div>
+        <div class="bg-charcoal-900/70 p-3 rounded-2xl border border-white/5">
+          <div class="text-[10px] text-slate-400 uppercase font-mono tracking-wider">Atmospheric RH</div>
+          <div class="text-lg font-bold text-mint-400 mt-0.5">58% Relative</div>
+          <div class="text-[11px] text-slate-500">Dew Point: 18.4°C</div>
+        </div>
+        <div class="bg-charcoal-900/70 p-3 rounded-2xl border border-white/5">
+          <div class="text-[10px] text-slate-400 uppercase font-mono tracking-wider">Local Forum Posts</div>
+          <div class="text-lg font-bold text-amber-400 mt-0.5" id="metricForumCount">4 Active Listings</div>
+          <div class="text-[11px] text-slate-500">1 Village Radius</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- TAB 1: 🏡 HOME (CORE MATRIX & ROOFTOP & WISDOM)          -->
+    <!-- ======================================================== -->
+    <section id="tab-home" class="space-y-6">
+      
+      <!-- SUBSECTION 1: OFFLINE AGRICULTURAL CORE MATRIX -->
+      <div id="matrixSection" class="glass-card rounded-3xl p-5 sm:p-7 border border-emerald-500/20">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-5">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="p-1.5 rounded-lg bg-emerald-950 text-emerald-400 border border-emerald-600/30">
+                <i data-lucide="layers" class="w-4 h-4"></i>
+              </span>
+              <h3 class="text-lg font-bold text-white">Offline Agricultural Core Matrix</h3>
+            </div>
+            <p class="text-xs text-slate-400 mt-1">Multi-relational database mapping 5 soil types & water tables to crops, yield, rotation & forestry.</p>
+          </div>
+          <span class="text-[11px] font-mono px-2.5 py-1 rounded-full bg-charcoal-800 text-emerald-300 border border-emerald-500/20">
+            5 Soils × 2 Water Tables
+          </span>
+        </div>
+
+        <!-- Soil & Water Table Selectors -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Select Soil Profile:</label>
+            <div class="grid grid-cols-3 sm:grid-cols-5 gap-1.5" id="soilBtnGroup">
+              <button onclick="window.sehawaApp.setSoil('alluvial')" class="soil-tab-btn px-2.5 py-2 rounded-xl text-xs font-medium bg-emerald-950 text-emerald-300 border border-emerald-500/40 text-center transition-all" data-soil="alluvial">Alluvial</button>
+              <button onclick="window.sehawaApp.setSoil('black')" class="soil-tab-btn px-2.5 py-2 rounded-xl text-xs font-medium bg-charcoal-900 text-slate-300 border border-charcoal-700 text-center hover:bg-charcoal-800 transition-all" data-soil="black">Black</button>
+              <button onclick="window.sehawaApp.setSoil('red')" class="soil-tab-btn px-2.5 py-2 rounded-xl text-xs font-medium bg-charcoal-900 text-slate-300 border border-charcoal-700 text-center hover:bg-charcoal-800 transition-all" data-soil="red">Red</button>
+              <button onclick="window.sehawaApp.setSoil('sandy')" class="soil-tab-btn px-2.5 py-2 rounded-xl text-xs font-medium bg-charcoal-900 text-slate-300 border border-charcoal-700 text-center hover:bg-charcoal-800 transition-all" data-soil="sandy">Sandy</button>
+              <button onclick="window.sehawaApp.setSoil('loamy')" class="soil-tab-btn px-2.5 py-2 rounded-xl text-xs font-medium bg-charcoal-900 text-slate-300 border border-charcoal-700 text-center hover:bg-charcoal-800 transition-all" data-soil="loamy">Loamy</button>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Water Table Depth:</label>
+            <div class="grid grid-cols-2 gap-2" id="waterBtnGroup">
+              <button onclick="window.sehawaApp.setWaterTable('high')" class="water-tab-btn px-3 py-2 rounded-xl text-xs font-medium bg-emerald-950 text-emerald-300 border border-emerald-500/40 text-center transition-all flex items-center justify-center gap-1.5" data-water="high">
+                <i data-lucide="droplets" class="w-3.5 h-3.5 text-blue-400"></i>
+                <span>High Water Table (&lt; 15m)</span>
+              </button>
+              <button onclick="window.sehawaApp.setWaterTable('low')" class="water-tab-btn px-3 py-2 rounded-xl text-xs font-medium bg-charcoal-900 text-slate-300 border border-charcoal-700 text-center hover:bg-charcoal-800 transition-all flex items-center justify-center gap-1.5" data-water="low">
+                <i data-lucide="wind" class="w-3.5 h-3.5 text-amber-400"></i>
+                <span>Low Water Table (&gt; 35m)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div id="matrixResultCard" class="bg-charcoal-900/90 rounded-2xl p-5 border border-white/10 space-y-4"></div>
+      </div>
+
+      <!-- SUBSECTION 2: HOME & ROOFTOP VEGETABLE UNIT -->
+      <div class="glass-card rounded-3xl p-5 sm:p-7 border border-emerald-500/20">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-5">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="p-1.5 rounded-lg bg-emerald-950 text-mint-400 border border-mint-500/30">
+                <i data-lucide="home" class="w-4 h-4"></i>
+              </span>
+              <h3 class="text-lg font-bold text-white">Home & Rooftop Vegetable Unit</h3>
+            </div>
+            <p class="text-xs text-slate-400 mt-1">Specialized micro-cultivation profiles for balcony & terrace containers with calibrated drip flow.</p>
+          </div>
+          <span class="text-[11px] font-mono px-2.5 py-1 rounded-full bg-emerald-950 text-mint-300 border border-mint-500/20">
+            Drip-Calibrated Profiles
+          </span>
+        </div>
+
+        <div class="flex flex-wrap gap-2 mb-5" id="veggieChips">
+          <button onclick="window.sehawaApp.selectVeggie('tomato')" class="veggie-chip px-3 py-1.5 rounded-xl text-xs font-medium bg-emerald-950 text-emerald-300 border border-emerald-500/40 flex items-center gap-1.5" data-veg="tomato">🍅 Tomato</button>
+          <button onclick="window.sehawaApp.selectVeggie('spinach')" class="veggie-chip px-3 py-1.5 rounded-xl text-xs font-medium bg-charcoal-900 text-slate-300 border border-charcoal-700 hover:bg-charcoal-800 flex items-center gap-1.5" data-veg="spinach">🥬 Spinach (Palak)</button>
+          <button onclick="window.sehawaApp.selectVeggie('chili')" class="veggie-chip px-3 py-1.5 rounded-xl text-xs font-medium bg-charcoal-900 text-slate-300 border border-charcoal-700 hover:bg-charcoal-800 flex items-center gap-1.5" data-veg="chili">🌶️ Chili (Mirchi)</button>
+          <button onclick="window.sehawaApp.selectVeggie('coriander')" class="veggie-chip px-3 py-1.5 rounded-xl text-xs font-medium bg-charcoal-900 text-slate-300 border border-charcoal-700 hover:bg-charcoal-800 flex items-center gap-1.5" data-veg="coriander">🌿 Coriander (Dhaniya)</button>
+          <button onclick="window.sehawaApp.selectVeggie('bellpepper')" class="veggie-chip px-3 py-1.5 rounded-xl text-xs font-medium bg-charcoal-900 text-slate-300 border border-charcoal-700 hover:bg-charcoal-800 flex items-center gap-1.5" data-veg="bellpepper">🫑 Bell Pepper</button>
+        </div>
+
+        <div id="veggieResultCard" class="bg-charcoal-900/90 rounded-2xl p-5 border border-white/10"></div>
+      </div>
+
+      <!-- SUBSECTION 3: PREMIUM FARMING WISDOM TIPS -->
+      <div class="glass-card rounded-3xl p-5 sm:p-7 border border-emerald-500/20">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <span class="p-1.5 rounded-lg bg-amber-950 text-amber-400 border border-amber-500/30">
+              <i data-lucide="sparkles" class="w-4 h-4"></i>
+            </span>
+            <h3 class="text-lg font-bold text-white">Premium Farming Wisdom & Companion Matrix</h3>
+          </div>
+          <span class="text-[11px] font-mono px-2.5 py-1 rounded-full bg-amber-950 text-amber-300 border border-amber-500/20">
+            Field-Tested
+          </span>
+        </div>
+        <p class="text-xs text-slate-400 mb-5">Exhaustive companion planting synergies to break pest cycles, attract predators, and maximize nitrogen fixation without synthetic chemicals.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="wisdomCardsContainer"></div>
+      </div>
+
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- TAB 2: 🍂 LEAF DOCTOR & VERIFIED PESTICIDE GUIDE          -->
+    <!-- ======================================================== -->
+    <section id="tab-leafdoctor" class="space-y-6 hidden">
+      <div class="glass-card rounded-3xl p-5 sm:p-7 border border-emerald-500/20">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-5">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="p-1.5 rounded-lg bg-emerald-950 text-emerald-400 border border-emerald-600/30">
+                <i data-lucide="camera" class="w-4 h-4"></i>
+              </span>
+              <h3 class="text-lg font-bold text-white">Camera-Based Native Leaf Doctor</h3>
+            </div>
+            <p class="text-xs text-slate-400 mt-1">Mobile viewfinder with client-side HTML5 canvas pixel analysis. Analyzes chlorophyll density, chlorosis & necrotic blight.</p>
+          </div>
+          <span class="text-[11px] font-mono px-2.5 py-1 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-500/20">
+            Pixel Engine Active
+          </span>
+        </div>
+
+        <!-- Viewport -->
+        <div class="relative w-full max-w-lg mx-auto aspect-[4/3] bg-charcoal-950 rounded-2xl overflow-hidden border border-charcoal-700 shadow-inner flex items-center justify-center">
+          <video id="cameraFeed" autoplay playsinline muted class="w-full h-full object-cover"></video>
+          <canvas id="analysisCanvas" class="hidden w-full h-full object-cover"></canvas>
+
+          <div id="viewfinderReticle" class="absolute inset-8 border-2 border-dashed border-emerald-400/50 rounded-xl pointer-events-none flex items-center justify-center">
+            <div class="text-[11px] font-mono text-emerald-300/80 bg-charcoal-950/80 px-2 py-1 rounded backdrop-blur-sm">
+              ALIGN LEAF INSIDE BOUNDS
+            </div>
+          </div>
+
+          <div id="cameraStatusBadge" class="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-charcoal-900/90 border border-white/10 text-[10px] font-mono text-slate-300 backdrop-blur-md">
+            <span class="w-2 h-2 rounded-full bg-slate-500" id="camStatusDot"></span>
+            <span id="camStatusText">Standby</span>
+          </div>
+
+          <canvas id="hiddenEngineCanvas" class="hidden"></canvas>
+        </div>
+
+        <!-- Camera Controls -->
+        <div class="mt-4 flex flex-wrap items-center justify-center gap-3">
+          <button id="btnStartCamera" onclick="window.sehawaApp.startCamera()" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs transition-all flex items-center gap-2 shadow-lg shadow-emerald-900/30">
+            <i data-lucide="video" class="w-4 h-4"></i>
+            <span>Start Live Camera</span>
+          </button>
+          <button id="btnCapturePhoto" onclick="window.sehawaApp.captureAndAnalyze()" class="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-charcoal-950 font-bold text-xs transition-all flex items-center gap-2 shadow-lg shadow-emerald-500/20">
+            <i data-lucide="aperture" class="w-4 h-4"></i>
+            <span>Capture & Diagnose</span>
+          </button>
+          <button id="btnStopCamera" onclick="window.sehawaApp.stopCamera()" class="px-3.5 py-2.5 rounded-xl bg-charcoal-800 hover:bg-charcoal-700 text-slate-300 font-medium text-xs transition-all flex items-center gap-1.5 border border-charcoal-600">
+            <i data-lucide="square" class="w-3.5 h-3.5 text-signal-red"></i>
+            <span>Stop Cam</span>
+          </button>
+        </div>
+
+        <!-- Sample Leaf Presets -->
+        <div class="mt-4 pt-4 border-t border-charcoal-700/60 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400">
+          <span>Or test immediately with pre-calibrated botanical leaf samples:</span>
+          <div class="flex flex-wrap gap-2">
+            <button onclick="window.sehawaApp.loadSampleLeaf('healthy')" class="px-2.5 py-1 rounded-lg bg-emerald-950 hover:bg-emerald-900 text-emerald-300 border border-emerald-600/30 text-xs font-medium">🌿 Healthy Leaf</button>
+            <button onclick="window.sehawaApp.loadSampleLeaf('chlorosis')" class="px-2.5 py-1 rounded-lg bg-amber-950 hover:bg-amber-900 text-amber-300 border border-amber-600/30 text-xs font-medium">🍂 Chlorosis (Yellow)</button>
+            <button onclick="window.sehawaApp.loadSampleLeaf('blight')" class="px-2.5 py-1 rounded-lg bg-red-950 hover:bg-red-900 text-red-300 border border-red-600/30 text-xs font-medium">🍂 Necrotic Blight (Brown)</button>
+          </div>
+        </div>
+
+        <div id="leafDiagnosisResult" class="mt-6 hidden space-y-4"></div>
+      </div>
+
+      <!-- Verified Pesticide Guide -->
+      <div class="glass-card rounded-3xl p-5 sm:p-7 border border-emerald-500/20">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-5">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="p-1.5 rounded-lg bg-emerald-950 text-mint-400 border border-mint-500/30">
+                <i data-lucide="shield-alert" class="w-4 h-4"></i>
+              </span>
+              <h3 class="text-lg font-bold text-white">Verified Ingredient & Pesticide Guide</h3>
+            </div>
+            <p class="text-xs text-slate-400 mt-1">Chemical & organic formulation profiles with exact commercial trade names, real e-commerce URLs, and safety withholding periods.</p>
+          </div>
+          
+          <div class="relative w-full sm:w-64">
+            <i data-lucide="search" class="w-4 h-4 absolute left-3 top-2.5 text-slate-400"></i>
+            <input type="text" id="pesticideSearchInput" oninput="window.sehawaApp.filterPesticides(this.value)" placeholder="Search disease or chemical..." class="w-full bg-charcoal-900 border border-charcoal-700 rounded-xl pl-9 pr-3 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-400">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="pesticideDirectory"></div>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- TAB 3: ⚡️ PLANNERS (WEATHER SHIELD & IRRIGATION TIMER)   -->
+    <!-- ======================================================== -->
+    <section id="tab-planners" class="space-y-6 hidden">
+      <div class="glass-card rounded-3xl p-5 sm:p-7 border border-emerald-500/20">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-5">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="p-1.5 rounded-lg bg-amber-950 text-amber-400 border border-amber-500/30">
+                <i data-lucide="cloud-lightning" class="w-4 h-4"></i>
+              </span>
+              <h3 class="text-lg font-bold text-white">Dual-Trigger Weather Shield & Predictive Grid Planner</h3>
+            </div>
+            <p class="text-xs text-slate-400 mt-1">Adverse weather simulation triggers native alerts and linked predictive electricity grid shutdown warnings.</p>
+          </div>
+          <span class="text-[11px] font-mono px-2.5 py-1 rounded-full bg-amber-950 text-amber-300 border border-amber-500/20">
+            Predictive Logic Armed
+          </span>
+        </div>
+
+        <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Simulate or Select Live Weather Event:</label>
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 mb-6">
+          <button onclick="window.sehawaApp.triggerWeatherAlert('torrential')" class="weather-btn p-3 rounded-2xl bg-charcoal-900 border border-charcoal-700 hover:border-signal-red/60 text-left transition-all group">
+            <i data-lucide="cloud-rain" class="w-5 h-5 text-blue-400 mb-1.5 group-hover:scale-110 transition-transform"></i>
+            <div class="text-xs font-bold text-white">Torrential Rain</div>
+            <div class="text-[10px] text-slate-400">85mm/hr • Storm</div>
+          </button>
+
+          <button onclick="window.sehawaApp.triggerWeatherAlert('heatwave')" class="weather-btn p-3 rounded-2xl bg-charcoal-900 border border-charcoal-700 hover:border-amber-500/60 text-left transition-all group">
+            <i data-lucide="sun" class="w-5 h-5 text-amber-400 mb-1.5 group-hover:scale-110 transition-transform"></i>
+            <div class="text-xs font-bold text-white">Severe Heatwave</div>
+            <div class="text-[10px] text-slate-400">44.5°C • Low RH</div>
+          </button>
+
+          <button onclick="window.sehawaApp.triggerWeatherAlert('frost')" class="weather-btn p-3 rounded-2xl bg-charcoal-900 border border-charcoal-700 hover:border-blue-400/60 text-left transition-all group">
+            <i data-lucide="snowflake" class="w-5 h-5 text-blue-300 mb-1.5 group-hover:scale-110 transition-transform"></i>
+            <div class="text-xs font-bold text-white">Sudden Frost</div>
+            <div class="text-[10px] text-slate-400">2.1°C • Ground Freeze</div>
+          </button>
+
+          <button onclick="window.sehawaApp.triggerWeatherAlert('cyclone')" class="weather-btn p-3 rounded-2xl bg-charcoal-900 border border-charcoal-700 hover:border-signal-red/60 text-left transition-all group">
+            <i data-lucide="wind" class="w-5 h-5 text-red-400 mb-1.5 group-hover:scale-110 transition-transform"></i>
+            <div class="text-xs font-bold text-white">High Humidity Cyclone</div>
+            <div class="text-[10px] text-slate-400">75 km/h Squall</div>
+          </button>
+
+          <button onclick="window.sehawaApp.triggerWeatherAlert('clear')" class="weather-btn p-3 rounded-2xl bg-charcoal-900 border border-charcoal-700 hover:border-emerald-500/60 text-left transition-all group">
+            <i data-lucide="sun-medium" class="w-5 h-5 text-emerald-400 mb-1.5 group-hover:scale-110 transition-transform"></i>
+            <div class="text-xs font-bold text-white">Optimal Sunny</div>
+            <div class="text-[10px] text-slate-400">28°C • Mild Breeze</div>
+          </button>
+        </div>
+
+        <div id="weatherAlertDisplay" class="hidden"></div>
+
+        <!-- Manual Power Cut Scheduler -->
+        <div class="mt-8 pt-6 border-t border-charcoal-700/60">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="p-1 rounded bg-amber-950 text-amber-400 border border-amber-600/30">
+              <i data-lucide="timer" class="w-3.5 h-3.5"></i>
+            </span>
+            <h4 class="text-sm font-bold text-white">Manual Power Cut Intimation Scheduler</h4>
+          </div>
+          <p class="text-xs text-slate-400 mb-4">Calculate the precise crop water volume and pre-cut pump runtime required before maintenance feeder windows hit.</p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 bg-charcoal-900/80 p-4 rounded-2xl border border-charcoal-700">
+            <div>
+              <label class="block text-[11px] font-mono text-slate-400 uppercase mb-1">Cultivated Acreage:</label>
+              <input type="number" id="schedAcreage" value="2.5" step="0.5" min="0.25" max="50" oninput="window.sehawaApp.calculatePowerCutIrrigation()" class="w-full bg-charcoal-950 border border-charcoal-700 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-emerald-400 font-mono">
+            </div>
+            <div>
+              <label class="block text-[11px] font-mono text-slate-400 uppercase mb-1">Crop Type:</label>
+              <select id="schedCrop" onchange="window.sehawaApp.calculatePowerCutIrrigation()" class="w-full bg-charcoal-950 border border-charcoal-700 rounded-xl px-2 py-1.5 text-xs text-white focus:outline-none focus:border-emerald-400 font-mono">
+                <option value="tomato">Tomato (4.8 mm/day)</option>
+                <option value="cotton">Cotton (6.2 mm/day)</option>
+                <option value="wheat">Wheat (4.2 mm/day)</option>
+                <option value="sugarcane">Sugarcane (8.5 mm/day)</option>
+                <option value="paddy">Paddy / Rice (9.2 mm/day)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[11px] font-mono text-slate-400 uppercase mb-1">Expected Power Cut (Hours):</label>
+              <input type="number" id="schedCutHours" value="6" min="1" max="24" oninput="window.sehawaApp.calculatePowerCutIrrigation()" class="w-full bg-charcoal-950 border border-charcoal-700 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-emerald-400 font-mono">
+            </div>
+            <div>
+              <label class="block text-[11px] font-mono text-slate-400 uppercase mb-1">Ambient Temp (°C):</label>
+              <input type="number" id="schedTemp" value="34" min="10" max="50" oninput="window.sehawaApp.calculatePowerCutIrrigation()" class="w-full bg-charcoal-950 border border-charcoal-700 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-emerald-400 font-mono">
+            </div>
+          </div>
+
+          <div id="powerCutOutput" class="mt-3 p-4 rounded-2xl bg-charcoal-950/80 border border-emerald-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"></div>
+        </div>
+      </div>
+
+      <!-- Irrigation Timer & Market Rescue -->
+      <div class="glass-card rounded-3xl p-5 sm:p-7 border border-emerald-500/20">
+        <div class="mb-8">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="p-1.5 rounded-lg bg-emerald-950 text-emerald-400 border border-emerald-600/30">
+                  <i data-lucide="droplet" class="w-4 h-4"></i>
+                </span>
+                <h3 class="text-lg font-bold text-white">Dynamic Transpiration Irrigation Timer</h3>
+              </div>
+              <p class="text-xs text-slate-400 mt-1">Deducts recent rainfall millimeters from crop's daily transpiration demand (ETc) to give exact watering minutes.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-[11px] font-mono text-slate-400">Rainfall:</span>
+              <input type="range" id="rainDeductionSlider" min="0" max="30" value="4" oninput="window.sehawaApp.updateRainfallDeduction(this.value)" class="w-24 accent-emerald-500 cursor-pointer">
+              <span id="rainDeductionLabel" class="text-xs font-mono font-bold text-blue-400">4 mm</span>
+            </div>
+          </div>
+
+          <div class="bg-charcoal-900/90 rounded-2xl p-6 border border-emerald-500/30 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="text-center md:text-left">
+              <div class="text-[11px] font-mono uppercase text-emerald-300 tracking-wider">Calculated Run Time for Today</div>
+              <div class="text-5xl font-extrabold font-mono text-white tracking-tight mt-1" id="timerDigits">24:48</div>
+              <div class="text-xs text-slate-400 mt-1" id="timerFormulaDetails">Base ETc: 32m • Deducted 4mm rain (-7.2m) • Net: 24.8 mins</div>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <button id="btnTimerToggle" onclick="window.sehawaApp.toggleIrrigationTimer()" class="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-charcoal-950 font-bold text-xs transition-all flex items-center gap-2 shadow-lg shadow-emerald-500/25">
+                <i data-lucide="play" id="timerIcon" class="w-4 h-4"></i>
+                <span id="timerBtnText">Start Pump Timer</span>
+              </button>
+              <button onclick="window.sehawaApp.resetIrrigationTimer()" class="px-4 py-2.5 rounded-xl bg-charcoal-800 hover:bg-charcoal-700 text-slate-300 font-medium text-xs transition-all border border-charcoal-600">
+                <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+              </button>
+              <button onclick="window.sehawaApp.playBeepTest()" title="Audio Ping Simulation" class="px-3 py-2.5 rounded-xl bg-charcoal-800 hover:bg-charcoal-700 text-amber-400 font-medium text-xs transition-all border border-charcoal-600">
+                <i data-lucide="bell" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Market Rescue System -->
+        <div class="pt-6 border-t border-charcoal-700/60">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="p-1.5 rounded-lg bg-signal-darkred text-signal-red border border-signal-red/30">
+                  <i data-lucide="truck" class="w-4 h-4"></i>
+                </span>
+                <h3 class="text-lg font-bold text-white">Market Rescue System (Distress Rainfall Response)</h3>
+              </div>
+              <p class="text-xs text-slate-400 mt-1">Instant priority routing to direct farmers to harvest immediately and sell to emergency bulk buyers before rotting.</p>
+            </div>
+            
+            <button onclick="window.sehawaApp.triggerMarketRescue()" class="px-3 py-1.5 rounded-xl bg-signal-red hover:bg-red-500 text-white font-bold text-xs transition-all flex items-center gap-1.5 shadow-lg shadow-signal-red/30">
+              <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i>
+              <span>Simulate Unseasonal Rain Threat</span>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3" id="marketRescueDirectory"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- TAB 4: 👥 COMMUNITY RESIDENCY FORUM (LOCALSTORAGE CRUD) -->
+    <!-- ======================================================== -->
+    <section id="tab-community" class="space-y-6 hidden">
+      <div class="glass-card rounded-3xl p-5 sm:p-7 border border-emerald-500/20">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-5">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="p-1.5 rounded-lg bg-emerald-950 text-emerald-400 border border-emerald-600/30">
+                <i data-lucide="users" class="w-4 h-4"></i>
+              </span>
+              <h3 class="text-lg font-bold text-white">Local Residency Community Forum</h3>
+            </div>
+            <p class="text-xs text-slate-400 mt-1">Peer-to-peer bulletin UI with 100% offline CRUD writing directly to browser localStorage inside 1-village radius.</p>
+          </div>
+
+          <button onclick="window.sehawaApp.openNewPostModal()" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-charcoal-950 font-bold text-xs transition-all flex items-center gap-2 shadow-lg shadow-emerald-500/20">
+            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+            <span>Post New Listing</span>
+          </button>
+        </div>
+
+        <div class="flex flex-wrap gap-2 mb-5">
+          <button onclick="window.sehawaApp.filterForumCategory('all')" class="forum-filter-btn px-3 py-1 rounded-xl text-xs font-medium bg-emerald-950 text-emerald-300 border border-emerald-500/40" data-cat="all">All Listings</button>
+          <button onclick="window.sehawaApp.filterForumCategory('tractor')" class="forum-filter-btn px-3 py-1 rounded-xl text-xs font-medium bg-charcoal-900 text-slate-300 border border-charcoal-700" data-cat="tractor">🚜 Tractor Rentals</button>
+          <button onclick="window.sehawaApp.filterForumCategory('labor')" class="forum-filter-btn px-3 py-1 rounded-xl text-xs font-medium bg-charcoal-900 text-slate-300 border border-charcoal-700" data-cat="labor">🤝 Labor Sharing</button>
+          <button onclick="window.sehawaApp.filterForumCategory('tool')" class="forum-filter-btn px-3 py-1 rounded-xl text-xs font-medium bg-charcoal-900 text-slate-300 border border-charcoal-700" data-cat="tool">🛠️ Tool Exchange</button>
+          <button onclick="window.sehawaApp.filterForumCategory('seed_manure')" class="forum-filter-btn px-3 py-1 rounded-xl text-xs font-medium bg-charcoal-900 text-slate-300 border border-charcoal-700" data-cat="seed_manure">🌱 Seed & Manure</button>
+        </div>
+
+        <div class="space-y-3" id="forumFeedContainer"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- BOTTOM NAVIGATION BAR -->
+  <nav class="fixed bottom-0 left-0 right-0 z-50 flex justify-center px-4 pb-3 pt-1 pointer-events-none">
+    <div class="w-full max-w-md bg-charcoal-900/95 border border-charcoal-700/90 shadow-2xl rounded-2xl backdrop-blur-xl px-2 py-1.5 flex items-center justify-around pointer-events-auto">
+      <button onclick="window.sehawaApp.switchTab('home')" class="nav-tab-btn flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-all text-emerald-400 bg-emerald-950/60" data-target="home">
+        <i data-lucide="home" class="w-5 h-5"></i>
+        <span class="text-[10px] font-semibold tracking-wider">Home</span>
+      </button>
+
+      <button onclick="window.sehawaApp.switchTab('leafdoctor')" class="nav-tab-btn flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-all text-slate-400 hover:text-slate-200" data-target="leafdoctor">
+        <i data-lucide="leaf" class="w-5 h-5"></i>
+        <span class="text-[10px] font-semibold tracking-wider">Leaf Doctor</span>
+      </button>
+
+      <button onclick="window.sehawaApp.switchTab('planners')" class="nav-tab-btn flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-all text-slate-400 hover:text-slate-200" data-target="planners">
+        <i data-lucide="zap" class="w-5 h-5"></i>
+        <span class="text-[10px] font-semibold tracking-wider">Planners</span>
+      </button>
+
+      <button onclick="window.sehawaApp.switchTab('community')" class="nav-tab-btn flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-all text-slate-400 hover:text-slate-200" data-target="community">
+        <div class="relative">
+          <i data-lucide="users" class="w-5 h-5"></i>
+          <span class="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-emerald-400"></span>
+        </div>
+        <span class="text-[10px] font-semibold tracking-wider">Community</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- PREDICTIVE POWER OUTAGE MODAL -->
+  <div id="predictiveAlertModal" class="fixed inset-0 z-50 bg-charcoal-950/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="w-full max-w-lg glass-card-red rounded-3xl p-6 sm:p-7 shadow-2xl border-2 border-signal-red">
+      <div class="flex items-start gap-4">
+        <div class="w-12 h-12 rounded-2xl bg-signal-darkred/90 border border-signal-red flex items-center justify-center shrink-0">
+          <i data-lucide="alert-octagon" class="w-7 h-7 text-signal-red animate-pulse"></i>
+        </div>
+        <div>
+          <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono tracking-wider uppercase bg-signal-darkred text-red-200 mb-2 border border-signal-red/40">
+            CRITICAL GRID CONTINGENCY
+          </div>
+          <h3 class="text-xl font-extrabold text-white leading-tight">
+            🚨 PREDICTIVE ALERT: Approaching severe weather has placed your local electricity grid at high risk.
+          </h3>
+        </div>
+      </div>
+
+      <div class="mt-4 p-3.5 rounded-xl bg-charcoal-950/90 border border-signal-red/30 text-xs text-slate-200 leading-relaxed space-y-2">
+        <p class="font-medium text-red-200">Power lines will likely undergo automatic emergency substation trip-off within 45 to 90 minutes.</p>
+        <div class="p-2.5 rounded-lg bg-emerald-950/70 border border-emerald-500/40 text-emerald-300 font-semibold flex items-center gap-2">
+          <i data-lucide="zap" class="w-4 h-4 text-amber-400 shrink-0"></i>
+          <span>Run your water irrigation pumps NOW before the 3-phase grid goes offline!</span>
+        </div>
+      </div>
+
+      <div class="mt-5 flex items-center justify-end gap-3">
+        <button onclick="window.sehawaApp.dismissPredictiveModal()" class="px-4 py-2 rounded-xl bg-charcoal-800 hover:bg-charcoal-700 text-slate-300 text-xs font-semibold">Acknowledge</button>
+        <button onclick="window.sehawaApp.goToPlannersFromModal()" class="px-5 py-2 rounded-xl bg-signal-red hover:bg-red-500 text-white font-bold text-xs shadow-lg shadow-signal-red/30 flex items-center gap-1.5">
+          <span>Start Pump Timer</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMMUNITY FORUM: POST NEW LISTING MODAL -->
+  <div id="newPostModal" class="fixed inset-0 z-50 bg-charcoal-950/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="w-full max-w-lg glass-card rounded-3xl p-6 shadow-2xl border border-emerald-500/30">
+      <div class="flex items-center justify-between pb-4 border-b border-charcoal-700/60 mb-4">
+        <div class="flex items-center gap-2">
+          <span class="p-1.5 rounded-lg bg-emerald-950 text-emerald-400">
+            <i data-lucide="edit-3" class="w-4 h-4"></i>
+          </span>
+          <h3 class="text-base font-bold text-white">Create Peer-to-Peer Listing</h3>
+        </div>
+        <button onclick="window.sehawaApp.closeNewPostModal()" class="text-slate-400 hover:text-white">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="newPostForm" onsubmit="window.sehawaApp.submitNewPost(event)" class="space-y-3.5 text-xs">
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">Category:</label>
+          <select id="postCategory" required class="w-full bg-charcoal-900 border border-charcoal-700 rounded-xl px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-400">
+            <option value="tractor">🚜 Tractor Rental</option>
+            <option value="labor">🤝 Collective Labor Sharing</option>
+            <option value="tool">🛠️ Tool & Implement Barter</option>
+            <option value="seed_manure">🌱 Seed & Organic Manure Swap</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">Listing Title:</label>
+          <input type="text" id="postTitle" required placeholder="e.g., John Deere 5050D Tractor with Cultivator" class="w-full bg-charcoal-900 border border-charcoal-700 rounded-xl px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-400">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-slate-300 font-medium mb-1">Village Sector / Ward:</label>
+            <input type="text" id="postLocation" required placeholder="e.g., North Ward, Rampur" class="w-full bg-charcoal-900 border border-charcoal-700 rounded-xl px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-400">
+          </div>
+          <div>
+            <label class="block text-slate-300 font-medium mb-1">Price / Terms:</label>
+            <input type="text" id="postTerms" required placeholder="e.g., ₹850/hour or Barter" class="w-full bg-charcoal-900 border border-charcoal-700 rounded-xl px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-400">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">Contact Phone / Farmer Name:</label>
+          <input type="text" id="postContact" required placeholder="e.g., Ramesh Patel (+91 98765-43210)" class="w-full bg-charcoal-900 border border-charcoal-700 rounded-xl px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-400">
+        </div>
+
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">Equipment / Labor Details:</label>
+          <textarea id="postDescription" rows="3" required placeholder="Describe condition, implement accessories, availability hours..." class="w-full bg-charcoal-900 border border-charcoal-700 rounded-xl p-3 text-slate-200 focus:outline-none focus:border-emerald-400"></textarea>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-3">
+          <button type="button" onclick="window.sehawaApp.closeNewPostModal()" class="px-4 py-2 rounded-xl bg-charcoal-800 text-slate-300 font-medium">Cancel</button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-charcoal-950 font-bold shadow-lg shadow-emerald-500/20">Publish Listing</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- SCRIPT LOGIC (OFFLINE DATABASE & ENGINES) -->
+  <script>
+    const AGRICULTURAL_CORE_MATRIX = {
+      alluvial: {
+        soilName: "Alluvial Soil (Gangetic & Riverine)",
+        phRange: "6.5 - 7.8",
+        characteristics: "Rich in potash and humus; high fertility; loam to clayey texture with excellent capillary retention.",
+        variants: {
+          high: {
+            waterLevelLabel: "High Water Table (< 15m depth)",
+            bestSuitedCrop: "Paddy (Oryza sativa - PR 126 / Basmati 1509)",
+            expectedYield: "28 - 32 Quintals per acre",
+            marketDemand: "High",
+            cropRotation3Step: [
+              { step: 1, season: "Kharif", crop: "Paddy (Transplanted)" },
+              { step: 2, season: "Rabi", crop: "Mustard or Potato" },
+              { step: 3, season: "Zaid", crop: "Green Gram (Moong) - Green Manure" }
+            ],
+            reafforestationTrees: [
+              { name: "Bamboo (Bambusa balcooa)", trait: "Binds loose alluvial banks, harvested every 3 years" },
+              { name: "Arjun (Terminalia arjuna)", trait: "Tolerates waterlogged root zones, builds riverbanks" },
+              { name: "Subabul", trait: "Fodder foliage & rapid atmospheric nitrogen fixing" }
+            ],
+            irrigationAdvisory: "High groundwater. Implement Alternate Wetting and Drying (AWD) to save 30% water."
+          },
+          low: {
+            waterLevelLabel: "Low Water Table (> 35m depth)",
+            bestSuitedCrop: "Maize / Corn (DHM 117 / Pioneer P3522)",
+            expectedYield: "24 - 28 Quintals per acre",
+            marketDemand: "High",
+            cropRotation3Step: [
+              { step: 1, season: "Kharif", crop: "Maize (Hybrid Grain)" },
+              { step: 2, season: "Rabi", crop: "Chickpea (Chana)" },
+              { step: 3, season: "Zaid", crop: "Cowpea (Foliar Mulch)" }
+            ],
+            reafforestationTrees: [
+              { name: "Neem (Azadirachta indica)", trait: "Deep taproot extracts moisture, natural pest boundary" },
+              { name: "Shisham (Dalbergia sissoo)", trait: "Valuable timber with minimal surface water" }
+            ],
+            irrigationAdvisory: "Sub-surface drip recommended. Avoid flood irrigation to prevent aquifer overdraft."
+          }
+        }
+      },
+      black: {
+        soilName: "Black Soil (Regur / Vertisol)",
+        phRange: "7.5 - 8.5",
+        characteristics: "High clay percentage; self-ploughing capacity; swells when wet and cracks when dry; rich in calcium & magnesium.",
+        variants: {
+          high: {
+            waterLevelLabel: "High Water Table (< 15m depth)",
+            bestSuitedCrop: "Sugarcane (Co 86032 / Co 0238)",
+            expectedYield: "45 - 55 Tonnes per acre",
+            marketDemand: "High",
+            cropRotation3Step: [
+              { step: 1, season: "12-14 Months", crop: "Sugarcane (Plant + Ratoon)" },
+              { step: 2, season: "Kharif", crop: "Soybean (JS 335)" },
+              { step: 3, season: "Rabi", crop: "Gram / Chickpea" }
+            ],
+            reafforestationTrees: [
+              { name: "Teak (Tectona grandis)", trait: "High value timber on farm boundaries" },
+              { name: "Karanja (Pongamia pinnata)", trait: "Biofuel seed oil, deep roots survive heavy clay" }
+            ],
+            irrigationAdvisory: "Ensure broadbed furrow layout to prevent water stagnation and root asphyxiation."
+          },
+          low: {
+            waterLevelLabel: "Low Water Table (> 35m depth)",
+            bestSuitedCrop: "Bt Cotton (Bollgard II / RCH 659)",
+            expectedYield: "12 - 15 Quintals per acre",
+            marketDemand: "Medium-High",
+            cropRotation3Step: [
+              { step: 1, season: "Long Kharif", crop: "Bt Cotton" },
+              { step: 2, season: "Zaid", crop: "Summer Sesame (Til)" },
+              { step: 3, season: "Kharif", crop: "Pigeon Pea (Arhar)" }
+            ],
+            reafforestationTrees: [
+              { name: "Babool (Acacia nilotica)", trait: "Deep taproots, drought champion in black clay" },
+              { name: "Subabul", trait: "High protein goat fodder & wood biomass" }
+            ],
+            irrigationAdvisory: "Utilize soil's natural moisture retention. Irrigate strictly at squaring & boll formation."
+          }
+        }
+      },
+      red: {
+        soilName: "Red Soil (Lateritic & Alfisol)",
+        phRange: "5.5 - 6.8",
+        characteristics: "Porous ferric oxide structure; fast drainage; low phosphorus and nitrogen.",
+        variants: {
+          high: {
+            waterLevelLabel: "High Water Table (< 15m depth)",
+            bestSuitedCrop: "Groundnut / Peanut (Kadiri-6 / TAG-24)",
+            expectedYield: "14 - 18 Quintals per acre",
+            marketDemand: "High",
+            cropRotation3Step: [
+              { step: 1, season: "Kharif", crop: "Groundnut" },
+              { step: 2, season: "Rabi", crop: "Finger Millet (Ragi)" },
+              { step: 3, season: "Zaid", crop: "Black Gram (Urad)" }
+            ],
+            reafforestationTrees: [
+              { name: "Mahogany (Swietenia macrophylla)", trait: "Dense luxury hardwood thrives in laterite" },
+              { name: "Casuarina", trait: "Boundary windbreak with atmospheric nitrogen fixation" }
+            ],
+            irrigationAdvisory: "Porous drainage requires frequent light irrigations (micro-sprinklers)."
+          },
+          low: {
+            waterLevelLabel: "Low Water Table (> 35m depth)",
+            bestSuitedCrop: "Finger Millet / Ragi (GPU 28 / ML-365)",
+            expectedYield: "12 - 16 Quintals per acre",
+            marketDemand: "High",
+            cropRotation3Step: [
+              { step: 1, season: "Kharif", crop: "Finger Millet" },
+              { step: 2, season: "Rabi", crop: "Horse Gram" },
+              { step: 3, season: "Zaid", crop: "Dhaincha (Green Manure)" }
+            ],
+            reafforestationTrees: [
+              { name: "Moringa (Moringa oleifera)", trait: "Drought resistant, recurring cash yield from pods" },
+              { name: "Neem", trait: "Extreme drought tolerance and pest barrier" }
+            ],
+            irrigationAdvisory: "Add farmyard manure in furrows to boost organic water retention."
+          }
+        }
+      },
+      sandy: {
+        soilName: "Sandy Soil (Arid & Coastal)",
+        phRange: "7.0 - 8.5",
+        characteristics: "Coarse granular particles; rapid percolation; low nutrient holding capacity.",
+        variants: {
+          high: {
+            waterLevelLabel: "High Water Table (< 15m depth)",
+            bestSuitedCrop: "Watermelon / Muskmelon (Sugar Baby)",
+            expectedYield: "16 - 22 Tonnes per acre",
+            marketDemand: "High",
+            cropRotation3Step: [
+              { step: 1, season: "Zaid", crop: "Watermelon" },
+              { step: 2, season: "Kharif", crop: "Cluster Bean (Guar)" },
+              { step: 3, season: "Rabi", crop: "Cumin / Jeera" }
+            ],
+            reafforestationTrees: [
+              { name: "Casuarina", trait: "Stabilizes mobile sand, blocks coastal winds" },
+              { name: "Khejri (Prosopis cineraria)", trait: "King tree of arid ecosystems" }
+            ],
+            irrigationAdvisory: "Daily short micro-drip pulses paired with mulch film to halt evaporation."
+          },
+          low: {
+            waterLevelLabel: "Low Water Table (> 35m depth)",
+            bestSuitedCrop: "Pearl Millet / Bajra (HHB 67 / Pioneer)",
+            expectedYield: "10 - 14 Quintals per acre",
+            marketDemand: "Medium",
+            cropRotation3Step: [
+              { step: 1, season: "Kharif", crop: "Pearl Millet" },
+              { step: 2, season: "Rabi", crop: "Moth Bean" },
+              { step: 3, season: "Zaid", crop: "Castor / Fallow" }
+            ],
+            reafforestationTrees: [
+              { name: "Khejri", trait: "Deep 30m taproot fixes nitrogen in pure sand" },
+              { name: "Ber (Ziziphus mauritiana)", trait: "Thorny perimeter fence with edible fruit" }
+            ],
+            irrigationAdvisory: "Farm pond rainwater harvesting; supplemental life-saving irrigation at tillering."
+          }
+        }
+      },
+      loamy: {
+        soilName: "Loamy Soil (Ideal Silt-Sand-Clay Balance)",
+        phRange: "6.0 - 7.2",
+        characteristics: "Optimal equilibrium of drainage and retention; dark organic rich structure.",
+        variants: {
+          high: {
+            waterLevelLabel: "High Water Table (< 15m depth)",
+            bestSuitedCrop: "Wheat (Sharbati DBW 187 / HD 2967)",
+            expectedYield: "22 - 26 Quintals per acre",
+            marketDemand: "High",
+            cropRotation3Step: [
+              { step: 1, season: "Rabi", crop: "Wheat" },
+              { step: 2, season: "Zaid", crop: "Moong Bean (Green Gram)" },
+              { step: 3, season: "Kharif", crop: "Soybean or Maize" }
+            ],
+            reafforestationTrees: [
+              { name: "Poplar (Populus deltoides)", trait: "5-year commercial plywood turnover" },
+              { name: "Shisham", trait: "Premium furniture hardwood" }
+            ],
+            irrigationAdvisory: "5 critical stages: Crown Root Initiation (21 days), Tillering, Flowering, and Milking."
+          },
+          low: {
+            waterLevelLabel: "Low Water Table (> 35m depth)",
+            bestSuitedCrop: "Mustard / Rapeseed (Pusa Bold / Giriraj)",
+            expectedYield: "8 - 11 Quintals per acre",
+            marketDemand: "High",
+            cropRotation3Step: [
+              { step: 1, season: "Rabi", crop: "Mustard" },
+              { step: 2, season: "Zaid", crop: "Guar / Cluster Bean" },
+              { step: 3, season: "Kharif", crop: "Sorghum / Jowar" }
+            ],
+            reafforestationTrees: [
+              { name: "Neem", trait: "Broad canopy, natural pest deterrent boundary" },
+              { name: "Subabul", trait: "Rapid fuel-wood and nitrogen biomass" }
+            ],
+            irrigationAdvisory: "2 light irrigations sufficient: at pre-flowering (30 days) and pod filling (60 days)."
+          }
+        }
+      }
+    };
+
+    const ROOFTOP_VEGETABLES = {
+      tomato: {
+        title: "Cherry & Roma Tomatoes",
+        scientificName: "Solanum lycopersicum",
+        dripFlow: "2.0 Litres / hour",
+        dripSchedule: "Run 15 mins at dawn, 10 mins at twilight",
+        pottingMix: "40% Cocopeat + 30% Aged Vermicompost + 20% Red Soil + 10% Perlite & Neem Cake",
+        containerSize: "14-16 inch container (minimum 20L volume)",
+        sunlight: "6 - 8 hours direct sun",
+        pruning: "Prune lower indeterminate suckers below first blossom cluster; stake with bamboo.",
+        pestVulnerability: "Whiteflies & Leaf Curl Virus",
+        proTip: "Add 1 tbsp dolomitic lime or crushed eggshells to potting mix to prevent Blossom End Rot."
+      },
+      spinach: {
+        title: "Spinach (Palak)",
+        scientificName: "Spinacia oleracea",
+        dripFlow: "1.2 Litres / hour",
+        dripSchedule: "Run 8-10 mins early morning; keep top 2 inches moist",
+        pottingMix: "50% Cocopeat + 35% Vermicompost + 15% River Sand",
+        containerSize: "Wide rectangular trough with 6-8 inch depth",
+        sunlight: "3 - 5 hours filtered morning sunlight",
+        pruning: "Cut-and-come-again harvesting: shear outer leaves 1 inch above soil.",
+        pestVulnerability: "Aphids and serpentine leaf miners",
+        proTip: "Spray diluted sour buttermilk (20ml in 1L water) weekly to enhance foliar green luster."
+      },
+      chili: {
+        title: "Pungent Chilies (Mirchi)",
+        scientificName: "Capsicum annuum",
+        dripFlow: "1.5 Litres / hour",
+        dripSchedule: "Run 12 mins at sunrise. Let topsoil dry 1 inch before re-watering",
+        pottingMix: "35% Red Loam + 35% Cocopeat + 20% Cow Dung Compost + 10% Wood Ash",
+        containerSize: "10-12 inch deep round pot with high drainage",
+        sunlight: "7 - 9 hours full intense sunshine",
+        pruning: "Pinch apical tip at 6 inches height to stimulate dense lateral fruiting branches.",
+        pestVulnerability: "Thrips, mites, and leaf curling",
+        proTip: "Foliar spray with 5ml/L neem oil + mild soap every 10 days prevents leaf curling."
+      },
+      coriander: {
+        title: "Coriander (Dhaniya)",
+        scientificName: "Coriandrum sativum",
+        dripFlow: "1.0 Litres / hour",
+        dripSchedule: "Micro-mister or drip for 6 mins twice daily",
+        pottingMix: "45% Cocopeat + 35% Fine Vermicompost + 20% Rice Husk",
+        containerSize: "4-6 inch shallow window planter box",
+        sunlight: "4 - 5 hours gentle morning sun; shelter from noon heat",
+        pruning: "Harvest top leafy sprigs regularly; do not let it bolt to seed umbels prematurely.",
+        pestVulnerability: "Powdery mildew in high humidity stagnation",
+        proTip: "Gently crush whole coriander seeds into halves with rolling pin, soak 8 hours before sowing."
+      },
+      bellpepper: {
+        title: "Bell Peppers / Capsicum",
+        scientificName: "Capsicum annuum var. grossum",
+        dripFlow: "2.2 Litres / hour",
+        dripSchedule: "Run 15 mins at 7:00 AM; steady moisture prevents blossom drop",
+        pottingMix: "40% Cocopeat + 30% Vermicompost + 20% Loam + 10% Bone Meal",
+        containerSize: "12-14 inch container with support stake",
+        sunlight: "5 - 6 hours sun, protected by 35% agro-shade net in peak summer",
+        pruning: "Limit to 4 primary stems per plant for large thick-walled peppers.",
+        pestVulnerability: "Anthracnose and fruit borers",
+        proTip: "Foliar spray of 1g/L Epsom Salt (Magnesium Sulphate) during flowering boosts fruit set."
+      }
+    };
+
+    const FARMING_WISDOM_TIPS = [
+      {
+        title: "Marigold Shield in Brassicas",
+        pairing: "French Marigolds + Cauliflower / Cabbage",
+        mechanism: "Roots exude alpha-terthienyl, reducing root-knot nematodes by 84%. Floral nectar attracts hoverflies whose larvae devour Diamondback moth caterpillars.",
+        category: "Pest Deterrence"
+      },
+      {
+        title: "Mustard Trap Line in Wheat",
+        pairing: "1 Line Mustard : 8 Lines Wheat",
+        mechanism: "Mustard acts as a sacrificial trap crop for cereal aphids. Aphid colonies are spot-managed on mustard lines, keeping wheat heads clean.",
+        category: "Trap Cropping"
+      },
+      {
+        title: "Sweet Basil Volatile Camouflage",
+        pairing: "Sweet Basil + Tomatoes & Chilies",
+        mechanism: "Basil foliage exudes linalool and eugenol, masking tomato host scent and dropping whitefly colonization by 62%.",
+        category: "Olfactory Confusion"
+      },
+      {
+        title: "Sunhemp Trap Border for Cotton",
+        pairing: "Sunhemp + Bt Cotton",
+        mechanism: "A 2-meter border of Sunhemp lures Helicoverpa armigera (bollworm) to lay eggs on Sunhemp, protecting cotton squares.",
+        category: "Biological Barrier"
+      },
+      {
+        title: "Coriander Flowering Strips",
+        pairing: "Coriander + Cabbage & Gourds",
+        mechanism: "Tiny flowers provide nectar reservoirs for Braconid parasitic wasps that destroy hundreds of pest larvae.",
+        category: "Beneficial Predators"
+      },
+      {
+        title: "Under-Canopy Ginger Stratification",
+        pairing: "Ginger + Banana / Areca Nut",
+        mechanism: "40% shade canopy matches ginger's photosynthetic saturation point. Banana root exudates suppress rhizome rot fungi.",
+        category: "Agroforestry"
+      },
+      {
+        title: "Cowpea Living Nitrogen Mulch",
+        pairing: "Cowpea + Maize / Sorghum",
+        mechanism: "Creeping cowpea fixes up to 60 kg atmospheric nitrogen per hectare and chokes out weeds like Cyperus rotundus.",
+        category: "Soil Health"
+      }
+    ];
+
+    const PESTICIDE_DATABASE = [
+      {
+        id: "pest-1",
+        disease: "Cotton & Chili Aphids, Whiteflies & Thrips",
+        targetPathogen: "Sucking Pest Complex",
+        chemicalFormulation: "Imidacloprid 17.8% SL",
+        commercialTradeName: "Tatamida (Tata Rallis)",
+        productUrl: "https://agribegri.com/products/tatamida-insecticide.php",
+        dosage: "0.5 ml per Litre of water",
+        organicFormulation: "Cold-Pressed Neem Oil (10,000 PPM) @ 3.0 ml/L",
+        safetyInterval: "15 Days (PHI)"
+      },
+      {
+        id: "pest-2",
+        disease: "Stem Borer, Leaf Folder & Diamondback Moth",
+        targetPathogen: "Lepidopteran Caterpillars",
+        chemicalFormulation: "Chlorantraniliprole 18.5% SC",
+        commercialTradeName: "Coragen (FMC Corporation)",
+        productUrl: "https://agribegri.com/products/coragen-insecticide.php",
+        dosage: "0.4 ml per Litre of water (60 ml/acre)",
+        organicFormulation: "Bacillus thuringiensis (Bt) @ 2.0 g/L or Beauveria bassiana",
+        safetyInterval: "7 Days (PHI)"
+      },
+      {
+        id: "pest-3",
+        disease: "Early & Late Blight, Anthracnose & Downy Mildew",
+        targetPathogen: "Phytophthora & Alternaria",
+        chemicalFormulation: "Azoxystrobin 18.2% + Difenoconazole 11.4% SC",
+        commercialTradeName: "Amistar Top (Syngenta)",
+        productUrl: "https://agribegri.com/products/syngenta-amistar-top-fungicide.php",
+        dosage: "1.0 ml per Litre of water",
+        organicFormulation: "Trichoderma viride 1.5% WP @ 5.0 g/L foliar spray",
+        safetyInterval: "10 Days (PHI)"
+      },
+      {
+        id: "pest-4",
+        disease: "Bacterial Leaf Blight & Citrus Canker",
+        targetPathogen: "Xanthomonas campestris",
+        chemicalFormulation: "Copper Oxychloride 50% WP + Streptomycin Sulphate 90%",
+        commercialTradeName: "Blitox 50 (Tata Rallis) + Plantomycin",
+        productUrl: "https://agribegri.com/products/tata-blitox-copper-oxychloride-fungicide.php",
+        dosage: "2.5 g Blitox + 0.1 g Plantomycin per Litre",
+        organicFormulation: "Pseudomonas fluorescens 1.0% WP @ 5.0 g/L",
+        safetyInterval: "14 Days (PHI)"
+      },
+      {
+        id: "pest-5",
+        disease: "Tikka Leaf Spot (Cercospora) & Rust",
+        targetPathogen: "Cercospora personata",
+        chemicalFormulation: "Mancozeb 75% WP",
+        commercialTradeName: "Dithane M-45 (Indofil)",
+        productUrl: "https://agribegri.com/products/indofil-m-45-contact-fungicide.php",
+        dosage: "2.0 - 2.5 g per Litre of water",
+        organicFormulation: "Dashaparni Kashayam (10-leaf extract) @ 30 ml/L",
+        safetyInterval: "14 Days (PHI)"
+      },
+      {
+        id: "pest-6",
+        disease: "Powdery Mildew & Sheath Blight",
+        targetPathogen: "Erysiphe cichoracearum",
+        chemicalFormulation: "Hexaconazole 5% SC",
+        commercialTradeName: "Contaf Plus (Tata Rallis)",
+        productUrl: "https://agribegri.com/products/tata-contaf-plus-fungicide.php",
+        dosage: "2.0 ml per Litre of water",
+        organicFormulation: "Wettable Sulphur 80% WDG @ 3.0 g/L",
+        safetyInterval: "15 Days (PHI)"
+      }
+    ];
+
+    const INITIAL_FORUM_POSTS = [
+      {
+        id: "post-101",
+        category: "tractor",
+        categoryLabel: "🚜 Tractor Rental",
+        title: "Mahindra 575 DI (45 HP) with 42-Blade Rotavator & Leveler",
+        location: "North Ward, Rampur (1.2 km away)",
+        terms: "₹850 / hour (Diesel included)",
+        contact: "Baldev Singh (+91 94140-58219)",
+        description: "Equipped with heavy-duty rotavator ready for wheat sowing and dry land leveling. Available for immediate 4-hour morning slots.",
+        timestamp: "2 hours ago",
+        upvotes: 8
+      },
+      {
+        id: "post-102",
+        category: "labor",
+        categoryLabel: "🤝 Collective Labor Sharing",
+        title: "6-Member Experienced Women Harvesting Squad",
+        location: "South Ward, Rampur (0.8 km away)",
+        terms: "₹400 / day per member or Rice Paddy Exchange",
+        contact: "Sunita Bai (+91 98291-74012)",
+        description: "Specialists in manual sickle harvesting, bundle tying, and thresher feeding for Groundnut & Paddy.",
+        timestamp: "4 hours ago",
+        upvotes: 14
+      },
+      {
+        id: "post-103",
+        category: "tool",
+        categoryLabel: "🛠️ Tool & Implement Barter",
+        title: "STIHL SR 450 Knapsack Mistblower Sprayer (14 Litre)",
+        location: "East Ward, Rampur (2.0 km away)",
+        terms: "Free Barter for 2-Row Manual Seed Drill for 3 days",
+        contact: "Kishore Verma (+91 97843-11928)",
+        description: "High velocity petrol backpack sprayer, reaches tall fruit tree canopies up to 12 meters.",
+        timestamp: "Yesterday",
+        upvotes: 5
+      },
+      {
+        id: "post-104",
+        category: "seed_manure",
+        categoryLabel: "🌱 Seed & Organic Manure",
+        title: "40 Bags Pure Desi Gir Cow Vermicompost (Enriched with Trichoderma)",
+        location: "West Ward, Rampur (1.5 km away)",
+        terms: "₹180 / 40kg bag (Pickup at farm)",
+        contact: "Devendra Joshi (+91 99280-33451)",
+        description: "Triple-sieved, aged 90 days with Eisenia fetida earthworms. Zero weed seeds, enriched with Trichoderma bio-fungicide.",
+        timestamp: "1 day ago",
+        upvotes: 11
+      }
+    ];
+
+    const REGIONAL_SPEECH_DATA = {
+      "en-IN": {
+        welcome: "Welcome to Sehawa. Autonomous offline agricultural intelligence is active on your device.",
+        powerPredict: "Predictive alert: Power lines will likely undergo automatic emergency shutdown. Run your water irrigation pumps now before the grid goes offline!",
+        leafHealthy: "Analysis complete. Your leaf exhibits high chlorophyll density and healthy vegetative turgor.",
+        leafChlorosis: "Warning. Chlorosis detected. Leaf shows yellow pigment accumulation indicating Nitrogen or Iron deficiency.",
+        leafBlight: "Urgent. Necrotic leaf spots detected. Immediate fungicidal intervention required."
+      },
+      "hi-IN": {
+        welcome: "सेहावा में आपका स्वागत है। आपके उपकरण पर ऑफ़लाइन कृषि बुद्धिमत्ता सक्रिय है।",
+        powerPredict: "भविष्यवाणी चेतावनी: खराब मौसम के कारण बिजली ग्रिड बंद होने की संभावना है। ग्रिड बंद होने से पहले तुरंत अपने सिंचाई पंप चलाएं!",
+        leafHealthy: "पत्ती का विश्लेषण पूर्ण: पत्ती में क्लोरोफिल की मात्रा भरपूर और स्वास्थ्य उत्तम है।",
+        leafChlorosis: "चेतावनी: पत्ती में पीलापन पाया गया है। यह नाइट्रोजन या लोहे की कमी का संकेत है।",
+        leafBlight: "सावधान: पत्ती पर काले या भूरे धब्बे पाए गए हैं। तुरंत कवकनाशी का छिड़काव करें।"
+      },
+      "te-IN": {
+        welcome: "సెహావా కు స్వాగతం. మీ పరికరంలో ఆఫ్‌లైన్ వ్యవసాయ మేధస్సు సక్రియం చేయబడింది.",
+        powerPredict: "హెచ్చరిక: ప్రతికూల వాతావరణం వల్ల విద్యుత్ సరఫరా ఆగిపోయే ప్రమాదం ఉంది. గ్రిడ్ ఆగిపోయే ముందే మీ మోటార్ పంపులను ఇప్పుడే నడపండి!",
+        leafHealthy: "ఆకు ఆరోగ్యకరంగా ఉంది. అధిక క్లోరోఫిల్ స్థాయిలు నమోదు చేయబడ్డాయి.",
+        leafChlorosis: "హెచ్చరిక: క్లోరోసిస్ గుర్తించబడింది. ఆకులో పసుపు రంగు పెరిగింది.",
+        leafBlight: "అత్యవసరం: ఆకుపై మచ్చల తెగులు గుర్తించబడింది. వెంటనే తగిన పురుగుమందును పిచికారీ చేయండి."
+      },
+      "ta-IN": {
+        welcome: "செஹாவாவிற்கு நல்வரவு. ஆஃப்லைன் விவசாய நுண்ணறிவு உங்கள் சாதனத்தில் இயங்குகிறது.",
+        powerPredict: "எச்சரிக்கை: கடுமையான வானிலை காரணமாக மின்தடை ஏற்பட வாய்ப்புள்ளது. மின்சாரம் துண்டிக்கப்படுவதற்கு முன் உடனடியாக பம்பை இயக்கவும்!",
+        leafHealthy: "இலை ஆரோக்கியமாக உள்ளது. அதிக பச்சைய அடர்த்தி காணப்படுகிறது.",
+        leafChlorosis: "எச்சரிக்கை: இலை மஞ்சள் நிறமாக மாறியுள்ளது (குளோரோசிஸ்).",
+        leafBlight: "கவனம்: இலையில் கருகல் நோய் கண்டறியப்பட்டுள்ளது. பூஞ்சாணக் கொல்லியைத் தெளிக்கவும்."
+      }
+    };
+
+    class SehawaApp {
+      constructor() {
+        this.selectedSoil = 'alluvial';
+        this.selectedWater = 'high';
+        this.selectedVeggie = 'tomato';
+        this.currentLanguage = 'en-IN';
+        this.activeTab = 'home';
+        this.cameraStream = null;
+        this.timerSeconds = 24 * 60 + 48;
+        this.timerInterval = null;
+        this.isTimerRunning = false;
+        this.speechRecognition = null;
+        this.isListening = false;
+        this.audioCtx = null;
+
+        if (!localStorage.getItem('sehawa_forum_posts')) {
+          localStorage.setItem('sehawa_forum_posts', JSON.stringify(INITIAL_FORUM_POSTS));
+        }
+      }
+
+      init() {
+        this.renderCoreMatrix();
+        this.renderVeggieProfile();
+        this.renderWisdomTips();
+        this.renderPesticides(PESTICIDE_DATABASE);
+        this.renderForum();
+        this.calculatePowerCutIrrigation();
+        this.initSpeechEngines();
+
+        // Check if hash points to a specific tab
+        if (window.location.hash) {
+          const h = window.location.hash.replace('#', '');
+          if (['home', 'leafdoctor', 'planners', 'community'].includes(h)) {
+            this.switchTab(h);
+          }
+        }
+
+        if (window.lucide) window.lucide.createIcons();
+      }
+
+      switchTab(tabName) {
+        this.activeTab = tabName;
+        ['home', 'leafdoctor', 'planners', 'community'].forEach(t => {
+          const el = document.getElementById(`tab-${t}`);
+          if (el) {
+            if (t === tabName) el.classList.remove('hidden');
+            else el.classList.add('hidden');
+          }
+        });
+
+        document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+          const target = btn.getAttribute('data-target');
+          if (target === tabName) {
+            btn.className = "nav-tab-btn flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-all text-emerald-400 bg-emerald-950/60";
+          } else {
+            btn.className = "nav-tab-btn flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-all text-slate-400 hover:text-slate-200";
+          }
+        });
+
+        if (window.lucide) window.lucide.createIcons();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      setLanguage(langCode) {
+        this.currentLanguage = langCode;
+        const welcomeText = (REGIONAL_SPEECH_DATA[langCode] || REGIONAL_SPEECH_DATA['en-IN']).welcome;
+        this.speakText(welcomeText);
+      }
+
+      speakText(text) {
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+          const utterance = new SpeechSynthesisUtterance(text);
+          utterance.lang = this.currentLanguage;
+          utterance.rate = 0.95;
+          window.speechSynthesis.speak(utterance);
+        }
+      }
+
+      initSpeechEngines() {
+        const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (SpeechRec) {
+          this.speechRecognition = new SpeechRec();
+          this.speechRecognition.continuous = false;
+          this.speechRecognition.interimResults = false;
+          this.speechRecognition.lang = this.currentLanguage;
+
+          this.speechRecognition.onstart = () => {
+            this.isListening = true;
+            document.getElementById('voiceAssistantBanner').classList.remove('hidden');
+            document.getElementById('voiceTranscriptText').innerText = "Listening now...";
+            document.getElementById('voiceBtnText').innerText = "Listening...";
+          };
+
+          this.speechRecognition.onresult = (e) => {
+            const transcript = e.results[0][0].transcript.toLowerCase();
+            document.getElementById('voiceTranscriptText').innerText = `You said: "${transcript}"`;
+            this.handleVoiceQuery(transcript);
+          };
+
+          this.speechRecognition.onerror = () => {
+            this.isListening = false;
+            document.getElementById('voiceBtnText').innerText = "Voice AI";
+          };
+
+          this.speechRecognition.onend = () => {
+            this.isListening = false;
+            document.getElementById('voiceBtnText').innerText = "Voice AI";
+          };
+        }
+      }
+
+      toggleVoiceRecognition() {
+        if (!this.speechRecognition) {
+          alert("Web Speech Recognition is not supported by your browser. Voice synthesis is active!");
+          return;
+        }
+        if (this.isListening) this.speechRecognition.stop();
+        else {
+          this.speechRecognition.lang = this.currentLanguage;
+          try { this.speechRecognition.start(); } catch(err) { console.log(err); }
+        }
+      }
+
+      closeVoiceBanner() {
+        document.getElementById('voiceAssistantBanner').classList.add('hidden');
+        if (this.speechRecognition && this.isListening) this.speechRecognition.stop();
+      }
+
+      handleVoiceQuery(t) {
+        if (t.includes("soil") || t.includes("crop")) {
+          this.switchTab('home');
+          this.speakText("Displaying Agricultural Core Matrix.");
+        } else if (t.includes("leaf") || t.includes("doctor") || t.includes("disease")) {
+          this.switchTab('leafdoctor');
+          this.speakText("Opened Native Leaf Doctor.");
+        } else if (t.includes("rain") || t.includes("weather") || t.includes("pump")) {
+          this.switchTab('planners');
+          this.speakText("Showing Weather Shield and Irrigation Planner.");
+        } else if (t.includes("community") || t.includes("tractor")) {
+          this.switchTab('community');
+          this.speakText("Switched to Community Forum.");
+        }
+      }
+
+      setSoil(soilKey) {
+        this.selectedSoil = soilKey;
+        document.querySelectorAll('.soil-tab-btn').forEach(b => {
+          if (b.getAttribute('data-soil') === soilKey) {
+            b.className = "soil-tab-btn px-2.5 py-2 rounded-xl text-xs font-medium bg-emerald-950 text-emerald-300 border border-emerald-500/40 text-center transition-all";
+          } else {
+            b.className = "soil-tab-btn px-2.5 py-2 rounded-xl text-xs font-medium bg-charcoal-900 text-slate-300 border border-charcoal-700 text-center hover:bg-charcoal-800 transition-all";
+          }
+        });
+        this.renderCoreMatrix();
+      }
+
+      setWaterTable(w) {
+        this.selectedWater = w;
+        document.querySelectorAll('.water-tab-btn').forEach(b => {
+          if (b.getAttribute('data-water') === w) {
+            b.className = "water-tab-btn px-3 py-2 rounded-xl text-xs font-medium bg-emerald-950 text-emerald-300 border border-emerald-500/40 text-center transition-all flex items-center justify-center gap-1.5";
+          } else {
+            b.className = "water-tab-btn px-3 py-2 rounded-xl text-xs font-medium bg-charcoal-900 text-slate-300 border border-charcoal-700 text-center hover:bg-charcoal-800 transition-all flex items-center justify-center gap-1.5";
+          }
+        });
+        this.renderCoreMatrix();
+      }
+
+      renderCoreMatrix() {
+        const s = AGRICULTURAL_CORE_MATRIX[this.selectedSoil];
+        const v = s.variants[this.selectedWater];
+        const container = document.getElementById('matrixResultCard');
+
+        const rotationHTML = v.cropRotation3Step.map(r => `
+          <div class="flex-1 bg-charcoal-950/70 p-3 rounded-xl border border-white/5 text-center">
+            <div class="text-[10px] font-mono uppercase text-emerald-400 font-bold">Step ${r.step} • ${r.season}</div>
+            <div class="text-xs font-bold text-white mt-1">${r.crop}</div>
+          </div>
+        `).join('');
+
+        const treesHTML = v.reafforestationTrees.map(t => `
+          <li class="flex items-start gap-2 text-xs text-slate-300">
+            <span class="text-emerald-400 font-bold">▪</span>
+            <div><strong class="text-white">${t.name}:</strong> <span class="text-slate-400">${t.trait}</span></div>
+          </li>
+        `).join('');
+
+        container.innerHTML = `
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3 border-b border-white/5">
+            <div>
+              <span class="text-[10px] font-mono uppercase tracking-wider text-emerald-400">${s.soilName}</span>
+              <h4 class="text-xl font-extrabold text-white mt-0.5">${v.bestSuitedCrop}</h4>
+              <p class="text-xs text-slate-400 mt-1">${s.characteristics} (pH ${s.phRange})</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/30">Demand: ${v.marketDemand}</span>
+              <span class="px-2.5 py-1 rounded-full text-xs font-mono font-bold bg-charcoal-800 text-amber-300 border border-amber-500/20">${v.expectedYield}</span>
+            </div>
+          </div>
+          <div>
+            <div class="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+              <i data-lucide="repeat" class="w-3.5 h-3.5 text-emerald-400"></i>
+              <span>Recommended 3-Step Crop Rotation</span>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-2">${rotationHTML}</div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+            <div class="bg-charcoal-950/60 p-3.5 rounded-xl border border-white/5">
+              <div class="text-xs font-semibold text-emerald-300 uppercase tracking-wider mb-2">Boundary Re-afforestation Trees</div>
+              <ul class="space-y-1.5">${treesHTML}</ul>
+            </div>
+            <div class="bg-charcoal-950/60 p-3.5 rounded-xl border border-white/5">
+              <div class="text-xs font-semibold text-blue-300 uppercase tracking-wider mb-2">Hydrological Advisory (${v.waterLevelLabel})</div>
+              <p class="text-xs text-slate-300 leading-relaxed">${v.irrigationAdvisory}</p>
+            </div>
+          </div>
+        `;
+        if (window.lucide) window.lucide.createIcons();
+      }
+
+      selectVeggie(vegKey) {
+        this.selectedVeggie = vegKey;
+        document.querySelectorAll('.veggie-chip').forEach(c => {
+          if (c.getAttribute('data-veg') === vegKey) {
+            c.className = "veggie-chip px-3 py-1.5 rounded-xl text-xs font-medium bg-emerald-950 text-emerald-300 border border-emerald-500/40 flex items-center gap-1.5";
+          } else {
+            c.className = "veggie-chip px-3 py-1.5 rounded-xl text-xs font-medium bg-charcoal-900 text-slate-300 border border-charcoal-700 hover:bg-charcoal-800 flex items-center gap-1.5";
+          }
+        });
+        this.renderVeggieProfile();
+      }
+
+      renderVeggieProfile() {
+        const v = ROOFTOP_VEGETABLES[this.selectedVeggie];
+        const card = document.getElementById('veggieResultCard');
+        card.innerHTML = `
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3 border-b border-white/5">
+            <div>
+              <span class="text-[10px] font-mono italic text-slate-400">${v.scientificName}</span>
+              <h4 class="text-lg font-bold text-white">${v.title}</h4>
+            </div>
+            <div class="px-3 py-1 rounded-xl bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-xs font-mono font-bold flex items-center gap-1.5">
+              <i data-lucide="droplet" class="w-3.5 h-3.5 text-blue-400"></i>
+              <span>Drip Emitter: ${v.dripFlow}</span>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 text-xs">
+            <div class="space-y-3">
+              <div><span class="text-emerald-400 font-mono text-[11px] uppercase">Potting Mix:</span><div class="text-slate-200">${v.pottingMix}</div></div>
+              <div><span class="text-emerald-400 font-mono text-[11px] uppercase">Drip Cadence:</span><div class="text-slate-200">${v.dripSchedule}</div></div>
+              <div><span class="text-emerald-400 font-mono text-[11px] uppercase">Container:</span><div class="text-slate-200">${v.containerSize}</div></div>
+            </div>
+            <div class="space-y-3">
+              <div><span class="text-amber-400 font-mono text-[11px] uppercase">Pruning:</span><div class="text-slate-200">${v.pruning}</div></div>
+              <div><span class="text-amber-400 font-mono text-[11px] uppercase">Pest Watch:</span><div class="text-slate-200">${v.pestVulnerability}</div></div>
+              <div class="p-2.5 rounded-xl bg-emerald-950/60 border border-emerald-500/20 text-emerald-200"><strong>Pro Tip:</strong> ${v.proTip}</div>
+            </div>
+          </div>
+        `;
+        if (window.lucide) window.lucide.createIcons();
+      }
+
+      renderWisdomTips() {
+        const container = document.getElementById('wisdomCardsContainer');
+        container.innerHTML = FARMING_WISDOM_TIPS.map(t => `
+          <div class="bg-charcoal-900/80 p-4 rounded-2xl border border-white/5 flex flex-col justify-between hover:border-emerald-500/30 transition-all">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-1.5">
+                <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-amber-950/80 text-amber-300 border border-amber-600/30">${t.category}</span>
+                <span class="text-xs font-bold text-slate-300">${t.pairing}</span>
+              </div>
+              <h5 class="text-sm font-bold text-white mb-1.5">${t.title}</h5>
+              <p class="text-xs text-slate-300 leading-relaxed">${t.mechanism}</p>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      renderPesticides(data) {
+        const d = document.getElementById('pesticideDirectory');
+        if (!data || data.length === 0) {
+          d.innerHTML = `<div class="col-span-2 text-center py-8 text-xs text-slate-500">No matching formulation found.</div>`;
+          return;
+        }
+        d.innerHTML = data.map(p => `
+          <div class="bg-charcoal-900/90 rounded-2xl p-4 border border-white/10 space-y-3">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <span class="text-[10px] font-mono uppercase text-signal-red font-bold">Target</span>
+                <h5 class="text-sm font-bold text-white">${p.disease}</h5>
+                <p class="text-[11px] text-slate-400">${p.targetPathogen}</p>
+              </div>
+              <a href="${p.productUrl}" target="_blank" rel="noopener noreferrer" class="px-3 py-1 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-charcoal-950 font-bold text-[11px] flex items-center gap-1">
+                <span>Buy Market</span>
+                <i data-lucide="external-link" class="w-3 h-3"></i>
+              </a>
+            </div>
+            <div class="p-2.5 rounded-xl bg-charcoal-950 border border-white/5 space-y-1 text-xs">
+              <div><span class="text-slate-400">Brand:</span> <strong class="text-emerald-300">${p.commercialTradeName}</strong></div>
+              <div><span class="text-slate-400">Chemical:</span> <span class="text-slate-200 font-mono">${p.chemicalFormulation}</span></div>
+              <div><span class="text-slate-400">Dosage:</span> <span class="text-amber-300 font-mono">${p.dosage}</span></div>
+            </div>
+            <div class="text-[11px] text-slate-300"><strong class="text-mint-400">Organic Option:</strong> ${p.organicFormulation}</div>
+          </div>
+        `).join('');
+        if (window.lucide) window.lucide.createIcons();
+      }
+
+      filterPesticides(q) {
+        const term = q.toLowerCase().trim();
+        if (!term) return this.renderPesticides(PESTICIDE_DATABASE);
+        this.renderPesticides(PESTICIDE_DATABASE.filter(p => 
+          p.disease.toLowerCase().includes(term) ||
+          p.chemicalFormulation.toLowerCase().includes(term) ||
+          p.commercialTradeName.toLowerCase().includes(term)
+        ));
+      }
+
+      async startCamera() {
+        const video = document.getElementById('cameraFeed');
+        document.getElementById('analysisCanvas').classList.add('hidden');
+        video.classList.remove('hidden');
+        try {
+          if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            this.cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+            video.srcObject = this.cameraStream;
+            document.getElementById('camStatusText').innerText = "Live Stream Active";
+            document.getElementById('camStatusDot').className = "w-2 h-2 rounded-full bg-emerald-400 animate-pulse";
+          }
+        } catch(e) {
+          alert("Camera hardware unavailable in this sandbox. Use the sample leaf buttons!");
+        }
+      }
+
+      stopCamera() {
+        if (this.cameraStream) {
+          this.cameraStream.getTracks().forEach(t => t.stop());
+          this.cameraStream = null;
+        }
+        document.getElementById('camStatusText').innerText = "Standby";
+        document.getElementById('camStatusDot').className = "w-2 h-2 rounded-full bg-slate-500";
+      }
+
+      captureAndAnalyze() {
+        const video = document.getElementById('cameraFeed');
+        const c = document.getElementById('hiddenEngineCanvas');
+        const ctx = c.getContext('2d');
+        const w = video.videoWidth || 480;
+        const h = video.videoHeight || 360;
+        c.width = w; c.height = h;
+
+        if (this.cameraStream && video.videoWidth) {
+          ctx.drawImage(video, 0, 0, w, h);
+          this.runPixelEngine(ctx, w, h);
+        } else {
+          this.loadSampleLeaf('chlorosis');
+        }
+      }
+
+      loadSampleLeaf(type) {
+        const c = document.getElementById('hiddenEngineCanvas');
+        const ctx = c.getContext('2d');
+        const w = 400, h = 300;
+        c.width = w; c.height = h;
+
+        ctx.fillStyle = "#0F1418";
+        ctx.fillRect(0, 0, w, h);
+        ctx.save();
+        ctx.translate(w / 2, h / 2);
+        ctx.beginPath();
+        ctx.ellipse(0, 0, 140, 90, Math.PI / 4, 0, 2 * Math.PI);
+
+        if (type === 'healthy') {
+          const g = ctx.createLinearGradient(-100, -100, 100, 100);
+          g.addColorStop(0, '#15803D'); g.addColorStop(1, '#22C55E');
+          ctx.fillStyle = g;
+        } else if (type === 'chlorosis') {
+          const g = ctx.createLinearGradient(-100, -100, 100, 100);
+          g.addColorStop(0, '#EAB308'); g.addColorStop(1, '#A3E635');
+          ctx.fillStyle = g;
+        } else {
+          const g = ctx.createRadialGradient(0, 0, 10, 0, 0, 120);
+          g.addColorStop(0, '#451A03'); g.addColorStop(1, '#15803D');
+          ctx.fillStyle = g;
+        }
+        ctx.fill();
+        ctx.restore();
+
+        const pCanvas = document.getElementById('analysisCanvas');
+        pCanvas.width = w; pCanvas.height = h;
+        pCanvas.getContext('2d').drawImage(c, 0, 0);
+
+        document.getElementById('cameraFeed').classList.add('hidden');
+        pCanvas.classList.remove('hidden');
+        this.runPixelEngine(ctx, w, h);
+      }
+
+      runPixelEngine(ctx, w, h) {
+        const d = ctx.getImageData(0, 0, w, h).data;
+        let total = 0, green = 0, yellow = 0, necrotic = 0;
+
+        for (let i = 0; i < d.length; i += 16) {
+          const r = d[i], g = d[i + 1], b = d[i + 2];
+          if (r < 25 && g < 25 && b < 25) continue;
+          total++;
+          if (g > 70 && g > r * 1.15 && g > b * 1.2) green++;
+          else if (r > 120 && g > 115 && b < 100 && Math.abs(r - g) < 60) yellow++;
+          else if ((r > 50 && r < 140 && g < 90 && b < 65) || (r > 70 && g < 60 && b < 50)) necrotic++;
+        }
+        if (total === 0) total = 1;
+
+        const gPct = Math.round((green / total) * 100);
+        const yPct = Math.round((yellow / total) * 100);
+        const nPct = Math.round((necrotic / total) * 100);
+
+        this.renderLeafDiagnosis(gPct, yPct, nPct);
+      }
+
+      renderLeafDiagnosis(g, y, n) {
+        const res = document.getElementById('leafDiagnosisResult');
+        res.classList.remove('hidden');
+
+        let title = "", badge = "", desc = "", org = "", chem = "", audio = "";
+        if (n > 20 || (n > 12 && y > 15)) {
+          title = "Necrotic Leaf Spot / Blight";
+          badge = `<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-signal-darkred text-red-200 border border-signal-red">CRITICAL BLIGHT</span>`;
+          desc = "Dark necrotic lesions detected indicating fungal or bacterial cellular breakdown.";
+          org = "Trichoderma viride 1.5% WP (5g/L) + fermented Dashaparni Kashayam.";
+          chem = "Mancozeb 75% WP (Dithane M-45 @ 2.5g/L) or Copper Oxychloride 50% WP.";
+          audio = (REGIONAL_SPEECH_DATA[this.currentLanguage] || REGIONAL_SPEECH_DATA['en-IN']).leafBlight;
+        } else if (y > 22) {
+          title = "Chlorosis (Nutrient Deficiency - N/Fe/Mg)";
+          badge = `<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-950 text-amber-300 border border-amber-500">DEFICIENCY DETECTED</span>`;
+          desc = "Yellow pigment accumulation indicates loss of chlorophyll synthesis.";
+          org = "Chelated Iron (Fe-EDTA @ 1g/L) + Epsom Salt (2g/L) + vermicompost tea.";
+          chem = "Soluble N-P-K 19-19-19 foliar spray @ 5g/L.";
+          audio = (REGIONAL_SPEECH_DATA[this.currentLanguage] || REGIONAL_SPEECH_DATA['en-IN']).leafChlorosis;
+        } else {
+          title = "Healthy Leaf (High Chlorophyll Vigor)";
+          badge = `<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-950 text-emerald-300 border border-emerald-500">OPTIMAL HEALTH</span>`;
+          desc = "High green density across frame. Vegetative turgor is optimal.";
+          org = "Maintain standard micro-drip; bi-weekly preventative neem spray.";
+          chem = "No chemical intervention needed.";
+          audio = (REGIONAL_SPEECH_DATA[this.currentLanguage] || REGIONAL_SPEECH_DATA['en-IN']).leafHealthy;
+        }
+
+        res.innerHTML = `
+          <div class="bg-charcoal-900 rounded-2xl p-5 border border-white/10 space-y-4">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3 border-b border-white/5">
+              <div>
+                <span class="text-[10px] font-mono uppercase text-emerald-400">Analysis Result</span>
+                <h4 class="text-lg font-bold text-white">${title}</h4>
+              </div>
+              <div class="flex items-center gap-2">
+                ${badge}
+                <button onclick="window.sehawaApp.speakText('${audio}')" class="p-2 rounded-xl bg-charcoal-800 text-emerald-400"><i data-lucide="volume-2" class="w-4 h-4"></i></button>
+              </div>
+            </div>
+            <div>
+              <div class="text-xs font-mono text-slate-300 mb-1 flex justify-between">
+                <span>Color Histogram</span>
+                <span>Green: ${g}% • Yellow: ${y}% • Necrotic: ${n}%</span>
+              </div>
+              <div class="h-3 w-full rounded-full bg-charcoal-950 overflow-hidden flex">
+                <div style="width: ${g}%" class="bg-emerald-500 h-full"></div>
+                <div style="width: ${y}%" class="bg-amber-400 h-full"></div>
+                <div style="width: ${n}%" class="bg-red-800 h-full"></div>
+              </div>
+            </div>
+            <p class="text-xs text-slate-300">${desc}</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+              <div class="bg-charcoal-950 p-3 rounded-xl border border-white/5">
+                <strong class="text-mint-400">🌿 Organic Protocol:</strong> <p class="text-slate-300 mt-1">${org}</p>
+              </div>
+              <div class="bg-charcoal-950 p-3 rounded-xl border border-white/5">
+                <strong class="text-amber-400">🧪 Chemical Formulation:</strong> <p class="text-slate-300 mt-1">${chem}</p>
+              </div>
+            </div>
+          </div>
+        `;
+        if (window.lucide) window.lucide.createIcons();
+        this.speakText(audio);
+      }
+
+      triggerWeatherAlert(type) {
+        const d = document.getElementById('weatherAlertDisplay');
+        d.classList.remove('hidden');
+        this.playBeepTest();
+
+        if (type === 'torrential' || type === 'cyclone') {
+          this.showPredictivePowerAlert();
+        }
+
+        d.innerHTML = `
+          <div class="glass-card-red rounded-2xl p-4 border border-signal-red">
+            <div class="text-xs font-bold font-mono text-signal-red">WEATHER EVENT ACTIVE: ${type.toUpperCase()}</div>
+            <h4 class="text-base font-bold text-white mt-1">High Risk Hydrological Alert</h4>
+            <p class="text-xs text-slate-200 mt-1">Run irrigation pumps immediately and open drainage canals.</p>
+          </div>
+        `;
+      }
+
+      showPredictivePowerAlert() {
+        document.getElementById('predictiveAlertModal').classList.remove('hidden');
+        this.speakText((REGIONAL_SPEECH_DATA[this.currentLanguage] || REGIONAL_SPEECH_DATA['en-IN']).powerPredict);
+      }
+
+      dismissPredictiveModal() {
+        document.getElementById('predictiveAlertModal').classList.add('hidden');
+      }
+
+      goToPlannersFromModal() {
+        this.dismissPredictiveModal();
+        this.switchTab('planners');
+        this.toggleIrrigationTimer();
+      }
+
+      calculatePowerCutIrrigation() {
+        const acreage = parseFloat(document.getElementById('schedAcreage').value) || 2.5;
+        const crop = document.getElementById('schedCrop').value;
+        const cutHours = parseFloat(document.getElementById('schedCutHours').value) || 6;
+        const temp = parseFloat(document.getElementById('schedTemp').value) || 34;
+
+        const rates = { tomato: 4.8, cotton: 6.2, wheat: 4.2, sugarcane: 8.5, paddy: 9.2 };
+        const base = rates[crop] || 5.0;
+        const totalWaterMm = ((base * (1 + (temp - 30) * 0.03)) / 24) * cutHours;
+        const litres = Math.round(acreage * totalWaterMm * 4046.86);
+        const mins = Math.round(litres / 450);
+
+        document.getElementById('powerCutOutput').innerHTML = `
+          <div>
+            <div class="text-[11px] font-mono uppercase text-emerald-400">Required Pre-Irrigation Runtime</div>
+            <div class="text-2xl font-black text-white font-mono mt-0.5">${mins} Minutes (${(mins/60).toFixed(1)} hrs)</div>
+            <div class="text-xs text-slate-400 mt-1">Total Water: <strong class="text-slate-200">${litres.toLocaleString()} L</strong></div>
+          </div>
+          <span class="px-3 py-1.5 rounded-xl bg-amber-950 text-amber-300 border border-amber-600/30 text-xs font-mono font-bold">5 HP Submersible @ 450 L/min</span>
+        `;
+      }
+
+      updateRainfallDeduction(val) {
+        document.getElementById('rainDeductionLabel').innerText = `${val} mm`;
+        const net = Math.max(0, 32 - val * 1.8);
+        this.timerSeconds = Math.round(net * 60);
+        const m = Math.floor(this.timerSeconds / 60), s = this.timerSeconds % 60;
+        document.getElementById('timerDigits').innerText = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+      }
+
+      toggleIrrigationTimer() {
+        if (this.isTimerRunning) {
+          clearInterval(this.timerInterval);
+          this.isTimerRunning = false;
+          document.getElementById('timerBtnText').innerText = "Resume Pump Timer";
+        } else {
+          this.isTimerRunning = true;
+          document.getElementById('timerBtnText').innerText = "Pause Pump Timer";
+          this.timerInterval = setInterval(() => {
+            if (this.timerSeconds > 0) {
+              this.timerSeconds--;
+              const m = Math.floor(this.timerSeconds / 60), s = this.timerSeconds % 60;
+              document.getElementById('timerDigits').innerText = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+            } else {
+              clearInterval(this.timerInterval);
+              this.isTimerRunning = false;
+              alert("Irrigation complete!");
+            }
+          }, 1000);
+        }
+      }
+
+      resetIrrigationTimer() {
+        clearInterval(this.timerInterval);
+        this.isTimerRunning = false;
+        this.timerSeconds = 24 * 60 + 48;
+        document.getElementById('timerDigits').innerText = "24:48";
+        document.getElementById('timerBtnText').innerText = "Start Pump Timer";
+      }
+
+      playBeepTest() {
+        try {
+          const AC = window.AudioContext || window.webkitAudioContext;
+          if (!this.audioCtx) this.audioCtx = new AC();
+          const osc = this.audioCtx.createOscillator();
+          const gain = this.audioCtx.createGain();
+          osc.frequency.setValueAtTime(880, this.audioCtx.currentTime);
+          gain.gain.setValueAtTime(0.15, this.audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.audioCtx.currentTime + 0.4);
+          osc.connect(gain); gain.connect(this.audioCtx.destination);
+          osc.start(); osc.stop(this.audioCtx.currentTime + 0.4);
+        } catch(e) {}
+      }
+
+      triggerMarketRescue() {
+        this.playBeepTest();
+        document.getElementById('marketRescueDirectory').innerHTML = `
+          <div class="bg-charcoal-900 rounded-2xl p-4 border border-signal-red/50 space-y-2">
+            <div class="text-[10px] font-mono text-signal-red font-bold uppercase">Emergency Cold Hub (4.2 km)</div>
+            <h5 class="text-sm font-bold text-white">Kisan Agro Cold Logistics</h5>
+            <p class="text-xs text-slate-300">500 MT capacity available. Accepting damp produce lots.</p>
+            <a href="tel:+919812345678" class="text-xs font-bold text-emerald-400">Call: +91 98123-45678</a>
+          </div>
+          <div class="bg-charcoal-900 rounded-2xl p-4 border border-amber-500/50 space-y-2">
+            <div class="text-[10px] font-mono text-amber-400 font-bold uppercase">FPO Distress Intake (6.8 km)</div>
+            <h5 class="text-sm font-bold text-white">Valley Farmers Producer Org</h5>
+            <p class="text-xs text-slate-300">Direct spot weigh floor with drying yards.</p>
+            <a href="tel:+919876543219" class="text-xs font-bold text-emerald-400">Call: +91 98765-43219</a>
+          </div>
+          <div class="bg-charcoal-900 rounded-2xl p-4 border border-blue-500/50 space-y-2">
+            <div class="text-[10px] font-mono text-blue-400 font-bold uppercase">Solar Dehydration (9.1 km)</div>
+            <h5 class="text-sm font-bold text-white">Surya Agro Dehydrators</h5>
+            <p class="text-xs text-slate-300">Buys onions and chilies immediately for solar dehydration.</p>
+            <a href="tel:+919823456789" class="text-xs font-bold text-emerald-400">Call: +91 98234-56789</a>
+          </div>
+        `;
+      }
+
+      getForumPosts() {
+        try { return JSON.parse(localStorage.getItem('sehawa_forum_posts')) || INITIAL_FORUM_POSTS; }
+        catch(e) { return INITIAL_FORUM_POSTS; }
+      }
+
+      saveForumPosts(p) {
+        localStorage.setItem('sehawa_forum_posts', JSON.stringify(p));
+        this.renderForum();
+      }
+
+      filterForumCategory(cat) {
+        this.currentForumFilter = cat;
+        document.querySelectorAll('.forum-filter-btn').forEach(btn => {
+          if (btn.getAttribute('data-cat') === cat) {
+            btn.className = "forum-filter-btn px-3 py-1 rounded-xl text-xs font-medium bg-emerald-950 text-emerald-300 border border-emerald-500/40";
+          } else {
+            btn.className = "forum-filter-btn px-3 py-1 rounded-xl text-xs font-medium bg-charcoal-900 text-slate-300 border border-charcoal-700";
+          }
+        });
+        this.renderForum();
+      }
+
+      renderForum() {
+        const feed = document.getElementById('forumFeedContainer');
+        const posts = this.getForumPosts();
+        const f = this.currentForumFilter || 'all';
+        const filtered = (f === 'all') ? posts : posts.filter(p => p.category === f);
+        document.getElementById('metricForumCount').innerText = `${posts.length} Active Listings`;
+
+        feed.innerHTML = filtered.map(post => `
+          <div class="bg-charcoal-900/80 rounded-2xl p-4 border border-white/5 space-y-2">
+            <div class="flex items-start justify-between">
+              <div>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-charcoal-950 text-emerald-300">${post.categoryLabel || post.category}</span>
+                <h4 class="text-sm font-bold text-white mt-1">${post.title}</h4>
+                <div class="text-[11px] text-slate-400 font-mono">${post.location}</div>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <button onclick="window.sehawaApp.upvotePost('${post.id}')" class="px-2 py-1 rounded-lg bg-charcoal-800 text-xs text-slate-300">👍 ${post.upvotes || 0}</button>
+                <button onclick="window.sehawaApp.deletePost('${post.id}')" class="p-1 rounded-lg bg-charcoal-800 text-slate-400 hover:text-signal-red"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+              </div>
+            </div>
+            <p class="text-xs text-slate-300">${post.description}</p>
+            <div class="flex justify-between items-center pt-2 border-t border-charcoal-800 text-xs">
+              <span class="text-amber-300 font-mono font-bold">${post.terms}</span>
+              <span class="text-slate-400">${post.contact}</span>
+            </div>
+          </div>
+        `).join('');
+        if (window.lucide) window.lucide.createIcons();
+      }
+
+      openNewPostModal() { document.getElementById('newPostModal').classList.remove('hidden'); }
+      closeNewPostModal() { document.getElementById('newPostModal').classList.add('hidden'); }
+
+      submitNewPost(e) {
+        e.preventDefault();
+        const cat = document.getElementById('postCategory').value;
+        const newPost = {
+          id: "post-" + Date.now(),
+          category: cat,
+          categoryLabel: cat,
+          title: document.getElementById('postTitle').value,
+          location: document.getElementById('postLocation').value,
+          terms: document.getElementById('postTerms').value,
+          contact: document.getElementById('postContact').value,
+          description: document.getElementById('postDescription').value,
+          timestamp: "Just now",
+          upvotes: 1
+        };
+        const posts = this.getForumPosts();
+        posts.unshift(newPost);
+        this.saveForumPosts(posts);
+        this.closeNewPostModal();
+        document.getElementById('newPostForm').reset();
+      }
+
+      upvotePost(id) {
+        const posts = this.getForumPosts();
+        const p = posts.find(x => x.id === id);
+        if (p) { p.upvotes = (p.upvotes || 0) + 1; this.saveForumPosts(posts); }
+      }
+
+      deletePost(id) {
+        if (confirm("Delete this listing?")) {
+          this.saveForumPosts(this.getForumPosts().filter(x => x.id !== id));
+        }
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      window.sehawaApp = new SehawaApp();
+      window.sehawaApp.init();
+    });
+  </script>
+
+</body>
+</html>

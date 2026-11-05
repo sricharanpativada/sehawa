@@ -53,7 +53,7 @@
 
 ## 🚀 Getting Started
 
-No build step or Node.js environment is required. Simply clone the repository and open `index.html` in any browser:
+No build step or Node.js environment is required. Simply clone the repository and open either `index.html` (the landing page with interactive app popup modal) or `app.html` (the direct standalone companion app) in any browser:
 
 ```bash
 # Clone the repository
@@ -66,7 +66,8 @@ cd sehawa
 python3 -m http.server 8080
 ```
 
-Open `http://localhost:8080` in Chrome, Safari, Firefox, or Edge.
+- **Landing Page**: `http://localhost:8080/index.html` (features the seed-sprout 3D canvas and pops the companion app into a window upon clicking **Launch App**, **Open Companion App**, or **Explore Offline Engine**).
+- **Standalone Companion App**: `http://localhost:8080/app.html` (direct access to the offline agritech suite).
 
 ---
 
@@ -84,3 +85,4 @@ Open `http://localhost:8080` in Chrome, Safari, Firefox, or Edge.
 ## 📄 License
 
 This project is licensed under the MIT License.
+
