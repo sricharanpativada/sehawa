@@ -482,35 +482,19 @@
               </div>
             </div>
 
-            <span class="text-[10px] font-mono px-2.5 py-1 rounded-full bg-charcoal-950 text-emerald-400 border border-emerald-500/20 flex items-center gap-1">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span>Spoken Voice Active</span>
-            </span>
+            <div class="flex items-center gap-2">
+              <div class="flex items-center gap-1 p-0.5 rounded-xl bg-charcoal-950 border border-white/10">
+                <button id="leafLangTeBtn" onclick="window.sehawaApp.setAppLanguage('te-IN')" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-500 text-charcoal-950 transition-all shadow-md">తెలుగు</button>
+                <button id="leafLangHiBtn" onclick="window.sehawaApp.setAppLanguage('hi-IN')" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-charcoal-800 text-slate-300 hover:text-white transition-all">हिन्दी</button>
+                <button id="leafLangEnBtn" onclick="window.sehawaApp.setAppLanguage('en-IN')" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-charcoal-800 text-slate-300 hover:text-white transition-all">English</button>
+              </div>
+            </div>
           </div>
 
           <!-- Quick Diagnostic Questions -->
           <div class="space-y-1.5">
-            <span class="text-[10px] font-mono text-slate-400 uppercase">Tap a question:</span>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-1.5 text-xs">
-              <button onclick="window.sehawaApp.askAppLeafQuestion('What is the leaf type and morphology?')" class="p-2.5 rounded-xl bg-charcoal-950 hover:bg-emerald-950 border border-white/5 text-slate-300 hover:text-white text-left transition-all">
-                🍃 "What is the leaf type & shape?"
-              </button>
-              <button onclick="window.sehawaApp.askAppLeafQuestion('Analyze leaf color and stress signs')" class="p-2.5 rounded-xl bg-charcoal-950 hover:bg-emerald-950 border border-white/5 text-slate-300 hover:text-white text-left transition-all">
-                🎨 "What do leaf colors indicate?"
-              </button>
-              <button onclick="window.sehawaApp.askAppLeafQuestion('What disease is diagnosed on this leaf?')" class="p-2.5 rounded-xl bg-charcoal-950 hover:bg-emerald-950 border border-white/5 text-slate-300 hover:text-white text-left transition-all">
-                🔬 "What is the exact diagnosis?"
-              </button>
-              <button onclick="window.sehawaApp.askAppLeafQuestion('What organic or biological treatment to use?')" class="p-2.5 rounded-xl bg-charcoal-950 hover:bg-emerald-950 border border-white/5 text-slate-300 hover:text-white text-left transition-all">
-                🌱 "What biological cure to apply?"
-              </button>
-              <button onclick="window.sehawaApp.askAppLeafQuestion('Is this disease contagious to other plants?')" class="p-2.5 rounded-xl bg-charcoal-950 hover:bg-emerald-950 border border-white/5 text-slate-300 hover:text-white text-left transition-all">
-                ⚠️ "Is it contagious in field?"
-              </button>
-              <button onclick="window.sehawaApp.askAppLeafQuestion('How to prevent this in the next season?')" class="p-2.5 rounded-xl bg-charcoal-950 hover:bg-emerald-950 border border-white/5 text-slate-300 hover:text-white text-left transition-all">
-                🔄 "Crop rotation & prevention"
-              </button>
-            </div>
+            <span class="text-[10px] font-mono text-slate-400 uppercase" id="appLeafQuestionsPromptLabel">రైతులు ఎక్కువగా అడిగే ప్రశ్నలు (Quick Questions):</span>
+            <div id="appLeafPromptChipsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-1.5 text-xs"></div>
           </div>
 
           <!-- Custom Question Input -->
@@ -823,9 +807,16 @@
             <p class="text-xs text-slate-400">Train the agent live on leaf patterns & diagnose 8 crops across 20+ disease states.</p>
           </div>
         </div>
-        <button onclick="window.sehawaApp.closeVisionTrainerModal()" class="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-charcoal-800 transition-all">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
+        <div class="flex items-center gap-2">
+          <div class="flex items-center gap-1 p-0.5 rounded-xl bg-charcoal-900 border border-white/10">
+            <button id="visLangTeBtn" onclick="window.sehawaApp.setAppLanguage('te-IN')" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-500 text-charcoal-950 transition-all">తెలుగు</button>
+            <button id="visLangHiBtn" onclick="window.sehawaApp.setAppLanguage('hi-IN')" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-charcoal-800 text-slate-300 hover:text-white transition-all">हिन्दी</button>
+            <button id="visLangEnBtn" onclick="window.sehawaApp.setAppLanguage('en-IN')" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-charcoal-800 text-slate-300 hover:text-white transition-all">English</button>
+          </div>
+          <button onclick="window.sehawaApp.closeVisionTrainerModal()" class="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-charcoal-800 transition-all">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
       </div>
 
       <div class="flex-1 overflow-y-auto p-5 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -879,18 +870,31 @@
                 <span class="text-[10px] font-mono uppercase text-emerald-400 font-bold">Neural Inference Diagnosis</span>
                 <h4 id="visionResultTitle" class="text-lg font-bold text-white mt-0.5">Tomato Early Blight</h4>
                 <div id="visionTeluguDiagnosis" class="text-xs font-semibold text-emerald-300 mt-0.5">టమాట ఆకుపై అల్టర్నేరియా మచ్చల తెగులు ఉంది.</div>
+                <div id="visionHindiDiagnosis" class="text-xs font-semibold text-amber-300 mt-0.5">टमाटर की पत्ती पर अगेती झुलसा रोग (अल्टरनेरिया) है।</div>
               </div>
-              <span id="visionConfidenceBadge" class="px-2.5 py-1 rounded-full text-xs font-mono font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/30">96.4% Match</span>
+              <div class="flex flex-col items-end gap-1.5">
+                <span id="visionConfidenceBadge" class="px-2.5 py-1 rounded-full text-xs font-mono font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/30">96.4% Match</span>
+                <button onclick="window.sehawaApp.speakCurrentVisionInference()" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-950 hover:bg-emerald-900 text-emerald-300 border border-emerald-500/30 text-xs font-semibold transition-all">
+                  <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
+                  <span>వినండి / सुनें</span>
+                </button>
+              </div>
             </div>
             <div class="space-y-1.5 pt-1" id="visionProbBars">
               <div class="text-[11px] font-mono text-slate-400 flex justify-between"><span>Tomato Early Blight</span><span>96.4%</span></div>
               <div class="h-2 w-full rounded-full bg-charcoal-900 overflow-hidden"><div class="bg-emerald-500 h-full rounded-full" style="width: 96.4%"></div></div>
             </div>
             <p id="visionExplanation" class="text-xs text-slate-300 leading-relaxed">Concentric ring lesions with chlorotic yellow halo.</p>
-            <div class="p-3 rounded-xl bg-charcoal-900 border border-white/5 space-y-1 text-xs">
-              <div class="text-mint-400 font-bold">🌿 Treatment Protocol (English & Telugu):</div>
-              <p class="text-slate-200" id="visionTreatmentEng">Foliar spray with Mancozeb 75% WP @ 2.5g/L.</p>
-              <p class="text-amber-200 font-medium" id="visionTreatmentTel">మాంకోజెబ్ మందును లీటరు నీటిలో కలిపి ఆకులపై పిచికారీ చేయండి.</p>
+            <div class="p-3.5 rounded-xl bg-charcoal-900 border border-white/5 space-y-2 text-xs">
+              <div class="text-mint-400 font-bold flex items-center gap-1.5">
+                <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
+                <span>Trilingual Treatment Protocol (English • తెలుగు • हिन्दी):</span>
+              </div>
+              <div class="space-y-1">
+                <p class="text-slate-200" id="visionTreatmentEng"><strong>English:</strong> Foliar spray with Mancozeb 75% WP @ 2.5g/L.</p>
+                <p class="text-emerald-300 font-medium" id="visionTreatmentTel"><strong>తెలుగు:</strong> మాంకోజెబ్ మందును లీటరు నీటిలో కలిపి ఆకులపై పిచికారీ చేయండి.</p>
+                <p class="text-amber-200 font-medium" id="visionTreatmentHin"><strong>हिन्दी:</strong> 2.5 ग्राम मैंकोजेब प्रति लीटर पानी में मिलाकर पत्तियों पर छिड़कें।</p>
+              </div>
             </div>
           </div>
 
@@ -1624,60 +1628,72 @@
         crop: "Tomato",
         condition: "Early Blight (Alternaria solani)",
         teluguLabel: "టమాట ఆకుపై అల్టర్నేరియా మచ్చల తెగులు",
+        hindiLabel: "टमाटर की पत्ती पर अगेती झुलसा रोग (अल्टरनेरिया)",
         features: [0.35, 0.42, 0.65, 0.78, 0.52],
         explanation: "Concentric ring 'bullseye' lesions with dark borders surrounded by yellow chlorotic halos. Fungal spores spread through splash irrigation.",
         treatmentEng: "Spray Mancozeb 75% WP @ 2.5g/L or bio-fungicide Trichoderma viride 1.5% WP (5g/L). Remove lower infected leaves.",
-        treatmentTel: "మాంకోజెబ్ లేదా ట్రైకోడెర్మా మందును లీటరు నీటిలో 2.5 గ్రాములు కలిపి ఆకులపై పిచికారీ చేయండి. కింద ఉన్న పాడైన ఆకులను తీసేయండి."
+        treatmentTel: "మాంకోజెబ్ లేదా ట్రైకోడెర్మా మందును లీటరు నీటిలో 2.5 గ్రాములు కలిపి ఆకులపై పిచికారీ చేయండి. కింద ఉన్న పాడైన ఆకులను తీసేయండి.",
+        treatmentHin: "2.5 ग्राम मैंकोजेब 75% WP या 5 ग्राम ट्राइकोडर्मा प्रति लीटर पानी में मिलाकर पत्तियों पर छिड़कें। निचली ग्रसित पत्तियों को तोड़ दें।"
       },
       {
         id: "tomato_healthy",
         crop: "Tomato",
         condition: "Healthy Leaf (Optimal Chlorophyll)",
         teluguLabel: "ఆరోగ్యకరమైన టమాట ఆకు (మంచి ఎదుగుదల)",
+        hindiLabel: "स्वस्थ टमाटर की पत्ती (भरपूर क्लोरोफिल)",
         features: [0.88, 0.08, 0.04, 0.28, 0.85],
         explanation: "Robust chlorophyll density, clear stomata, and firm vegetative turgor with zero pathogen spotting.",
         treatmentEng: "Maintain consistent drip irrigation (2.0 L/hr); apply bi-weekly preventative neem oil spray (1500 PPM).",
-        treatmentTel: "ప్రస్తుతం ఏ రోగమూ లేదు. డ్రిప్ ద్వారా సరిపడా నీరు అందిస్తూ, 15 రోజులకు ఒకసారి వేపనూనె కొట్టండి."
+        treatmentTel: "ప్రస్తుతం ఏ రోగమూ లేదు. డ్రిప్ ద్వారా సరిపడా నీరు అందిస్తూ, 15 రోజులకు ఒకసారి వేపనూనె కొట్టండి.",
+        treatmentHin: "पौधे स्वस्थ हैं। ड्रिप से नियमित 2 लीटर/घंटा पानी दें और 15 दिन में एक बार नीम तेल का निवारक छिड़काव करें।"
       },
       {
         id: "rice_blast",
         crop: "Rice / Paddy",
         condition: "Rice Blast (Magnaporthe oryzae)",
         teluguLabel: "వరి ఆకుపై అగ్గి తెగులు (బ్లాస్ట్)",
+        hindiLabel: "धान की पत्ती पर ब्लास्ट रोग (अग्नि झुलसा)",
         features: [0.40, 0.38, 0.70, 0.68, 0.45],
         explanation: "Spindle-shaped diamond lesions with gray-white centers and brownish borders. Spreads rapidly in high humidity and excess nitrogen.",
         treatmentEng: "Foliar spray with Tricyclazole 75% WP @ 0.6g/L or Isoprothiolane 40% EC @ 1.5ml/L. Avoid excess urea application.",
-        treatmentTel: "వరి చేనులో అగ్గి తెగులు కనిపిస్తోంది. ట్రైసైక్లాజోల్ మందు పిచికారీ చేయండి మరియు యూరియా వాడకం తగ్గించండి."
+        treatmentTel: "వరి చేనులో అగ్గి తెగులు కనిపిస్తోంది. ట్రైసైక్లాజోల్ మందు పిచికారీ చేయండి మరియు యూరియా వాడకం తగ్గించండి.",
+        treatmentHin: "0.6 ग्राम ट्राईसाइक्लाजोल 75% WP प्रति लीटर पानी में मिलाकर छिड़कें। यूरिया का अधिक उपयोग न करें।"
       },
       {
         id: "cotton_curling",
         crop: "Cotton",
         condition: "Leaf Curl Virus & Thrips",
         teluguLabel: "పత్తిలో ఆకుముడత మరియు తెల్లదోమ",
+        hindiLabel: "कपास में पत्ती मुड़ना (लीफ कर्ल) और रस चूसक कीट",
         features: [0.55, 0.58, 0.22, 0.82, 0.35],
         explanation: "Upward cupping and thickening of leaf veins caused by geminivirus transmitted by whitefly (Bemisia tabaci).",
         treatmentEng: "Spray Diafenthiuron 50% WP @ 1.2g/L or Imidacloprid 17.8% SL @ 0.5ml/L to control vector.",
-        treatmentTel: "తెల్లదోమ వల్ల పత్తి ఆకులు పైకి ముడుచుకున్నాయి. లీటరు నీటికి ఇమిడాక్లోప్రిడ్ లేదా డయాఫెంథియురాన్ మందు కొట్టండి."
+        treatmentTel: "తెల్లదోమ వల్ల పత్తి ఆకులు పైకి ముడుచుకున్నాయి. లీటరు నీటికి ఇమిడాక్లోప్రిడ్ లేదా డయాఫెంథియురాన్ మందు కొట్టండి.",
+        treatmentHin: "सफेद मक्खी नियंत्रण हेतु 0.5 मिली इमिडाक्लोप्रिड या 1.2 ग्राम डायफेन्थियुरॉन प्रति लीटर पानी में छिड़कें।"
       },
       {
         id: "corn_rust",
         crop: "Maize / Corn",
         condition: "Common Rust (Puccinia sorghi)",
         teluguLabel: "మొక్కజొన్న ఆకుపై తుప్పు తెగులు",
+        hindiLabel: "मक्का की पत्ती पर रतुआ (कॉमन रस्ट) रोग",
         features: [0.42, 0.62, 0.58, 0.65, 0.60],
         explanation: "Golden to cinnamon-brown powdery pustules erupting across both upper and lower leaf surfaces.",
         treatmentEng: "Spray Azoxystrobin 18.2% + Difenoconazole 11.4% SC @ 1ml/L. Ensure good air circulation.",
-        treatmentTel: "మొక్కజొన్న ఆకులపై తుప్పు మచ్చలు ఉన్నాయి. అజోక్సీస్ట్రోబిన్ లేదా మాంకోజెబ్ మందు పిచికారీ చేయండి."
+        treatmentTel: "మొక్కజొన్న ఆకులపై తుప్పు మచ్చలు ఉన్నాయి. అజోక్సీస్ట్రోబిన్ లేదా మాంకోజెబ్ మందు పిచికారీ చేయండి.",
+        treatmentHin: "1 मिली एजोक्सीस्ट्रोबिन या 2 ग्राम मैंकोजेब प्रति लीटर पानी में मिलाकर छिड़कें। खेत में हवा का आवागमन बनाए रखें।"
       },
       {
         id: "wheat_healthy",
         crop: "Wheat",
         condition: "Healthy Wheat Tiller",
         teluguLabel: "ఆరోగ్యకరమైన గోధుమ పైరు",
+        hindiLabel: "स्वस्थ गेहूं का पौधा (उत्तम बढ़वार)",
         features: [0.82, 0.12, 0.05, 0.32, 0.88],
         explanation: "Vibrant erect blue-green tillers with high nitrogen conversion and optimal photosynthetic grain filling.",
         treatmentEng: "Ensure timely crown root irrigation at 21 days; maintain phosphorus nutrition.",
-        treatmentTel: "గోధుమ పైరు చాలా బాగుంది. సమయానికి నీటి తడులు ఇస్తూ ఉండండి."
+        treatmentTel: "గోధుమ పైరు చాలా బాగుంది. సమయానికి నీటి తడులు ఇస్తూ ఉండండి.",
+        treatmentHin: "गेहूं की फसल स्वस्थ है। क्राउन रूट बनते समय 21 दिन पर पहली हल्की सिंचाई अवश्य करें।"
       }
     ];
 
@@ -2450,6 +2466,7 @@
         this.initSpeechEngines();
         this.renderAppQuickPromptChips();
         this.initAppDatasetEngine();
+        this.renderAppLeafPromptChips();
 
         // Check if hash points to a specific tab
         if (window.location.hash) {
@@ -2493,19 +2510,104 @@
       }
 
       setLanguage(langCode) {
-        this.currentLanguage = langCode;
-        const welcomeText = (REGIONAL_SPEECH_DATA[langCode] || REGIONAL_SPEECH_DATA['en-IN']).welcome;
-        this.speakText(welcomeText);
+        this.setAppLanguage(langCode);
       }
 
-      speakText(text) {
-        if ('speechSynthesis' in window) {
-          window.speechSynthesis.cancel();
-          const utterance = new SpeechSynthesisUtterance(text);
-          utterance.lang = this.currentLanguage;
+      setAppLanguage(langCode) {
+        this.currentLanguage = langCode;
+        this.appVoiceLang = langCode;
+
+        // Sync global dropdown
+        const sel = document.getElementById('globalLangSelector');
+        if (sel) sel.value = langCode;
+
+        // Sync Voice Translator Modal buttons
+        const vTe = document.getElementById('appVoiceLangTeBtn');
+        const vHi = document.getElementById('appVoiceLangHiBtn');
+        const vEn = document.getElementById('appVoiceLangEnBtn');
+        const activeClass = "px-3.5 py-1 rounded-full text-xs font-bold bg-emerald-500 text-charcoal-950 transition-all shadow-md shadow-emerald-500/20";
+        const inactiveClass = "px-3.5 py-1 rounded-full text-xs font-semibold bg-charcoal-800 text-slate-300 hover:text-white transition-all";
+        if (vTe) vTe.className = (langCode === 'te-IN') ? activeClass : inactiveClass;
+        if (vHi) vHi.className = (langCode === 'hi-IN') ? activeClass : inactiveClass;
+        if (vEn) vEn.className = (langCode === 'en-IN') ? activeClass : inactiveClass;
+
+        // Sync Leaf Doctor Card language buttons
+        const lTe = document.getElementById('leafLangTeBtn');
+        const lHi = document.getElementById('leafLangHiBtn');
+        const lEn = document.getElementById('leafLangEnBtn');
+        const leafActive = "px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-500 text-charcoal-950 transition-all shadow-md";
+        const leafInactive = "px-2.5 py-1 rounded-lg text-xs font-semibold bg-charcoal-800 text-slate-300 hover:text-white transition-all";
+        if (lTe) lTe.className = (langCode === 'te-IN') ? leafActive : leafInactive;
+        if (lHi) lHi.className = (langCode === 'hi-IN') ? leafActive : leafInactive;
+        if (lEn) lEn.className = (langCode === 'en-IN') ? leafActive : leafInactive;
+
+        // Sync Vision Trainer Modal language buttons
+        const visTe = document.getElementById('visLangTeBtn');
+        const visHi = document.getElementById('visLangHiBtn');
+        const visEn = document.getElementById('visLangEnBtn');
+        if (visTe) visTe.className = (langCode === 'te-IN') ? leafActive : leafInactive;
+        if (visHi) visHi.className = (langCode === 'hi-IN') ? leafActive : leafInactive;
+        if (visEn) visEn.className = (langCode === 'en-IN') ? leafActive : leafInactive;
+
+        // Update Speech Recognition lang
+        if (this.speechRecognition) this.speechRecognition.lang = langCode;
+        if (this.translatorRecognition) this.translatorRecognition.lang = langCode;
+
+        // Re-render quick prompt chips in Voice modal
+        this.renderAppQuickPromptChips();
+
+        // Re-render quick question chips in Leaf Doctor
+        this.renderAppLeafPromptChips();
+
+        // Refresh Leaf Doctor Q&A text & placeholder in the selected language
+        this.refreshAppLeafQaDisplay();
+
+        // Speak language confirmation in selected language
+        const welcomeMap = {
+          'te-IN': "రైతు సోదరులారా! తెలుగు భాష సక్రియం చేయబడింది. పంట ఆకుల ఫోటోలు మరియు వాయిస్ సహాయం సిద్ధంగా ఉన్నాయి.",
+          'hi-IN': "किसान भाइयों! हिन्दी भाषा सक्रिय हो गई है। फसल की पत्तियों का विश्लेषण और आवाज सहायक तैयार है।",
+          'en-IN': "English language activated. Botanical vision and agronomy voice assistant are ready."
+        };
+        const msg = welcomeMap[langCode] || welcomeMap['en-IN'];
+        this.speakText(msg, langCode);
+      }
+
+      speakText(text, lang = null) {
+        if (!('speechSynthesis' in window)) return;
+        window.speechSynthesis.cancel();
+
+        const targetLang = lang || this.appVoiceLang || this.currentLanguage || 'te-IN';
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = targetLang;
+
+        const voice = this.getVoiceForLang(targetLang);
+        if (voice) utterance.voice = voice;
+
+        // Calibrated rates for natural human speech pacing:
+        // Telugu: 0.90 (unhurried, warm rural conversational pacing)
+        // Hindi: 0.92
+        // English: 0.95
+        if (targetLang.startsWith('te')) {
+          utterance.rate = 0.90;
+          utterance.pitch = 1.0;
+        } else if (targetLang.startsWith('hi')) {
+          utterance.rate = 0.92;
+          utterance.pitch = 1.0;
+        } else {
           utterance.rate = 0.95;
-          window.speechSynthesis.speak(utterance);
+          utterance.pitch = 1.0;
         }
+
+        const wave = document.getElementById('audioWaveBars');
+        if (wave) wave.classList.remove('opacity-30');
+        utterance.onend = () => {
+          if (wave) wave.classList.add('opacity-30');
+        };
+        utterance.onerror = () => {
+          if (wave) wave.classList.add('opacity-30');
+        };
+
+        window.speechSynthesis.speak(utterance);
       }
 
       initSpeechEngines() {
@@ -3568,6 +3670,117 @@
         }
       }
 
+      
+      renderAppLeafPromptChips() {
+        const container = document.getElementById('appLeafPromptChipsContainer');
+        const promptLabel = document.getElementById('appLeafQuestionsPromptLabel');
+        if (!container) return;
+        const lang = this.appVoiceLang || 'te-IN';
+
+        if (promptLabel) {
+          if (lang === 'te-IN') promptLabel.innerText = "రైతులు ఎక్కువగా అడిగే ప్రశ్నలు (Quick Questions):";
+          else if (lang === 'hi-IN') promptLabel.innerText = "किसान भाइयों के त्वरित प्रश्न (Quick Questions):";
+          else promptLabel.innerText = "Quick Diagnostic Questions:";
+        }
+
+        const questions = [
+          {
+            teTitle: '🍃 "ఆకు రకం & ఆకారం ఏమిటి?"',
+            hiTitle: '🍃 "पत्ती का प्रकार और बनावट?"',
+            enTitle: '🍃 "What is leaf type & shape?"',
+            query: 'What is the leaf type and morphology?'
+          },
+          {
+            teTitle: '🎨 "ఆకు రంగు దేన్ని సూచిస్తుంది?"',
+            hiTitle: '🎨 "पत्ती के रंगों का क्या अर्थ है?"',
+            enTitle: '🎨 "What do leaf colors indicate?"',
+            query: 'Analyze leaf color and stress signs'
+          },
+          {
+            teTitle: '🔬 "ఖచ్చితమైన తెగులు నిర్ధారణ?"',
+            hiTitle: '🔬 "सटीक रोग निदान क्या है?"',
+            enTitle: '🔬 "What is exact diagnosis?"',
+            query: 'What disease is diagnosed on this leaf?'
+          },
+          {
+            teTitle: '🌱 "సేంద్రియ / జీవ నివారణ?"',
+            hiTitle: '🌱 "जैविक और देसी उपचार?"',
+            enTitle: '🌱 "What biological cure?"',
+            query: 'What organic or biological treatment to use?'
+          },
+          {
+            teTitle: '⚠️ "పక్క చేలకి సోకుతుందా?"',
+            hiTitle: '⚠️ "क्या यह रोग खेत में फैलेगा?"',
+            enTitle: '⚠️ "Is it contagious in field?"',
+            query: 'Is this disease contagious to other plants?'
+          },
+          {
+            teTitle: '🔄 "పంట మార్పిడి & రక్షణ"',
+            hiTitle: '🔄 "फसल चक्र और बचाव"',
+            enTitle: '🔄 "Crop rotation & prevention"',
+            query: 'How to prevent this in the next season?'
+          }
+        ];
+
+        container.innerHTML = questions.map(q => {
+          const label = (lang === 'te-IN') ? q.teTitle : (lang === 'hi-IN') ? q.hiTitle : q.enTitle;
+          return `
+            <button onclick="window.sehawaApp.askAppLeafQuestion('${q.query}')" class="p-2.5 rounded-xl bg-charcoal-950 hover:bg-emerald-950 border border-white/5 text-slate-300 hover:text-white text-left transition-all">
+              ${label}
+            </button>
+          `;
+        }).join('');
+      }
+
+      refreshAppLeafQaDisplay() {
+        const crop = this.currentAppCrop || 'tomato';
+        const disease = this.currentAppDisease || 'early_blight';
+        const taxon = this.BOTANICAL_TAXA[crop] || this.BOTANICAL_TAXA.tomato;
+        const pathology = taxon.pathologyLookups[disease] || taxon.pathologyLookups.healthy || Object.values(taxon.pathologyLookups)[0];
+        const lang = this.appVoiceLang || 'te-IN';
+        const metrics = this.currentAppLeafMetrics || { pctGreen: 70, pctYellow: 18, pctNecrotic: 12 };
+
+        let initialOverview = "";
+        if (lang === 'te-IN') {
+          initialOverview = `రైతు సోదరులారా! ${taxon.name} ఆకు నమూనా సిద్ధమైంది. ఆకు రకం: "${taxon.architecture.split(',')[0]}". రంగు విశ్లేషణ: పచ్చని క్లోరోఫిల్ ${metrics.pctGreen}%, పసుపు క్లోరోసిస్ ${metrics.pctYellow}%, మచ్చల కణజాలం ${metrics.pctNecrotic}%. నిర్ధారణ: ${pathology.title}.`;
+        } else if (lang === 'hi-IN') {
+          initialOverview = `किसान भाइयों! ${taxon.name} की पत्ती तैयार है। पत्ती प्रकार: "${taxon.architecture.split(',')[0]}"। रंग विश्लेषण: क्लोरोफिल ${metrics.pctGreen}%, पीलापन ${metrics.pctYellow}%, झुलसा ${metrics.pctNecrotic}%। रोग: ${pathology.title}।`;
+        } else {
+          initialOverview = `Generated ${taxon.name} leaf (${taxon.binomial}). Leaf Type: ${taxon.architecture.split(',')[0]}. Color Analysis: ${metrics.pctGreen}% chlorophyll green, ${metrics.pctYellow}% chlorosis yellow, ${metrics.pctNecrotic}% necrotic blight. Diagnosis: ${pathology.title}.`;
+        }
+
+        const qLabel = document.getElementById('appLeafQaQuestionLabel');
+        const aText = document.getElementById('appLeafQaAnswerText');
+        if (qLabel) qLabel.innerText = `Specimen: ${taxon.name} - ${pathology.title}`;
+        if (aText) aText.innerText = initialOverview;
+        this.currentAppLeafQaAnswer = initialOverview;
+
+        const input = document.getElementById('appLeafQaInput');
+        if (input) {
+          if (lang === 'te-IN') input.placeholder = "ఆకు గురించి ప్రశ్న అడగండి (ఉదా: 'పసుపు ఎందుకు అయింది?', 'ఏ మందు కొట్టాలి?')...";
+          else if (lang === 'hi-IN') input.placeholder = "पत्ती के बारे में सवाल पूछें (जैसे: 'पीली क्यों है?', 'क्या दवा डालें?')...";
+          else input.placeholder = "Ask any question about this leaf image (e.g. 'Why is it yellow?', 'How to cure?')...";
+        }
+      }
+
+      speakCurrentVisionInference() {
+        if (!this.currentVisionMatch) return;
+        const match = this.currentVisionMatch;
+        const conf = this.currentVisionConf || 96.4;
+        const lang = this.appVoiceLang || 'te-IN';
+
+        let spokenMsg = "";
+        if (lang === 'te-IN') {
+          spokenMsg = `${match.crop} ఆకుపై ${match.teluguLabel} ఉంది. సేంద్రియ నివారణ: ${match.treatmentTel}`;
+        } else if (lang === 'hi-IN') {
+          spokenMsg = `${match.crop} की पत्ती पर ${match.hindiLabel || match.condition} है। उपचार: ${match.treatmentHin || match.treatmentEng}`;
+        } else {
+          spokenMsg = `Identified ${match.crop} with ${match.condition}. Model confidence: ${conf}%. Treatment: ${match.treatmentEng}`;
+        }
+
+        this.speakText(spokenMsg, lang);
+      }
+
       // --- VISION LEARNER METHODS ---
       openVisionTrainerModal() {
         const modal = document.getElementById('visionTrainerModal');
@@ -3716,12 +3929,30 @@
       }
 
       displayVisionInference(match, conf) {
+        this.currentVisionMatch = match;
+        this.currentVisionConf = conf;
         document.getElementById('visionResultTitle').innerText = `${match.crop}: ${match.condition}`;
-        document.getElementById('visionTeluguDiagnosis').innerText = match.teluguLabel || "పంట ఆకు పరిశీలించబడింది.";
+        const telEl = document.getElementById('visionTeluguDiagnosis');
+        const hinEl = document.getElementById('visionHindiDiagnosis');
+        if (telEl) telEl.innerText = match.teluguLabel || "పంట ఆకు పరిశీలించబడింది.";
+        if (hinEl) hinEl.innerText = match.hindiLabel || "फसल की पत्ती का विश्लेषण पूर्ण हुआ।";
         document.getElementById('visionConfidenceBadge').innerText = `${conf}% Match`;
         document.getElementById('visionExplanation').innerText = match.explanation;
         document.getElementById('visionTreatmentEng').innerText = match.treatmentEng;
         document.getElementById('visionTreatmentTel').innerText = match.treatmentTel;
+        const hinTreat = document.getElementById('visionTreatmentHin');
+        if (hinTreat) hinTreat.innerText = match.treatmentHin || match.treatmentEng;
+
+        const lang = this.appVoiceLang || 'te-IN';
+        let spokenMsg = "";
+        if (lang === 'te-IN') {
+          spokenMsg = `${match.crop} ఆకుపై ${match.teluguLabel} ఉంది. సేంద్రియ నివారణ: ${match.treatmentTel}`;
+        } else if (lang === 'hi-IN') {
+          spokenMsg = `${match.crop} की पत्ती पर ${match.hindiLabel || match.condition} है। उपचार: ${match.treatmentHin || match.treatmentEng}`;
+        } else {
+          spokenMsg = `Identified ${match.crop} with ${match.condition}. Model confidence: ${conf}%. Treatment: ${match.treatmentEng}`;
+        }
+        this.speakText(spokenMsg, lang);
 
         document.getElementById('visionProbBars').innerHTML = `
           <div class="text-[11px] font-mono text-slate-300 flex justify-between">

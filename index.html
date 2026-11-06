@@ -711,35 +711,19 @@
                 </div>
               </div>
 
-              <span id="qaVoiceLangBadge" class="text-[10px] font-mono px-2.5 py-1 rounded-full bg-charcoal-900 text-emerald-400 border border-emerald-500/20 flex items-center gap-1">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span>Spoken Voice Active</span>
-              </span>
+              <div class="flex items-center gap-2">
+                <div class="flex items-center gap-1 p-0.5 rounded-xl bg-charcoal-900 border border-white/10">
+                  <button id="qaLangTeBtn" onclick="window.sehawaApp.setVoiceInputLang('te-IN')" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-500 text-charcoal-950 transition-all shadow-md">తెలుగు</button>
+                  <button id="qaLangHiBtn" onclick="window.sehawaApp.setVoiceInputLang('hi-IN')" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-charcoal-800 text-slate-300 hover:text-white transition-all">हिन्दी</button>
+                  <button id="qaLangEnBtn" onclick="window.sehawaApp.setVoiceInputLang('en-IN')" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-charcoal-800 text-slate-300 hover:text-white transition-all">English</button>
+                </div>
+              </div>
             </div>
 
             <!-- Quick Diagnostic Questions -->
             <div class="space-y-1.5">
-              <span class="text-[10px] font-mono text-slate-400 uppercase">Tap a question:</span>
-              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-1.5 text-xs">
-                <button onclick="window.sehawaApp.askLeafQuestion('What is the leaf type and morphology?')" class="p-2.5 rounded-xl bg-charcoal-900 hover:bg-emerald-950 border border-white/5 text-slate-300 hover:text-white text-left transition-all">
-                  🍃 "What is the leaf type & shape?"
-                </button>
-                <button onclick="window.sehawaApp.askLeafQuestion('Analyze leaf color and stress signs')" class="p-2.5 rounded-xl bg-charcoal-900 hover:bg-emerald-950 border border-white/5 text-slate-300 hover:text-white text-left transition-all">
-                  🎨 "What do leaf colors indicate?"
-                </button>
-                <button onclick="window.sehawaApp.askLeafQuestion('What disease is diagnosed on this leaf?')" class="p-2.5 rounded-xl bg-charcoal-900 hover:bg-emerald-950 border border-white/5 text-slate-300 hover:text-white text-left transition-all">
-                  🔬 "What is the exact diagnosis?"
-                </button>
-                <button onclick="window.sehawaApp.askLeafQuestion('What organic or biological treatment to use?')" class="p-2.5 rounded-xl bg-charcoal-900 hover:bg-emerald-950 border border-white/5 text-slate-300 hover:text-white text-left transition-all">
-                  🌱 "What biological cure to apply?"
-                </button>
-                <button onclick="window.sehawaApp.askLeafQuestion('Is this disease contagious to other plants?')" class="p-2.5 rounded-xl bg-charcoal-900 hover:bg-emerald-950 border border-white/5 text-slate-300 hover:text-white text-left transition-all">
-                  ⚠️ "Is it contagious in field?"
-                </button>
-                <button onclick="window.sehawaApp.askLeafQuestion('How to prevent this in the next season?')" class="p-2.5 rounded-xl bg-charcoal-900 hover:bg-emerald-950 border border-white/5 text-slate-300 hover:text-white text-left transition-all">
-                  🔄 "Crop rotation & prevention"
-                </button>
-              </div>
+              <span class="text-[10px] font-mono text-slate-400 uppercase" id="qaQuestionsPromptLabel">రైతులు ఎక్కువగా అడిగే ప్రశ్నలు (Quick Questions):</span>
+              <div id="leafQaPromptChipsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-1.5 text-xs"></div>
             </div>
 
             <!-- Custom Question Input -->
@@ -1806,6 +1790,7 @@
         this.initScrollEngine();
         this.initSpeechEngines();
         this.initAgriBotDatasetEngine();
+        this.renderLeafQaQuestionChips();
         this.updateLearnedBadge();
         if (window.lucide) window.lucide.createIcons();
       }
@@ -3069,6 +3054,99 @@
       /* ========================================================== */
       /* TRILINGUAL AGRONOMY VOICE ENGINE (TELUGU, HINDI, ENGLISH)  */
       /* ========================================================== */
+      
+      renderLeafQaQuestionChips() {
+        const container = document.getElementById('leafQaPromptChipsContainer');
+        const promptLabel = document.getElementById('qaQuestionsPromptLabel');
+        if (!container) return;
+        const lang = this.voiceInputLang || 'te-IN';
+
+        if (promptLabel) {
+          if (lang === 'te-IN') promptLabel.innerText = "రైతులు ఎక్కువగా అడిగే ప్రశ్నలు (Quick Questions):";
+          else if (lang === 'hi-IN') promptLabel.innerText = "किसान भाइयों के त्वरित प्रश्न (Quick Questions):";
+          else promptLabel.innerText = "Quick Diagnostic Questions:";
+        }
+
+        const questions = [
+          {
+            teTitle: '🍃 "ఆకు రకం & ఆకారం ఏమిటి?"',
+            hiTitle: '🍃 "पत्ती का प्रकार और बनावट?"',
+            enTitle: '🍃 "What is leaf type & shape?"',
+            query: 'What is the leaf type and morphology?'
+          },
+          {
+            teTitle: '🎨 "ఆకు రంగు దేన్ని సూచిస్తుంది?"',
+            hiTitle: '🎨 "पत्ती के रंगों का क्या अर्थ है?"',
+            enTitle: '🎨 "What do leaf colors indicate?"',
+            query: 'Analyze leaf color and stress signs'
+          },
+          {
+            teTitle: '🔬 "ఖచ్చితమైన తెగులు నిర్ధారణ?"',
+            hiTitle: '🔬 "सटीक रोग निदान क्या है?"',
+            enTitle: '🔬 "What is exact diagnosis?"',
+            query: 'What disease is diagnosed on this leaf?'
+          },
+          {
+            teTitle: '🌱 "సేంద్రియ / జీవ నివారణ?"',
+            hiTitle: '🌱 "जैविक और देसी उपचार?"',
+            enTitle: '🌱 "What biological cure?"',
+            query: 'What organic or biological treatment to use?'
+          },
+          {
+            teTitle: '⚠️ "పక్క చేలకి సోకుతుందా?"',
+            hiTitle: '⚠️ "क्या यह रोग खेत में फैलेगा?"',
+            enTitle: '⚠️ "Is it contagious in field?"',
+            query: 'Is this disease contagious to other plants?'
+          },
+          {
+            teTitle: '🔄 "పంట మార్పిడి & రక్షణ"',
+            hiTitle: '🔄 "फसल चक्र और बचाव"',
+            enTitle: '🔄 "Crop rotation & prevention"',
+            query: 'How to prevent this in the next season?'
+          }
+        ];
+
+        container.innerHTML = questions.map(q => {
+          const label = (lang === 'te-IN') ? q.teTitle : (lang === 'hi-IN') ? q.hiTitle : q.enTitle;
+          return `
+            <button onclick="window.sehawaApp.askLeafQuestion('${q.query}')" class="p-2.5 rounded-xl bg-charcoal-900 hover:bg-emerald-950 border border-white/5 text-slate-300 hover:text-white text-left transition-all">
+              ${label}
+            </button>
+          `;
+        }).join('');
+      }
+
+      refreshLeafQaAnswerDisplay() {
+        const crop = this.currentCropTaxon || 'tomato';
+        const disease = this.currentDiseaseKey || 'early_blight';
+        const taxon = this.BOTANICAL_TAXA[crop] || this.BOTANICAL_TAXA.tomato;
+        const pathology = taxon.pathologyLookups[disease] || taxon.pathologyLookups.healthy || Object.values(taxon.pathologyLookups)[0];
+        const lang = this.voiceInputLang || 'te-IN';
+        const metrics = this.currentLeafMetrics || { pctGreen: 70, pctYellow: 18, pctNecrotic: 12 };
+
+        let initialOverview = "";
+        if (lang === 'te-IN') {
+          initialOverview = `రైతు సోదరులారా! ${taxon.name} ఆకు నమూనా సిద్ధమైంది. ఆకు రకం: "${taxon.architecture.split(',')[0]}". రంగు విశ్లేషణ: పచ్చని క్లోరోఫిల్ ${metrics.pctGreen}%, పసుపు క్లోరోసిస్ ${metrics.pctYellow}%, మచ్చల కణజాలం ${metrics.pctNecrotic}%. నిర్ధారణ: ${pathology.title}.`;
+        } else if (lang === 'hi-IN') {
+          initialOverview = `किसान भाइयों! ${taxon.name} की पत्ती तैयार है। पत्ती प्रकार: "${taxon.architecture.split(',')[0]}"। रंग विश्लेषण: क्लोरोफिल ${metrics.pctGreen}%, पीलापन ${metrics.pctYellow}%, झुलसा ${metrics.pctNecrotic}%। रोग: ${pathology.title}।`;
+        } else {
+          initialOverview = `Generated ${taxon.name} leaf (${taxon.binomial}). Leaf Type: ${taxon.architecture.split(',')[0]}. Color Analysis: ${metrics.pctGreen}% chlorophyll green, ${metrics.pctYellow}% chlorosis yellow, ${metrics.pctNecrotic}% necrotic blight. Diagnosis: ${pathology.title}.`;
+        }
+
+        const qLabel = document.getElementById('leafQaQuestionLabel');
+        const aText = document.getElementById('leafQaAnswerText');
+        if (qLabel) qLabel.innerText = `Specimen: ${taxon.name} - ${pathology.title}`;
+        if (aText) aText.innerText = initialOverview;
+        this.currentLeafQaAnswer = initialOverview;
+
+        const input = document.getElementById('leafQaInput');
+        if (input) {
+          if (lang === 'te-IN') input.placeholder = "ఆకు గురించి ప్రశ్న అడగండి (ఉదా: 'పసుపు ఎందుకు అయింది?', 'ఏ మందు కొట్టాలి?')...";
+          else if (lang === 'hi-IN') input.placeholder = "पत्ती के बारे में सवाल पूछें (जैसे: 'पीली क्यों है?', 'क्या दवा डालें?')...";
+          else input.placeholder = "Ask any question about this leaf image (e.g. 'Why is it yellow?', 'How to cure?')...";
+        }
+      }
+
       initSpeechEngines() {
         this.voiceInputLang = 'te-IN'; // Default to Telugu as primary regional mandate
         this.lastSpokenText = "";
@@ -3188,6 +3266,19 @@
         if (teBtn) teBtn.className = (lang === 'te-IN') ? activeClass : inactiveClass;
         if (hiBtn) hiBtn.className = (lang === 'hi-IN') ? activeClass : inactiveClass;
         if (enBtn) enBtn.className = (lang === 'en-IN') ? activeClass : inactiveClass;
+
+        // Sync Visual Leaf Q&A Assistant card language pills
+        const qTe = document.getElementById('qaLangTeBtn');
+        const qHi = document.getElementById('qaLangHiBtn');
+        const qEn = document.getElementById('qaLangEnBtn');
+        const pillActive = "px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-500 text-charcoal-950 transition-all shadow-md";
+        const pillInactive = "px-2.5 py-1 rounded-lg text-xs font-semibold bg-charcoal-800 text-slate-300 hover:text-white transition-all";
+        if (qTe) qTe.className = (lang === 'te-IN') ? pillActive : pillInactive;
+        if (qHi) qHi.className = (lang === 'hi-IN') ? pillActive : pillInactive;
+        if (qEn) qEn.className = (lang === 'en-IN') ? pillActive : pillInactive;
+
+        this.renderLeafQaQuestionChips();
+        this.refreshLeafQaAnswerDisplay();
 
         if (lang === 'te-IN') {
           if (input) input.placeholder = "తెలుగులో మీ ప్రశ్న రాయండి (ఉదా: 'వరి ఆకులు ఎండిపోతున్నాయి', 'వర్షం వస్తే ఏం చేయాలి')...";
